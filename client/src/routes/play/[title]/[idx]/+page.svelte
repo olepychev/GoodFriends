@@ -26,7 +26,7 @@
   let bestResult = [];
 	let cntBestResult = 5;
   let isPlay = false;
-  $: nick = $globalStore.userDetail ? $globalStore.userDetail.nick: null;
+  $: nick = $globalStore.userDetail ? $globalStore.userDetail.nick: `demo`;
 
   $: {
     if(!$globalStore.userDetail) {
