@@ -29,7 +29,13 @@
   $: nick = $globalStore.userDetail ? $globalStore.userDetail.nick: null;
 
   $: {
-    updateLink();
+    if(!$globalStore.userDetail) {
+      isPlay = false;
+      link = "";
+    }
+    else {
+      updateLink();
+    }
   }
 
   onMount(async () => {
