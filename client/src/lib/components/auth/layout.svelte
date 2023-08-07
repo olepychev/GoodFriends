@@ -20,16 +20,16 @@
 			id="formLayout"
 			class="relative w-full max-w-[780px] grid md:grid-cols-2 h-full md:h-auto m-auto min-h-[600px] rounded-[14px] rounded-tl-[14px] bg-black overflow-hidden"
 		>
-		<img class="absolute left-0 top-0 w-full h-full object-cover flex md:hidden" src="/src/assets/imgs/authBg.svg" alt="">
+		<img class="absolute left-0 top-0 w-full h-full object-cover flex md:hidden" src="/imgs/authBg.svg" alt="">
 
 			<div class="hidden md:flex relative w-full rounded-r-[14px] px-[26px] overflow-hidden">
 				<img
 					class="absolute left-0 top-0 w-full h-full object-cover"
-					src="/src/assets/imgs/authImage.svg"
+					src="/imgs/authImage.svg"
 					alt=""
 				/>
 				<div class="relative w-full py-[17px] flex flex-col gap-[46px]">
-					<img class="w-full max-w-[31px]" src="/src/assets/imgs/logo-white.svg" alt="logo-white" />
+					<img class="w-full max-w-[31px]" src="/imgs/logo-white.svg" alt="logo-white" />
 					<div class="flex flex-col gap-[18px]">
 						<h6 class="text-xl text-white font-medium">Made for professional Gamblers</h6>
 						<p class="text-sm text-white50 font-medium">
@@ -43,7 +43,7 @@
 				<div class="flex flex-col w-full">
 					<div class="w-full flex justify-between md:justify-end px-[25px] mb-[55px] md:mb-[0px]">
 						<a href="/" on:click={() => dispatch('closeForm')} class="w-full max-w-[231px] md:hidden flex">
-							<img src="/src/assets/imgs/logoWithTitle.svg" alt="">
+							<img src="/imgs/logoWithTitle.svg" alt="">
 						</a>
 						<div
 							id="closeForm"

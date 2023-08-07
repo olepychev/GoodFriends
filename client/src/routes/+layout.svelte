@@ -2,11 +2,11 @@
 	import { onMount } from 'svelte';
 	import globalStore from '../store/globalStore';
 
-	import Sidebar from '$lib/components/sidebar/sidebar.svelte';
-	import Header from '$lib/components/header/header.svelte';
+	import Sidebar from '../lib/components/sidebar/sidebar.svelte';
+	import Header from '../lib/components/header/header.svelte';
 	import Chat from '../lib/components/chat/chat.svelte';
 
-	import ScrollUp from '$lib/components/scrollUp/scroll-up.svelte';
+	import ScrollUp from '../lib/components/scrollUp/scroll-up.svelte';
 
 	import Layout from '../lib/components/auth/layout.svelte';
 	import SignUp from '../lib/components/auth/sign-up.svelte';

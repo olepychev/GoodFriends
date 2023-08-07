@@ -46,7 +46,7 @@
 				<svg class="w-[24px] h-[24px]">
 					<use
 						class="dark:fill-white fill-black"
-						href="/src/assets/imgs/icons/icons.svg#chevron-left"
+						href="/imgs/icons/icons.svg#chevron-left"
 					/>
 				</svg>
 			</button>
@@ -58,7 +58,7 @@
 				<svg class="w-[24px] h-[24px] rotate-[180deg]">
 					<use
 						class="dark:fill-white fill-black"
-						href="/src/assets/imgs/icons/icons.svg#chevron-left"
+						href="/imgs/icons/icons.svg#chevron-left"
 					/>
 				</svg>
 			</button>
@@ -102,7 +102,7 @@
 							<div
 								class="flex flex-col gap-[12px] scale-[0.80] group-hover:scale-[1] transition-all"
 							>
-								<img src="/src/assets/imgs/play.svg" alt="play.svg" />
+								<img src="/imgs/play.svg" alt="play.svg" />
 							</div>
 						</div>
 					</div>
@@ -113,7 +113,7 @@
 							{categoryItem.title}
 						</p>
 						<svg class="min-w-[20px] min-h-[20px] w-[20px] h-[20px]">
-							<use class="fill-transparent" href="/src/assets/imgs/icons/icons.svg#info" />
+							<use class="fill-transparent" href="/imgs/icons/icons.svg#info" />
 						</svg>
 					</div>
 				</a>

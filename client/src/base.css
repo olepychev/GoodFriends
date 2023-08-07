@@ -95,7 +95,7 @@ body::-webkit-scrollbar {
 }
 
 .sidebar {
-	/* transition: all 0.1s ease-in; */
+	transition: all 0.1s ease-in;
 }
 
 .aside-active .sidebar .head,

@@ -4,30 +4,30 @@
 	const mainSportsTab = [
 		{
 			title: 'Soccer',
-			image: '/src/assets/imgs/live-sports/ball.svg'
+			image: '/imgs/live-sports/ball.svg'
 		},
 		{
 			title: 'Esports',
-			image: '/src/assets/imgs/live-sports/headphone.svg'
+			image: '/imgs/live-sports/headphone.svg'
 		},
 		{
 			title: 'Tennis',
-			image: '/src/assets/imgs/live-sports/tennis-ball.svg',
+			image: '/imgs/live-sports/tennis-ball.svg',
 			hide: 'mobile', // hide when taiiwindcss breakpoiint screen.sm
 		},
 		{
 			title: 'Basketball',
-			image: '/src/assets/imgs/live-sports/basket-ball.svg',
+			image: '/imgs/live-sports/basket-ball.svg',
 			hide: 'mobile', // hide when taiiwindcss breakpoiint screen.sm
 		},
 		{
 			title: 'Rugby',
-			image: '/src/assets/imgs/live-sports/rugby-ball.svg',
+			image: '/imgs/live-sports/rugby-ball.svg',
 			hide: 'mobile', // hide when taiiwindcss breakpoiint screen.sm
 		},
 		{
 			title: 'Cricket',
-			image: '/src/assets/imgs/live-sports/cricket-ball.svg',
+			image: '/imgs/live-sports/cricket-ball.svg',
 			hide: 'mobile', // hide when taiiwindcss breakpoiint screen.sm
 		}
 	];
@@ -43,11 +43,11 @@
 			teams: {
 				team1: {
 					title: 'Sevilia',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Atletico Madrid askdkajsdlk',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -99,11 +99,11 @@
 			teams: {
 				team1: {
 					title: 'Torino',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Inter Milan',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -155,11 +155,11 @@
 			teams: {
 				team1: {
 					title: 'Torino',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Inter Milan',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -211,11 +211,11 @@
 			teams: {
 				team1: {
 					title: 'Torino',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Inter Milan',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -267,11 +267,11 @@
 			teams: {
 				team1: {
 					title: 'Torino',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Inter Milan',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -323,11 +323,11 @@
 			teams: {
 				team1: {
 					title: 'Torino',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Inter Milan',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -379,11 +379,11 @@
 			teams: {
 				team1: {
 					title: 'Torino',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Inter Milan',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -435,11 +435,11 @@
 			teams: {
 				team1: {
 					title: 'Torino',
-					image: '/src/assets/imgs/sevilia.svg'
+					image: '/imgs/sevilia.svg'
 				},
 				team2: {
 					title: 'Inter Milan',
-					image: '/src/assets/imgs/atletico.svg'
+					image: '/imgs/atletico.svg'
 				}
 			},
 			bet: {
@@ -567,7 +567,7 @@
 					</div>
 					<div class="flex flex-col gap-[12px] sm:gap-[20px]">
 						<div class="flex items-center gap-[5px]">
-							<img class="w-[14px] sm:w-[16px]" src="/src/assets/imgs/global.svg" alt="global" />
+							<img class="w-[14px] sm:w-[16px]" src="/imgs/global.svg" alt="global" />
 							<p class="text-xs sm:text-sm uppercase font-medium text-grayDark2">{item.content}</p>
 						</div>
 						<div class="flex items-center gap-[15px] sm:gap-[31px]">

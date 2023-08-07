@@ -7,14 +7,14 @@
 		<div class="relative w-full hidden md:flex">
 			<img
 				class="w-full min-h-[260px] max-h-[320px] object-cover rounded-[14px]"
-				src="/src/assets/imgs/footerBanner.svg"
+				src="/imgs/footerBanner.svg"
 				alt=""
 			/>
 			<div class="absolute left-0 top-0 w-full h-full bg-black21 rounded-[33px]" />
 			<div class="absolute right-[51px] top-[50%] translate-y-[-50%]">
 				<img
 					class="h-[350px]"
-					src="/src/assets/imgs/footerBannerIllustration.svg"
+					src="/imgs/footerBannerIllustration.svg"
 					alt="illustration"
 				/>
 			</div>
@@ -43,7 +43,7 @@
 			Made with love and Ruby on Rails. GoodFriends © 2023
 		</p>
 		<a href="/" class="flex">
-			<img class="w-full max-w-[50px]" src="/src/assets/imgs/logo.svg" alt="" />
+			<img class="w-full max-w-[50px]" src="/imgs/Logo.svg" alt="" />
 		</a>
 	</div>
 </div>
