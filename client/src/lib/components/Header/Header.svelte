@@ -16,7 +16,7 @@
 	$: isLoggedIn = $globalStore.userDetail;
 
 	onMount(async () => {
-		// handleTokens();
+		handleTokens();
 	});
 
 	async function handleTokens() {
