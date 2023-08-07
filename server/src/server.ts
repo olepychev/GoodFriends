@@ -42,6 +42,7 @@ app.use((req, res, next) => {
 });
 
 const allowedOriginsWithCredentials: string[] = [
+    "http://localhost:9002",
     "http://localhost:10010", 
     "https://demo.goodfriendsgaming.com",
     "http://localhost:5173"];
