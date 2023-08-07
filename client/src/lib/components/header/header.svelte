@@ -4,7 +4,7 @@
 	import LoginHeader from './headerlogin.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import toast from '../../../lib/components/toast/toast';
+	import toast from '$lib/components/toast/toast';
 	import { getAccessToken, getRefreshToken } from '../../../apis/account';
 	import ProfileMenu from '$lib/components/menus/profile/profileMenu.svelte';
 	import DepositModal from '../modals/deposit/deposit.svelte';
