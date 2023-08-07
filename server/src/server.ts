@@ -43,7 +43,8 @@ app.use((req, res, next) => {
 
 const allowedOriginsWithCredentials: string[] = [
     "http://localhost:10010", 
-    "https://demo.goodfriendsgaming.com"];
+    "https://demo.goodfriendsgaming.com",
+    "http://localhost:5173"];
 const allowedOriginsWithoutCredentials: string[] = [
     "45.76.148.155",
     "45.77.174.118",
