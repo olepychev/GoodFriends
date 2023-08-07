@@ -100,7 +100,8 @@
 	</Layout>
 {/if}
 
-{#if loginForm}
+<div class={loginForm ? 'block': 'hidden'}>
+	<!-- {#if loginForm} -->
 	<Layout on:closeForm={closeForm}>
 		<SignIn
 			on:openForgotPasswordForm={openForgotPasswordForm}
@@ -108,7 +109,8 @@
 			on:closeForm={closeForm}
 		/>
 	</Layout>
-{/if}
+	<!-- {/if} -->
+</div>
 
 {#if forgotPasswordForm}
 	<Layout on:closeForm={closeForm}>

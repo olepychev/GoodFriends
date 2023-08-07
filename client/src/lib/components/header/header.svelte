@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import toast from '$lib/components/toast/toast';
-	import { getAccessToken, getRefreshToken } from '../../../apis/account';
+	import { getAccessToken, getRefreshToken, signupSocial, signIn } from '../../../apis/account';
 	import ProfileMenu from '$lib/components/menus/profile/profileMenu.svelte';
 	import DepositModal from '../modals/deposit/deposit.svelte';
 	import MyProfile from '../modals/profile/myProfile.svelte';
@@ -17,6 +17,10 @@
 
 	onMount(async () => {
 		handleTokens();
+		if ($globalStore.telegramUserData) {
+			const userInfo = JSON.stringify($globalStore.telegramUserData);
+			signInWithTelegram(userInfo)
+		}
 	});
 
 	async function handleTokens() {
@@ -36,6 +40,30 @@
 			toast.error('Bad Network Connection');
 		}
 	}
+
+	async function signInWithTelegram(userInfo) {
+    const res = await signupSocial({
+      email: 't_' + userInfo.id,
+      password: userInfo.id,
+      loginType: 'telegram'
+    })
+    try {
+      const res1 = await signIn({
+        email: 't_' + userInfo.id,
+        password: userInfo.id,
+      });
+
+      if (res1.success) {
+        toast.success(res1.data.message);
+        globalStore.toggleItem("loginForm", false);
+        handleTokens();
+      } else {
+        toast.error(res1.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 	let activeProfileMenu = false;
 	function openProfileMenu() {

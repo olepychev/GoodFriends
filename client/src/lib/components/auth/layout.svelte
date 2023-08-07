@@ -43,7 +43,7 @@
 				<div class="flex flex-col w-full">
 					<div class="w-full flex justify-between md:justify-end px-[25px] mb-[55px] md:mb-[0px]">
 						<a href="/" on:click={() => dispatch('closeForm')} class="w-full max-w-[231px] md:hidden flex">
-							<img src="/imgs/logoWithTitle.svg" alt="">
+							<img src="/imgs/LogoWithTitle.svg" alt="">
 						</a>
 						<div
 							id="closeForm"
