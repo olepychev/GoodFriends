@@ -1,335 +1,316 @@
 <script>
-  import { onMount } from "svelte";
-  import Select from 'svelte-select';
-  import {getCasinoList} from "../../apis/casino/GetCasinoList"
-  import { getFilterMenu } from "../../apis/casino/GetFilterMenu"
-  import FaqItem from "$lib/components/FaqItem.svelte";
-  // import filter from "svelte-select/filter";
-  import { tooltip } from 'svooltip';
-  // import 'svooltip/styles.css';
-  
-  export let data
-  const type = data.type ? [data.type] : ""
-  let vendorList = [], typeList = [];
-  let vendorSelectedList = [], typeSelectedList = [];
-  onMount(async () => {
-    const res = await getFilterMenu();
-    vendorList = res.vendor;
-    typeList = res.type;
-  })
+	import { onMount } from 'svelte';
+	import Footer from '$lib/components/footer/footer.svelte';
+	import { getFilterMenu, getCasinoList } from '../../apis/casino';
+	import Skeleton from '$lib/components/loader/skeleton.svelte';
 
-  let list = []
-  let totalNumber = 0
-  let currentLimit = 0
-  let page = 0
-  let searchKey = "";
+	const filterData = [
+		{
+			title: 'VendorList',
+			data: []
+		},
+		{
+			title: 'Type',
+			data: []
+		}
+	];
 
-  const search = async () => {
-    page = 0;
-    currentLimit = 0;
-    const res = await getCasinoList({
-      title: searchKey,
-      vendor: vendorSelectedList,
-      type: typeSelectedList,
-      page: page
-    })
-    totalNumber = res.totalNumber
-    list = res.list
-    currentLimit = list.length
-  }
-  
-  const moreLoad = async () => {
-    page++
-    const res = await getCasinoList({
-      title: searchKey,
-      vendor: vendorSelectedList,
-      type: type,
-      page: page
-    })
-    currentLimit += res.list.length
-    list = [...list, ...res.list]
-  }
+	const casinoTabs = [
+		{
+			title: 'All'
+		},
+		{
+			title: 'Best Casino',
+			image: '/src/assets/imgs/live-sports/ball.svg'
+		},
+		{
+			title: 'Slot',
+			image: '/src/assets/imgs/live-sports/headphone.svg'
+		},
+		{
+			title: 'Blackjack',
+			image: '/src/assets/imgs/live-sports/tennis-ball.svg'
+		},
+		{
+			title: 'Baccarat',
+			image: '/src/assets/imgs/live-sports/basket-ball.svg'
+		},
+		{
+			title: 'Roulette',
+			image: '/src/assets/imgs/live-sports/rugby-ball.svg'
+		}
+	];
 
-  const load = async () => {
-    const data = await getCasinoList({
-      title: "",
-      vendor: [],
-      type: type,
-      page: 0
-    })
-    totalNumber = data.totalNumber
-    list = data.list
-    currentLimit = list.length
-    return data
-  }
+	export let data;
+	let currentTab = 'All';
+	let totalNumber = 0,
+		casinoSlotsArr = [],
+		currentLimit = 0;
+	let filter = false;
+	let type = data.type ? [data.type] : '';
+	let vendorSelectedList = [],
+		typeSelectedList = [];
+	let searchKey = '',
+		page = 0;
 
-  const selectVendor = (e, item) => {
-    vendorSelectedList = e.target.checked ? [...vendorSelectedList, item.name] : vendorSelectedList.filter(it => it !== item.name);
-    search();
-  }
+	let slotsLoaded = false;
+	let loadedMore = true;
 
-  const selectType = (e, item) => {
-    typeSelectedList = e.target.checked ? [...typeSelectedList, item.name] : typeSelectedList.filter(it => it !== item.name);
-    search();
-  }
+	onMount(async () => {
+		const container = document.querySelectorAll('.dragable');
+		container.forEach((cont) => {
+			let startY;
+			let startX;
+			let scrollLeft;
+			let scrollTop;
+			let isDown;
+
+			cont.addEventListener('mousedown', (e) => {
+				isDown = true;
+				startY = e.pageY - cont.offsetTop;
+				startX = e.pageX - cont.offsetLeft;
+				scrollLeft = cont.scrollLeft;
+				scrollTop = cont.scrollTop;
+			});
+			cont.addEventListener('mouseup', (e) => {
+				isDown = false;
+			});
+			cont.addEventListener('mouseleave', (e) => {
+				isDown = false;
+			});
+			cont.addEventListener('mousemove', (e) => {
+				if (isDown) {
+					e.preventDefault();
+
+					//Move Horizontally
+					const x = e.pageX - cont.offsetLeft;
+					const walkX = x - startX;
+					cont.scrollLeft = scrollLeft - walkX;
+				}
+			});
+		});
+
+		const res = await getFilterMenu();
+		await load();
+
+		if (res.success) {
+			filterData[0].data = res.data.vendor;
+			filterData[1].data = res.data.type;
+		}
+	});
+
+	function handleFilter() {
+		filter = !filter;
+	}
+
+	function handleCasinoFilter(title) {
+		currentTab = title.toLowerCase();
+	}
+	const load = async () => {
+		const res = await getCasinoList({
+			title: '',
+			vendor: [],
+			type: type,
+			page: 0
+		});
+		totalNumber = res.data.totalNumber;
+		casinoSlotsArr = res.data.list;
+		currentLimit = casinoSlotsArr.length;
+		slotsLoaded = true;
+	};
+
+	const search = async () => {
+		page = 0;
+		currentLimit = 0;
+		const res = await getCasinoList({
+			title: searchKey,
+			vendor: vendorSelectedList,
+			type: typeSelectedList,
+			page: page
+		});
+		totalNumber = res.data.totalNumber;
+		casinoSlotsArr = res.data.list;
+		currentLimit = casinoSlotsArr.length;
+	};
+
+	const moreLoad = async () => {
+		page++;
+		loadedMore = false;
+		const res = await getCasinoList({
+			title: searchKey,
+			vendor: vendorSelectedList,
+			type: type,
+			page: page
+		});
+		currentLimit += res.data.list.length;
+		casinoSlotsArr = [...casinoSlotsArr, ...res.data.list];
+		loadedMore = true;
+	};
+
+	const selectVendor = (e, item) => {
+		vendorSelectedList = e.target.checked
+			? [...vendorSelectedList, item.name]
+			: vendorSelectedList.filter((it) => it !== item.name);
+		search();
+	};
+
+	const selectType = (e, item) => {
+		typeSelectedList = e.target.checked
+			? [...typeSelectedList, item.name]
+			: typeSelectedList.filter((it) => it !== item.name);
+		search();
+	};
 </script>
 
-<div class="container">
-  <FaqItem>
-    <h2 slot="head">  <form action="">
-      <div class="input-group main-search-bar">
-        <input
-          type="search"
-          bind:value={searchKey}
-          class="form-control"
-          placeholder="Search here..."
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          on:input={search}
-        >
-        <button type="submit" class="input-group-text" id="basic-addon1" on:click={search}>
-          <img src="/img/Search.svg" />
-        </button>
-      </div>
-    </form>
-    </h2>
-    <div slot="details" class="faq-answer">
+<main class="w-full py-[27px] pl-[15px] pr-[15px] md:pl-[30px] md:pr-[30px]" id="main">
+	<div class="container-main">
+		<div class="grid grid-cols-[auto,50px] gap-[4px] rounded-[7px] overflow-hidden">
+			<div
+				class="w-full grid grid-cols-[auto,50px] items-center bg-white dark:bg-white5 rounded-[7px]"
+			>
+				<input
+					class="w-full h-full bg-transparent outline-none px-[23px] text-sm font-medium font-normal text-black dark:text-grayLight placeholder:text-grayDark4"
+					type="text"
+					bind:value={searchKey}
+					placeholder="Seach here..."
+					on:input={search}
+				/>
+				<div
+					class="opacity-80 hover:opacity-100 flex h-[calc(100%-20px)] justify-center items-center cursor-pointer border-l border-grayDark40"
+				>
+					<svg class="w-[20px] h-[20px]">
+						<use class="fill-grayDark" href="/src/assets/imgs/icons/icons.svg#search" />
+					</svg>
+				</div>
+			</div>
+			<div
+				on:click={handleFilter}
+				id="filterToggle"
+				class="opacity-80 hover:opacity-100  w-[50px] h-[50px] bg-white dark:bg-white5 rounded-[7px] flex items-center justify-center cursor-pointer"
+			>
+				<svg class="w-[20px] h-[20px]">
+					<use class="fill-grayDark" href="/src/assets/imgs/icons/icons.svg#filter"/>
+				</svg>
+			</div>
+			{#if filter}
+				<div
+					class="w-full px-[25px] py-[13px] bg-white dark:bg-white5 rounded-[7px] h-[500px] overflow-auto custom-scrollbar md:h-auto"
+					id="filter"
+				>
+					<h6 class="text-xl text-black dark:text-white50 font-medium border-b border-b-grayLight4 dark:border-b-white11 pb-[6px] mb-[22px]">
+						Filter
+					</h6>
+					{#each filterData as filter}
+						<div class="w-full flex flex-col gap-[12px] mb-[24px]">
+							<p class="text-sm text-black50 dark:text-white50 font-medium">{filter.title}</p>
+							<div class="w-full flex flex-wrap items-center gap-[6px]">
+								{#each filter.data as item}
+									<label class="cursor-pointer group">
+										<input
+											type="checkbox"
+											name={filter.title + '[]'}
+											class="peer sr-only"
+											on:click={(e) => {
+												if (filter.title == 'VendorList') selectVendor(e, item);
+												else selectType(e, item);
+											}}
+											checked={filter.title == 'VendorList'
+												? vendorSelectedList.includes(item.name)
+												: typeSelectedList.includes(item.name)}
+										/>
+										<div
+											class="flex px-[12px] py-[8px] bg-grayLight4 dark:bg-white5 text-black50 dark:text-white50 hover:text-grayLight dark:hover:text-white50 text-sm border border-grayLight2 dark:border-white11 rounded-[4px] hover:bg-linear
+                            peer-checked:bg-linear peer-checked:text-white peer-focus:scale-[0.99] peer-blur:scale-[2] transition-all"
+										>
+											{item.name}
+										</div>
+									</label>
+								{/each}
+							</div>
+						</div>
+					{/each}
+				</div>
+			{/if}
+		</div>
 
-      <p class="label">VendorList</p>
+		<div
+			class="select-none flex sm:flex-wrap items-center gap-[15px] mt-[30px] dragable overflow-auto scrollbar-hidden"
+		>
+			{#each casinoTabs as tab}
+				<div
+					on:click={() => handleCasinoFilter(tab.title)}
+					class={`${
+						currentTab.toLowerCase() === tab.title.toLowerCase() ? 'bg-linear active-p-white' : ''
+					} ${
+						tab.hide ? 'hidden sm:flex' : 'flex'
+					} group items-center gap-[8px] p-[12px] min-w-max bg-black5 dark:bg-white5 border border-black5 dark:border-white11 rounded-[7px] cursor-pointer hover:bg-linear`}
+				>
+					{#if tab.image}
+						<img class="w-[15px] mb-[3px]" src={tab.image} alt={tab.title} />
+					{/if}
+					<p
+						class="group-hover:text-white text-black dark:text-white text-xs sm:text-sm font-normal"
+					>
+						{tab.title}
+					</p>
+				</div>
+			{/each}
+		</div>
 
-      <div class="btn-group mt-2" style="display: flex; flex-wrap: wrap;">
-        {#each vendorList as item}
-        <div class="select">
-            <input type="checkbox" id={item.name} on:click={(e) => selectVendor(e, item)} checked={vendorSelectedList.includes(item.name)}>
-            <label class="btn btn-warning button_select" for={item.name}>{item.name}</label>
-        </div>
-        {/each}
-      </div>
+		<div class="grid grid-system-slots w-full gap-[20px] mt-[20px]">
+			{#each casinoSlotsArr as item}
+				<a
+					href="/play/{item.title.toLowerCase().replaceAll(' ', '-')}/{item.idx}"
+					class="border-b-4 border-b-transparent group flex flex-col bg-white dark:bg-white5 relative w-full rounded-[20px] overflow-hidden hover:border-b-blue transition-all"
+				>
+					<div class="relative rounded-[20px] overflow-hidden">
+						<img
+							class="w-full h-[150px] sm:h-[180px] object-cover transition05"
+							src={item.thumbnail}
+							alt={item.title}
+						/>
+						<div
+							class="group-hover:opacity-100 opacity-0 transition-all absolute left-0 top-0 w-full h-full bg-black81 flex items-center justify-center"
+						>
+							<div
+								class="flex flex-col gap-[12px] scale-[0.80] group-hover:scale-[1] transition-all"
+							>
+								<img src="/src/assets/imgs/play.svg" alt="play.svg" />
+							</div>
+						</div>
+					</div>
+					<div
+						class="w-full flex gap-[6px] items-center justify-between px-[13px] pt-[11px] pb-[16px]"
+					>
+						<p class="text-sm text-grayDark2 font-semibold">
+							{item.title}
+						</p>
+						<svg class="min-w-[20px] min-h-[20px] w-[20px] h-[20px]">
+							<use class="fill-transparent" href="/src/assets/imgs/icons/icons.svg#info" />
+						</svg>
+					</div>
+				</a>
+			{/each}
 
-      <p class="label">Type</p>
+			{#if !slotsLoaded}
+				<Skeleton cardCount={40} />
+			{/if}
 
-      <div class="btn-group mt-2" style="display: flex; flex-wrap: wrap;">
-        {#each typeList as item}
-        <div class="select">
-            <input type="checkbox" id={item.name} on:click={(e) => selectType(e, item)} checked={typeSelectedList.includes(item.name)}>
-            <label class="btn btn-warning button_select" for={item.name}>{item.name}</label>
-        </div>
-        {/each}
-      </div>
-  
-    </div>
-  </FaqItem>
+			{#if !loadedMore}
+				<Skeleton cardCount={40} />
+			{/if}
+		</div>
 
+		{#if slotsLoaded}
+			<div class="w-full justify-center flex flex-col items-center gap-[12px] mt-[32px]">
+				<p class="text-base font-medium text-black dark:text-white">{currentLimit} / {totalNumber}</p>
+				<button
+					class="p-[12px] bg-linear text-white rounded-[6px] border border-white11"
+					on:click={moreLoad}>Load more</button
+				>
+			</div>
+		{/if}
 
-  <div class="boxsecond boxforth">
-    <div class="minigames-btn">
-      <button class={`btn me-2 ${type == "" ? "active": ""}`}>All</button>
-      <button class="btn me-2">
-        Hot
-      </button>
-      <button class="btn me-2" on:click={() => {}}>
-        <img class="me-1" src="/img/icon_pokericon_poker.svg" /> Best Casino
-      </button>
-      <button class={`btn ${type == "slot" ? "active": ""}`}>
-        <img class="me-1" src="/img/icon_livtv-sportsve-sports.svg" /> Slot
-      </button>
-      <button class="btn">
-        <img class="me-1" src="/img/icon_livtv-sportsve-sports.svg" /> Blackjack
-      </button>
-      <button class="btn">
-        <img class="me-1" src="/img/icon_livtv-sportsve-sports.svg" /> Baccarat
-      </button>
-      <button class="btn">
-        <img class="me-1" src="/img/icon_livtv-sportsve-sports.svg" /> Roulette
-      </button>
-    </div>
-
-    <div class="owl-minigames row" style="row-gap: 20px;">
-      {#await load() then data}
-        {#each list as item}
-          <div class="casino-item col-lg-2 col-sm-3 col-6">
-            <div class="item text-white">
-              <div class="box">
-                <div class="relative">
-                  <img
-                    class="mainimg"
-                    src={item.thumbnail}
-                    alt={item.title}
-                    onerror="event.target.parentNode.parentNode.parentNode.style.display = 'none';"
-                  />
-                  <div class="hover overlay">
-                    <a
-                      href="/play/{item.title
-                        .toLowerCase()
-                        .replaceAll(' ', '-')}/{item.idx}"
-                    >
-                      <div class="flex flex-col gap-6">
-                        <img src="/img/play.svg" />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="content">
-                  <p>
-                    <a
-                      href="/play/{item.title
-                        .toLowerCase()
-                        .replaceAll(' ', '-')}/{item.idx}">{item.title}</a
-                    >
-                    <!-- <span class="float-end"><img src="/img/info-circle.svg"
-                  use:tooltip={{
-                    content: `<strong>${item.vendor}</strong> : <strong>${item.title}</strong>`,
-                    html: true
-                  }}
-                /></span> -->
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        {/each}
-      {/await}
-    </div>
-  </div> 
-
-  <div style="text-align: center">
-    <div style="color:white">{currentLimit} / {totalNumber}</div>
-    <button class="btn-play" on:click={moreLoad}>Load More</button>
-  </div>
-</div>
-
-<style>
-
-  .hover.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #0c0e1ba6;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.3s ease;
-  }
-
-  .relative {
-    position: relative;
-  }
-
-  .box:hover .hover.overlay {
-    opacity: 1;
-    transition: all 0.3s ease;
-  }
-
-  .flex{
-    display: flex;
-  } .flex-col {
-    flex-direction: column;
-  } .gap-6 {
-    gap: 6px;
-  }
-
-  
-  .btn-group .select {
-    position: relative;
-  }
-
-  .btn-group .select input:checked + label {
-    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.184245) 6.25%, rgba(0, 0, 0, 0) 79.34%), linear-gradient(112.14deg, #7e2cff 35.54%, #596bf7 90.78%);
-    color: #ffffff;
-  }
-
-  .btn-group .select input:checked + label:hover,
-  .btn-group .select input:checked + label:focus,
-  .btn-group .select input:checked + label:active {
-    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.184245) 6.25%, rgba(0, 0, 0, 0) 79.34%), linear-gradient(112.14deg, #7e2cff 35.54%, #596bf7 90.78%);
-    color: #ffffff;
-    /* background-color: #ffc107; */
-  }
-
-  .btn-group input {
-    opacity: 0;
-    position: absolute;
-  }
-
-  .btn-group .button_select {
-    margin: 0 10px 10px 0;
-    display: flex;
-    background-color: transparent;
-
-    border-radius: 7px;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #656e79;
-    padding: 12px 12px 10px 12px;
-    position: relative;
-    /* background: rgba(255, 255, 255, 0.04); */
-    backdrop-filter: blur(1.89394px);
-
-    
-  }
-
-  body.light-mode .btn-group .button_select {
-    background: #ECECF1;
-    color: #656E79;
-    border: solid 1px #dcdcdc;
-  }
-
-
-  body:not(.light-mode) .btn-group .button_select {
-    background: linear-gradient(152.93deg, rgba(255, 255, 255, 0.11) 16.71%, rgba(255, 255, 255, 0) 78.65%);
-  }
-
-  .btn-group .button_select:hover,
-  .btn-group .button_select:focus,
-  .btn-group .button_select:active {
-    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.184245) 6.25%, rgba(0, 0, 0, 0) 79.34%), linear-gradient(112.14deg, #7e2cff 35.54%, #596bf7 90.78%) !important;
-    color: #ffffff !important;
-  }
-
-  .option {
-    position: relative;
-  }
-
-  .option input {
-    opacity: 0;
-    position: absolute;
-  }
-
-  .option input:checked + span {
-    /* background-color: #ffc107; */
-    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.184245) 6.25%, rgba(0, 0, 0, 0) 79.34%), linear-gradient(112.14deg, #7e2cff 35.54%, #596bf7 90.78%);
-  }
-
-  .option input:checked + span:hover,
-  .option input:checked + span:focus,
-  .option input:checked + span:active {
-    /* background-color: #ffc107; */
-    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.184245) 6.25%, rgba(0, 0, 0, 0) 79.34%), linear-gradient(112.14deg, #7e2cff 35.54%, #596bf7 90.78%);
-  }
-
-  .option .btn-option {
-    margin: 0 10px 10px 0;
-    display: flex;
-    background-color: transparent;
-
-    border-radius: 7px;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #656e79;
-    padding: 12px 12px 10px 12px;
-    position: relative;
-    /* background: rgba(255, 255, 255, 0.04); */
-    backdrop-filter: blur(1.89394px);
-  }
-
-  .option .btn-option:hover,
-  .option .btn-option:focus,
-  .option .btn-option:active {
-    background-color: transparent;
-  }
-</style>
+		<Footer banner={false} />
+	</div>
+</main>

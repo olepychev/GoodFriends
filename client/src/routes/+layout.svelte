@@ -1,167 +1,123 @@
 <script>
-  import { onMount, beforeUpdate } from "svelte";
-  import { navigating } from '$app/stores';
+	import { onMount } from 'svelte';
+	import globalStore from '../store/globalStore';
 
-  import Header from "$lib/components/Header/Header.svelte";
-  import Sidebar from "$lib/components/Sidebar/Sidebar.svelte";
-  import Chat from "$lib/components/Chat.svelte";
-  import Footer from "$lib/components/Footer.svelte";
-  import globalStore from "../stores/globalStore";
+	import Sidebar from '$lib/components/sidebar/sidebar.svelte';
+	import Header from '$lib/components/header/header.svelte';
+	import Chat from '../lib/components/chat/chat.svelte';
 
-  import LoginModal from "../lib/modals/LoginModal.svelte";
-  import SignupModal from "../lib/modals/SignupModal.svelte";
-  import ForgotModal from "../lib/modals/ForgotModal.svelte";
-  import UserInformation from "../lib/modals/UserInformation.svelte";
-  import DepositModal from "../lib/modals/DepositModal.svelte";
+	import ScrollUp from '$lib/components/scrollUp/scroll-up.svelte';
 
-  import { page } from '$app/stores'
+	import Layout from '../lib/components/auth/layout.svelte';
+	import SignUp from '../lib/components/auth/sign-up.svelte';
+	import SignIn from '../lib/components/auth/sign-in.svelte';
+	import ForgotPassword from '../lib/components/auth/forgot-password.svelte';
+	import '../base.css';
+	import MainLoader from '../lib/components/loader/mainLoader.svelte';
+	import MobileNav from '../lib/components/mobile-nav/mobileNav.svelte';
 
-  $: path = $page.url.pathname;
+	$: isChatOpen = $globalStore.chatOpen;
+	$: userDetail = $globalStore.userDetail;
+	$: registrationForm = $globalStore.registrationForm;
+	$: loginForm = $globalStore.loginForm;
+	$: forgotPasswordForm = $globalStore.forgotPasswordForm;
+	$: darkMode = $globalStore.darkMode
 
-  export let showOnPx = 150;
+	let loaderMain = false;
+	function chatToggle(res) {
+		handleChat(res);
+	}
 
-  let hidden = true;
+	function chatClose(res) {
+		handleChat(res);
+	}
 
-  function goTop() {
-    document.body.scrollIntoView();
-  }
+	function openForgotPasswordForm() {
+		globalStore.toggleItem('registrationForm', false);
+		globalStore.toggleItem('loginForm', false);
 
-  function scrollContainer() {
-    return document.documentElement || document.body;
-  }
+		globalStore.toggleItem('forgotPasswordForm', true);
 
-  function handleOnScroll() {
-    if (!scrollContainer()) {
-      return;
-    }
+		document.body.style.overflow = 'hidden';
+	}
+	function closeForm() {
+		globalStore.toggleItem('registrationForm', false);
+		globalStore.toggleItem('loginForm', false);
+		globalStore.toggleItem('forgotPasswordForm', false);
+		globalStore.toggleItem('registrationStep', 1);
+		globalStore.toggleItem('forgotPasswordStep', 1);
 
-    if (scrollContainer().scrollTop > showOnPx) {
-      hidden = false;
-    } else {
-      hidden = true;
-    }
-  }
-  
-  
+		document.body.style.overflow = 'auto';
+	}
 
-  onMount(() => {
-    /*
-    if(screenSize > 1600) {
-      window.document.body.classList.add('chat-open')
-    }*/
+	function openSignUpForm() {
+		globalStore.toggleItem('loginForm', false);
+		globalStore.toggleItem('forgotPasswordForm', false);
+		globalStore.toggleItem('registrationForm', true);
 
-    /*
-    if(screenSize > 1299 )   {
-      window.document.body.classList.add('sidebar-wide')
-    }*/
+		document.body.style.overflow = 'hidden';
+	}
+	function openSignInForm() {
+		globalStore.toggleItem('registrationForm', false);
+		globalStore.toggleItem('forgotPasswordForm', false);
+		globalStore.toggleItem('loginForm', true);
 
-    if(screenSize > 649 && screenSize < 1300)   {
-      window.document.body.classList.add('sidebar-tight')
-    } else if(screenSize >= 1300) {
-      window.document.body.classList.add('sidebar-wide')
-    } else if(screenSize < 650) {
-      window.document.body.classList.add('sidebar-tight')
-    }
+		document.body.style.overflow = 'auto';
+	}
 
-    if(screenSize < 1601 ) {
-      // window.document.body.classList.add('chat-closed')
-      window.document.body.classList.add('chat-opened')
-    } else {
-      window.document.body.classList.add('chat-opened')
-    }
-
-
-
-  });
-
-	beforeUpdate(() => {
-    /*
-    if(screenSize > 1600) {
-      window.document.body.classList.add('chat-open')
-    }*/
-
-
-  });
-
-
-	let screenSize;
-	let device_width;
-
-  $: {
-
-    if(screenSize < 650) {
-      device_width='dw1';
-
-    } else {
-      device_width='dw2';
-    }
-  }
-
-
-  $: if($navigating) { 
-    if(device_width=='dw1') {
-      myFunction();
-
-    }
-
-  }  
-
-  function myFunction() {
-    window.document.body.classList.remove('sidebar-wide')
-    window.document.body.classList.add('sidebar-tight')
-
-  }
-
+	onMount(() => {
+		if(darkMode) {
+			document.documentElement.classList.add('dark')
+		}else {
+			document.documentElement.classList.remove('dark')
+		}
+		loaderMain = true
+		isChatOpen
+			? document.body.classList.add('chat-active')
+			: document.body.classList.remove('chat-active');
+	});
 </script>
-<svelte:window on:scroll={handleOnScroll}  bind:innerWidth={screenSize}/>
-<div class="{device_width}" class:right-chat="{!$globalStore.chatOpen}">
-  <Header/>
-  <Sidebar pageSidebar={path} />
-  <Chat/>
-  <LoginModal/>
-  <SignupModal/>
-  <ForgotModal/>
-  <UserInformation/>
-  <DepositModal/>
 
-  <div class="body-part {path}" class:affiliate={path === '/affiliate'} class:provably-fair={path.includes("/help-center", 0)}>
+{#if !loaderMain}
+	<MainLoader />
+{/if}
+<Header on:chatToggle={chatToggle} />
+<Sidebar />
+{#if userDetail}
+	{#if isChatOpen}
+		<div>
+			<Chat on:chatClose={chatClose} />
+		</div>
+	{:else}
+		<div class="translate-x-[-2000px] opacity-0 transition-all">
+			<Chat on:chatClose={chatClose} />
+		</div>{/if}
+{/if}
 
-    <slot></slot>
+{#if registrationForm}
+	<Layout on:closeForm={closeForm}>
+		<SignUp on:openSignIn={openSignInForm} on:closeForm={closeForm} />
+	</Layout>
+{/if}
 
-    <Footer/>
+{#if loginForm}
+	<Layout on:closeForm={closeForm}>
+		<SignIn
+			on:openForgotPasswordForm={openForgotPasswordForm}
+			on:openSignUp={openSignUpForm}
+			on:closeForm={closeForm}
+		/>
+	</Layout>
+{/if}
 
-    <div  class="back-to-top" on:click={goTop} class:hidden>
-        <img src="/img/page-up.svg" />                
-    </div>    
-  </div>
-</div>
-        
+{#if forgotPasswordForm}
+	<Layout on:closeForm={closeForm}>
+		<ForgotPassword on:openSignIn={openSignInForm} on:closeForm={closeForm} />
+	</Layout>
+{/if}
 
-<style>
-    .back-to-top {
-      opacity: 1;
-      transition: opacity 0.5s, visibility 0.5s;
-      position: fixed;
-      z-index: 99999;
-      right: 300px;
-      user-select: none;
-      bottom: 75px;
-      cursor:pointer;
+<ScrollUp />
 
-    }
-  
-    .back-to-top.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
+<slot />
 
-    .back-to-top img {
-      max-width: 50px;
-
-    }  
-    @media only screen and (max-width:649px) {
-      .back-to-top {
-        bottom: 75px;
-      } 
-    }
-</style>
+<MobileNav />

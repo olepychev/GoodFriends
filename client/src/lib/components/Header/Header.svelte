@@ -1,70 +1,161 @@
 <script>
-  import BetSlip from "$lib/components/BetSlip/BetSlip.svelte";
-  import globalStore from "../../../stores/globalStore";
-  import { page } from "$app/stores";
-  import LoginHeader from "./HeaderLogin.svelte";
-  import LoggedinHeader from "./HeaderLoggedin.svelte";
-  import AccountModal from "../../modals/AccountModal.svelte";
+	import globalStore from '../../../store/globalStore';
+	import LoggedinHeader from './headerLoggedin.svelte';
+	import LoginHeader from './headerlogin.svelte';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import toast from '../../../lib/components/toast/toast';
+	import { getAccessToken, getRefreshToken } from '../../../apis/account';
+	import ProfileMenu from '$lib/components/menus/profile/profileMenu.svelte';
+	import DepositModal from '../modals/deposit/deposit.svelte';
+	import MyProfile from '../modals/profile/myProfile.svelte';
+	import EditMyProfile from '../modals/profile/editMyProfile.svelte';
+	import BetSlip from '../betSlip/betSlip.svelte';
 
-  $: isLoggedIn = $globalStore.userDetail;
-  $: path = $page.url.pathname;
+	$: path = $page.url.pathname;
+	$: isLoggedIn = $globalStore.userDetail;
 
+	onMount(async () => {
+		// handleTokens();
+	});
+
+	async function handleTokens() {
+		const res = await getAccessToken();
+		if (res.success) {
+			globalStore.toggleItem('userDetail', res.data);
+		} else if (res.data.code == 4001) {
+			const res1 = await getRefreshToken();
+			if (res1.success) {
+				const res2 = await getAccessToken();
+				if (res2.success) globalStore.toggleItem('userDetail', res2.data);
+			} else {
+				globalStore.toggleItem('userDetail', null);
+			}
+		} else {
+			globalStore.toggleItem('userDetail', null);
+			toast.error('Bad Network Connection');
+		}
+	}
+
+	let activeProfileMenu = false;
+	function openProfileMenu() {
+		activeProfileMenu = true;
+	}
+	function closeProfileMenu() {
+		activeProfileMenu = false;
+	}
+
+	let activeDepositModal = false;
+	function openDepositModal() {
+		activeProfileMenu = false;
+		activeDepositModal = true;
+		document.body.style.overflow = 'hidden';
+	}
+	let activeMyProfileModal = false;
+	let editMyProfileModal = false;
+	function openMyProfileModal() {
+		activeProfileMenu = false;
+		activeMyProfileModal = true;
+		document.body.style.overflow = 'hidden';
+	}
+	function editMyProfile() {
+		editMyProfileModal = true;
+	}
+	function previousMyProfile() {
+		editMyProfileModal = false;
+	}
+	$: activeBetSlip = $globalStore.betSlip
+	function openBetSlip() {
+		globalStore.toggleItem('betSlip', true);
+	}
+	function closeBetSlip() {
+		globalStore.toggleItem('betSlip', false);
+	}
+	function closeProfileModal() {
+		activeDepositModal = false;
+		activeMyProfileModal = false;
+		document.body.style.overflow = 'auto';
+	}
 </script>
 
-<div class="topbar bg-color">
-  <div class="row">
-    <div class="telegram-login-widget"></div>
-    <div class="col-md-5 col-2 align-self-center">
-      <div class="main-menu">
-        <ul>
-          <li
-            class="main-menu-item menu-item-casino gf-border-right-active"
-            class:active={path === "/casino"}
-          >
-            <a href="/casino">
-              <svg class="active-menu-icon"
-                ><use href="/img/symbols.svg?lang.svg#icon_Casino" /></svg
-              >
+<header
+	id="header"
+	class="overflow-hidden sticky top-0 w-full px-[15px] sm:px-[30px] py-[17px] bg-white dark:bg-blackDark z-[999]"
+>
+	<div class="w-full flex items-center justify-between">
+		<div class="hidden md:flex items-center gap-[15px]">
+			<a
+				href="/casino"
+				class={`${
+					path === '/casino' ? 'active' : ''
+				} group header-filter px-[18px] py-[13px] border-[1.14px] hover:bg-grayLight4 dark:hover:bg-white5 border-transparent rounded-[7px] transition-all hover:border-grayLight2 dark:hover:border-white11 flex items-center gap-[9px] cursor-pointer`}
+			>
+				<div class="header_icon-light hidden group-hover:block">
+					<img class="w-[24px]" src="/src/assets/imgs/casinoR.svg"/>
+				</div>
+				<div class="header_icon-dark block group-hover:hidden">
+					<img class="dark:hidden flex w-[24px]" src="/src/assets/imgs/casinoLight.svg"/>
+					<img class="dark:flex hidden w-[24px]" src="/src/assets/imgs/casinoDark.svg"/>
+				</div>
 
-              <svg
-                ><use href="/img/symbols.svg?lang.svg#icon_Casino_Dark" /></svg
-              >
+				<p class="text-grayLight3 dark:text-gray font-semibold text-sm group-hover:text-black dark:group-hover:text-white">Casino</p>
+			</a>
 
-              <span>Casino</span>
-            </a>
-          </li>
-          <li
-            class="main-menu-item menu-item-sports gf-border-right-active"
-            class:active={path === "/sports"}
-          >
-            <a href="/sports">
-              <svg class="active-menu-icon"
-                ><use href="/img/symbols.svg?lang.svg#icon_Sports" /></svg
-              >
+			<a
+				href="/sports"
+				class={`${
+					path === '/sports' ? 'active' : ''
+				} group header-filter px-[18px] py-[13px] border-[1.14px] hover:bg-grayLight4 dark:hover:bg-white5 border-transparent rounded-[7px] transition-all hover:border-grayLight2 dark:hover:border-white11 flex items-center gap-[9px] cursor-pointer`}
+			>
+				<div class="header_icon-light hidden group-hover:block">
+					<img class="w-[24px]" src="/src/assets/imgs/sportsR.svg"/>
+				</div>
+				<div class="header_icon-dark block group-hover:hidden">
+					<img class="dark:hidden flex w-[24px]" src="/src/assets/imgs/sportsLight.svg"/>
+					<img class="dark:flex hidden w-[24px]" src="/src/assets/imgs/sportsDark.svg"/>
+				</div>
 
-              <svg
-                ><use href="/img/symbols.svg?lang.svg#icon_Sports_Dark" /></svg
-              >
+				<p class="text-grayLight3 dark:text-gray font-semibold text-sm group-hover:text-black dark:group-hover:text-white">Sports</p>
+			</a>
+		</div>
+		<a href="/" class="flex md:hidden w-full max-w-[42px]">
+			<img class="w-full" src="/src/assets/imgs/logo.svg" alt="">
+		</a>
 
-              <span>Sports</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+		{#if isLoggedIn}
+			<LoggedinHeader on:openBetSlip={openBetSlip} on:openProfileMenu={openProfileMenu} />
+		{:else}
+			<LoginHeader />
+		{/if}
+		<img
+			src="/src/assets/imgs/headerElipse.svg"
+			class="hidden dark:flex h-[125px] object-cover sm:object-inherit sm:h-auto absolute z-[-1] right-0 bottom-[2px]"
+			alt=""
+		/>
+	</div>
+</header>
 
-      <a href="/"><img class="mlogo" src="/img/Union.svg" /></a>
-    </div>
+{#if activeProfileMenu}
+	<ProfileMenu
+		on:closeProfileMenu={closeProfileMenu}
+		on:openDepositModal={openDepositModal}
+		on:openMyProfileModal={openMyProfileModal}
+	/>
+{/if}
+{#if activeDepositModal}
+	<DepositModal on:closeProfileModal={closeProfileModal} />
+{/if}
 
-    {#if isLoggedIn}
-      <LoggedinHeader />
-    {:else}
-      <LoginHeader />
-    {/if}
-  </div>
+{#if activeMyProfileModal && !editMyProfileModal}
+	<MyProfile on:closeProfileModal={closeProfileModal} on:editMyProfile={editMyProfile} />
+{:else if activeMyProfileModal && editMyProfileModal}
+	<EditMyProfile
+		step={true}
+		on:stepBack={previousMyProfile}
+		on:closeProfileModal={closeProfileModal}
+	/>
+{/if}
 
-  {#if $globalStore.userDetail}
-    <AccountModal/>
-  {/if}
-</div>
-
-<BetSlip />
+{#if activeBetSlip}
+	<BetSlip on:closeBetSlip={closeBetSlip}/>
+{/if}
