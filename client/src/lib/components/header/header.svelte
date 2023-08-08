@@ -18,7 +18,7 @@
 	onMount(async () => {
 		handleTokens();
 		if ($globalStore.telegramUserData) {
-			const userInfo = JSON.stringify($globalStore.telegramUserData);
+			const userInfo = $globalStore.telegramUserData;
 			signInWithTelegram(userInfo)
 		}
 	});
