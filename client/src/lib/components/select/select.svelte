@@ -33,7 +33,7 @@
 	</div>
 	<div slot="chevron-icon">
 		<svg class="w-[20px] h-[20px]">
-			<use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#chevron-down" />
+			<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#chevron-down" />
 		</svg>
 	</div>
 	<div slot="list" let:filteredItems class="bg-grayLight4 dark:bg-blackLight">

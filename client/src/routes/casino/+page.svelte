@@ -21,23 +21,23 @@
 		},
 		{
 			title: 'Best Casino',
-			image: '/src/assets/imgs/live-sports/ball.svg'
+			image: '/imgs/live-sports/ball.svg'
 		},
 		{
 			title: 'Slot',
-			image: '/src/assets/imgs/live-sports/headphone.svg'
+			image: '/imgs/live-sports/headphone.svg'
 		},
 		{
 			title: 'Blackjack',
-			image: '/src/assets/imgs/live-sports/tennis-ball.svg'
+			image: '/imgs/live-sports/tennis-ball.svg'
 		},
 		{
 			title: 'Baccarat',
-			image: '/src/assets/imgs/live-sports/basket-ball.svg'
+			image: '/imgs/live-sports/basket-ball.svg'
 		},
 		{
 			title: 'Roulette',
-			image: '/src/assets/imgs/live-sports/rugby-ball.svg'
+			image: '/imgs/live-sports/rugby-ball.svg'
 		}
 	];
 
@@ -179,7 +179,7 @@
 					class="opacity-80 hover:opacity-100 flex h-[calc(100%-20px)] justify-center items-center cursor-pointer border-l border-grayDark40"
 				>
 					<svg class="w-[20px] h-[20px]">
-						<use class="fill-grayDark" href="/src/assets/imgs/icons/icons.svg#search" />
+						<use class="fill-grayDark" href="/imgs/icons/icons.svg#search" />
 					</svg>
 				</div>
 			</div>
@@ -189,7 +189,7 @@
 				class="opacity-80 hover:opacity-100  w-[50px] h-[50px] bg-white dark:bg-white5 rounded-[7px] flex items-center justify-center cursor-pointer"
 			>
 				<svg class="w-[20px] h-[20px]">
-					<use class="fill-grayDark" href="/src/assets/imgs/icons/icons.svg#filter"/>
+					<use class="fill-grayDark" href="/imgs/icons/icons.svg#filter"/>
 				</svg>
 			</div>
 			{#if filter}
@@ -275,7 +275,7 @@
 							<div
 								class="flex flex-col gap-[12px] scale-[0.80] group-hover:scale-[1] transition-all"
 							>
-								<img src="/src/assets/imgs/play.svg" alt="play.svg" />
+								<img src="/imgs/play.svg" alt="play.svg" />
 							</div>
 						</div>
 					</div>
@@ -286,7 +286,7 @@
 							{item.title}
 						</p>
 						<svg class="min-w-[20px] min-h-[20px] w-[20px] h-[20px]">
-							<use class="fill-transparent" href="/src/assets/imgs/icons/icons.svg#info" />
+							<use class="fill-transparent" href="/imgs/icons/icons.svg#info" />
 						</svg>
 					</div>
 				</a>

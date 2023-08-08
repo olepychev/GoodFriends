@@ -14,7 +14,7 @@
             <h6 class="text-mxl gradient-text-white2 main font-semibold">Global Settings</h6>
         	<a href="/" class="flex items-center opacity-70 hover:opacity-100 bg-white dark:bg-white5 px-[25px] py-[12px] rounded-[7px]">
                 <svg class="w-[20px] h-[20px]">
-                    <use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
+                    <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#chevron-left"/>
                 </svg>
 				<p class="text-sm font-medium capitalize text-black dark:text-white">Back</p>
 			</a>

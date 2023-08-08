@@ -20,7 +20,7 @@
 			
             <div class="mt-[20px] flex items-center justify-center w-[154px] h-[154px] rounded-full bg-linear3">
                 <div class="w-[138px] h-[138px] rounded-full">
-                    <img src="/src/assets/imgs/profile.svg" class="w-full h-full object-cover" alt="profile">
+                    <img src="/imgs/profile.svg" class="w-full h-full object-cover" alt="profile">
                 </div>
             </div>
 		</div>
@@ -33,7 +33,7 @@
                 <input checked type="radio" name="defaultImage" class="peer sr-only">
                 <div class="w-[78px] h-[78px] border-[2px] rounded-full border-transparent peer-checked:border-blue flex items-center justify-center transitin-al">
                     <div class="w-[69px] h-[69px] rounded-full">
-                        <img class="w-[69px]" src="/src/assets/imgs/profile.svg" alt="profile">
+                        <img class="w-[69px]" src="/imgs/profile.svg" alt="profile">
                     </div>
                 </div>
             </label>
@@ -41,7 +41,7 @@
                 <input type="radio" name="defaultImage" class="peer sr-only">
                 <div class="w-[78px] h-[78px] border-[2px] rounded-full border-transparent peer-checked:border-blue flex items-center justify-center transitin-al">
                     <div class="w-[69px] h-[69px] rounded-full">
-                        <img class="w-[69px]" src="/src/assets/imgs/profile2.svg" alt="profile">
+                        <img class="w-[69px]" src="/imgs/profile2.svg" alt="profile">
                     </div>
                 </div>
             </label>
@@ -49,7 +49,7 @@
                 <input type="radio" name="defaultImage" class="peer sr-only">
                 <div class="w-[78px] h-[78px] border-[2px] rounded-full border-transparent peer-checked:border-blue flex items-center justify-center transitin-al">
                     <div class="w-[69px] h-[69px] rounded-full">
-                        <img class="w-[69px]" src="/src/assets/imgs/profile3.svg" alt="profile">
+                        <img class="w-[69px]" src="/imgs/profile3.svg" alt="profile">
                     </div>
                 </div>
             </label>
@@ -57,7 +57,7 @@
                 <input type="radio" name="defaultImage" class="sr-only peer">
                 <div class="w-[78px] h-[78px] border-[2px] rounded-full border-transparent peer-checked:border-blue flex items-center justify-center transitin-al">
                     <div class="w-[69px] h-[69px] rounded-full">
-                        <img class="w-[69px]" src="/src/assets/imgs/profile4.svg" alt="profile">
+                        <img class="w-[69px]" src="/imgs/profile4.svg" alt="profile">
                     </div>
                 </div>
             </label>

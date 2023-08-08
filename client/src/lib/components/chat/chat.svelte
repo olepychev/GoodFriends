@@ -151,13 +151,13 @@
 					<!-- Chat Item -->
 					<div class="flex items-start gap-[10px]">
 						<div class="min-w-[30px] min-h-[30px] rounded-[10px] overflow-hidden">
-							<img class="w-full" src="/src/assets/imgs/friend.svg" alt="friend's Profile Image" />
+							<img class="w-full" src="/imgs/friend.svg" alt="friend's Profile Image" />
 						</div>
 						<div class="flex w-full md:w-auto flex-col gap-[13px]">
 							<div class="w-full flex items-center justify-between">
 								<div class="flex items-center gap-[5px]">
 									<p class="text-msm text-black dark:text-white font-normal">Ellis Schneider</p>
-									<img src="/src/assets/imgs/award1.svg" alt="" />
+									<img src="/imgs/award1.svg" alt="" />
 								</div>
 								<p class="text-gray text-msm font-normal">12:03</p>
 							</div>

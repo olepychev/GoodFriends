@@ -10,7 +10,7 @@ export default defineConfig({
 	},
 	// resolve: {
 	// 	alias: {
-	// 	  'imgs': fileURLToPath(new URL('./src/assets/imgs', import.meta.url))
+	// 	  'imgs': fileURLToPath(new URL('./imgs', import.meta.url))
 	// 	}
 	//   }
 });

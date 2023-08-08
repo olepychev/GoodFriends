@@ -12,42 +12,42 @@
 	const bestSlotSliderArr = [
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot1.svg',
+			image: '/imgs/slot1.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot2.svg',
+			image: '/imgs/slot2.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot3.svg',
+			image: '/imgs/slot3.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot4.svg',
+			image: '/imgs/slot4.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot5.svg',
+			image: '/imgs/slot5.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot1.svg',
+			image: '/imgs/slot1.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot3.svg',
+			image: '/imgs/slot3.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/src/assets/imgs/slot4.svg',
+			image: '/imgs/slot4.svg',
 			link: '/'
 		}
 	];
@@ -73,7 +73,7 @@
 				on:click={bestSlotSliderPrev}
 			>
 				<svg class="w-[24px] h-[24px]">
-					<use class="dark:fill-white fill-black" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
+					<use class="dark:fill-white fill-black" href="/imgs/icons/icons.svg#chevron-left"/>
 				</svg>
 			</button>
 			<button
@@ -82,7 +82,7 @@
 				on:click={bestSlotSliderNext}
 			>
 				<svg class="w-[24px] h-[24px] rotate-[180deg]">
-					<use class="dark:fill-white fill-black" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
+					<use class="dark:fill-white fill-black" href="/imgs/icons/icons.svg#chevron-left"/>
 				</svg>
 			</button>
 		</div>
@@ -136,7 +136,7 @@
 							{categoryItem.title}
 						</p>
 						<svg class="min-w-[20px] min-h-[20px] w-[20px] h-[20px]">
-							<use class="fill-transparent" href="/src/assets/imgs/icons/icons.svg#info" />
+							<use class="fill-transparent" href="/imgs/icons/icons.svg#info" />
 						</svg>
 					</div>
 				</a>
