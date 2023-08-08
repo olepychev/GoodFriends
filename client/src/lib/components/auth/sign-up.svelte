@@ -1,10 +1,14 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import { onMount } from 'svelte';
 	import toast from '../../../lib/components/toast/toast';
 	import globalStore from '../../../store/globalStore';
-	import { signUp, signUpEmail } from '../../../apis/account';
+	import { signUp, signUpEmail, getAccessToken, getRefreshToken, signupSocial } from '../../../apis/account';
 
 	const dispatch = createEventDispatcher();
+	const BOT_NAME = import.meta.env.VITE_TELEGRAM_BOT_NAME;
+  const REDIRECT_URL = import.meta.env.VITE_TELEGRAM_REDIRECT_URL;
+
 	let signUpUserData = {
     email: "",
     authCode: "",
@@ -13,6 +17,19 @@
   };
 
 	$: registrationStep = $globalStore.registrationStep;
+
+	onMount(async () => {
+		handleTelegram();
+	});
+
+	function handleTelegram() {
+    const script = document.createElement('script');
+    script.src = 'https://telegram.org/js/telegram-widget.js?14';
+    script.setAttribute('data-telegram-login', BOT_NAME);
+    script.setAttribute('data-size', 'large');
+    script.setAttribute('data-auth-url', REDIRECT_URL);
+    document.getElementById('telegram-login').appendChild(script);
+  }
 
 	function openSignIn() {
 		dispatch('openSignIn')
@@ -43,6 +60,91 @@
       } else toast.error(res.data.message);
     } else {
       dispatch('closeForm');
+    }
+  }
+
+	async function handleTokens() {
+    const res = await getAccessToken();
+    if (res.success) {
+      globalStore.toggleItem("userDetail", res.data);
+    } else if (res.data.code == 4001) {
+      const res1 = await getRefreshToken();
+      if (res1.success) {
+        const res2 = await getAccessToken();
+        if (res2.success) globalStore.toggleItem("userDetail", res2.data);
+      } else {
+        globalStore.toggleItem("userDetail", null);
+      }
+    } else {
+      globalStore.toggleItem("userDetail", null);
+      toast.error("Bad Network Connection");
+    }
+  }
+
+	async function signInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await provider.addScope("email");
+    const data = await firebase.auth().signInWithPopup(provider);
+    const userInfo = data.additionalUserInfo.profile;
+    const res = await signupSocial({
+      email: 'g_' + userInfo.id,
+      password: userInfo.id,
+      loginType: 'google'
+    })
+    try {
+      const res1 = await signIn({
+        email: 'g_' + userInfo.id,
+        password: userInfo.id,
+      });
+
+      if (res1.success) {
+        toast.success(res1.data.message);
+        globalStore.toggleItem("loginForm", false);
+        handleTokens();
+      } else {
+        toast.error(res1.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+	async function signInWithFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    await provider.addScope("email");
+    const data = await firebase.auth().signInWithPopup(provider);
+    const userInfo = data.additionalUserInfo.profile;
+    const res = await signupSocial({
+      email: 'f_' + userInfo.id,
+      password: userInfo.id,
+      loginType: 'facebook'
+    })
+    try {
+      const res1 = await signIn({
+        email: 'f_' + userInfo.id,
+        password: userInfo.id,
+      });
+
+      if (res1.success) {
+        toast.success(res1.data.message);
+        globalStore.toggleItem("loginForm", false);
+        handleTokens();
+      } else {
+        toast.error(res1.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function signInWithApple() {
+    const provider = new OAuthProvider('apple.com');
+    try {
+      const data = await firebase.auth().signInWithPopup(provider);
+      // console.log(data.additionalUserInfo.profile);
+      // User signed in successfully
+    } catch (error) {
+      console.error(error);
     }
   }
 </script>
@@ -140,7 +242,7 @@
 	Or Continue With
 </div>
 <div class="flex w-full items-center justify-center gap-[20px] mt-[30px]">
-	<a href="/" class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
+	<button on:click="{signInWithGoogle}" class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
 		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<g clip-path="url(#clip0_709_27938)">
 				<path
@@ -156,8 +258,8 @@
 				</clipPath>
 			</defs>
 		</svg>
-	</a>
-	<a href="/" class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
+	</button>
+	<button  class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
 		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<g clip-path="url(#clip0_709_27941)">
 				<path
@@ -171,25 +273,29 @@
 				</clipPath>
 			</defs>
 		</svg>
-	</a>
-	<a href="/" class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
+	</button>
+	<button on:click="{signInWithFacebook}" class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
 		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M5.98142 15.922H9.15428V7.88741H11.3689L11.6101 5.2007H9.15428V3.67184C9.15428 3.03215 9.27484 2.78906 9.88403 2.78906H11.6101V0H9.40176C7.03481 0 5.96873 1.0491 5.96873 3.05773V5.2071H4.3125V7.92579H5.96873L5.98142 15.922Z"
 				fill="white"
 			/>
 		</svg>
-	</a>
-	<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
-		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<g clip-path="url(#clip0_2708_75443)">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M13.1851 2.95334C13.3498 2.884 13.5302 2.86009 13.7073 2.88409C13.8844 2.90808 14.0519 2.97912 14.1922 3.0898C14.3326 3.20048 14.4407 3.34675 14.5053 3.5134C14.57 3.68004 14.5888 3.86097 14.5598 4.03734L13.0478 13.2087C12.9011 14.0933 11.9304 14.6007 11.1191 14.16C10.4404 13.7913 9.43242 13.2233 8.52575 12.6307C8.07242 12.334 6.68375 11.384 6.85442 10.708C7.00109 10.13 9.33442 7.95801 10.6678 6.66667C11.1911 6.15934 10.9524 5.86667 10.3344 6.33334C8.79909 7.49201 6.33575 9.25401 5.52109 9.75001C4.80242 10.1873 4.42775 10.262 3.97975 10.1873C3.16242 10.0513 2.40442 9.84067 1.78575 9.58401C0.949753 9.23734 0.99042 8.08801 1.78509 7.75334L13.1851 2.95334Z" fill="white"/>
-			</g>
-			<defs>
-			<clipPath id="clip0_2708_75443">
-			<rect width="16" height="16" fill="white"/>
-			</clipPath>
-			</defs>
-		</svg>			
 	</button>
+	<div class="relative cursor-pointer">
+		<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
+			<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g clip-path="url(#clip0_2708_75443)">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M13.1851 2.95334C13.3498 2.884 13.5302 2.86009 13.7073 2.88409C13.8844 2.90808 14.0519 2.97912 14.1922 3.0898C14.3326 3.20048 14.4407 3.34675 14.5053 3.5134C14.57 3.68004 14.5888 3.86097 14.5598 4.03734L13.0478 13.2087C12.9011 14.0933 11.9304 14.6007 11.1191 14.16C10.4404 13.7913 9.43242 13.2233 8.52575 12.6307C8.07242 12.334 6.68375 11.384 6.85442 10.708C7.00109 10.13 9.33442 7.95801 10.6678 6.66667C11.1911 6.15934 10.9524 5.86667 10.3344 6.33334C8.79909 7.49201 6.33575 9.25401 5.52109 9.75001C4.80242 10.1873 4.42775 10.262 3.97975 10.1873C3.16242 10.0513 2.40442 9.84067 1.78575 9.58401C0.949753 9.23734 0.99042 8.08801 1.78509 7.75334L13.1851 2.95334Z" fill="white"/>
+				</g>
+				<defs>
+				<clipPath id="clip0_2708_75443">
+				<rect width="16" height="16" fill="white"/>
+				</clipPath>
+				</defs>
+			</svg>			
+		</button>
+
+		<div id="telegram-login" class="w-[42px] h-[42px] absolute top-0 opacity-0"></div>
+	</div>
 </div>
