@@ -1,7 +1,7 @@
 <script>
   import { goto } from "$app/navigation";
   import { browser } from "$app/environment";
-  import globalStore from "./../../stores/globalStore.js";
+  import globalStore from "../../store/globalStore";
 
   /** @type {import('./$types').PageData} */
   export let data;
