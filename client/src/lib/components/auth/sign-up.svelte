@@ -16,7 +16,7 @@
     password: "",
   };
 
-	$: registrationStep = $globalStore.registrationStep;
+	$: registrationOpen = $globalStore.registrationOpen;
 
 	onMount(async () => {
 		handleTelegram();
@@ -37,7 +37,7 @@
 
 	async function handleSignUp(event) {
     event.preventDefault();
-    if ($globalStore.registrationStep == 1) {
+    if ($globalStore.registrationOpen == 1) {
       document.getElementById('submit_send').disabled = true
       const res = await signUpEmail({
         email: signUpUserData.email,
@@ -45,9 +45,9 @@
       document.getElementById('submit_send').disabled = false
       if (res.success) {
         toast.success("Sent a verification code to your email.");
-        globalStore.toggleItem("registrationStep", 2);
+        globalStore.toggleItem("registrationOpen", 2);
       } else toast.error(res.data.message);
-    } else if ($globalStore.registrationStep == 2) {
+    } else if ($globalStore.registrationOpen == 2) {
       const res = await signUp({
         email: signUpUserData.email,
         authCode: signUpUserData.authCode,
@@ -56,10 +56,10 @@
       });
       if (res.success) {
         toast.success(res.data.message);
-        globalStore.toggleItem("registrationStep", 3);
+        globalStore.toggleItem("registrationOpen", 3);
       } else toast.error(res.data.message);
     } else {
-      dispatch('closeForm');
+      globalStore.toggleItem("registrationOpen", 0);
     }
   }
 
@@ -99,7 +99,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginForm", false);
+        globalStore.toggleItem("loginOpen", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -127,7 +127,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginForm", false);
+        globalStore.toggleItem("loginOpen", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -153,7 +153,7 @@
 <form on:submit={handleSignUp} class="w-full">
 	<!-- First Step -->
 	<div class="flex flex-col w-full gap-[15px]">
-		{#if registrationStep === 1}
+		{#if registrationOpen === 1}
 			<div class="flex flex-col gap-[9px]">
 				<label class="text-msm text-white font-medium" for="email">Email address</label>
 				<div class="w-full flex">
@@ -166,7 +166,7 @@
 					/>
 				</div>
 			</div>
-		{:else if registrationStep == 2}
+		{:else if registrationOpen == 2}
 		<div class="flex flex-col gap-[9px]">
 			<label class="text-msm text-white font-medium" for="authCode">5 Verification Code</label>
 			<div class="w-full flex">
@@ -204,10 +204,13 @@
 				/>
 			</div>
 		</div>
-		{:else if registrationStep == 3 }
+		{:else if registrationOpen == 3 }
 		<div class="flex items-center justify-between mt-[15px] gap-[4px]">
 			<p class="text-msm text-grayDark3 font-medium">
-				Successfully SignUp! <a href="/" on:click={openSignIn} class="gradient-text font-bold"
+				Successfully SignUp! <a href="/" on:click={ () => {
+					globalStore.toggleItem("loginOpen", true);
+					globalStore.toggleItem("registrationOpen", false);
+				}} class="gradient-text font-bold"
 					>Sign In</a>
 			</p>
 		</div>
@@ -217,14 +220,14 @@
 				type="submit"
 				class="w-full bg-linear p-[13px] rounded-[7px] text-sm font-semibold text-white opacity-90 hover:opacity-100 transition-all"
 			>
-				{$globalStore.registrationStep == 1
+				{$globalStore.registrationOpen == 1
 				? "Send"
-				: $globalStore.registrationStep == 2
+				: $globalStore.registrationOpen == 2
 				? "Verify"
 				: "Submit"}
 			</button>
 		</div>
-		{#if $globalStore.registrationStep == 1}
+		{#if $globalStore.registrationOpen == 1}
 		<div class="flex items-center justify-center mt-[15px] gap-[4px]">
 			<p class="text-msm text-grayDark3 font-medium">
 				Already have an account? <a href="#" on:click={openSignIn} class="gradient-text font-bold">Sign In</a>

@@ -2,7 +2,8 @@
 	import { createEventDispatcher } from 'svelte';
 	import Select from '../../select/select.svelte';
 	import ModalLayout from '../modalLayout.svelte';
-	const dispathEvent = createEventDispatcher()
+	import globalStore from '../../../../store/globalStore';
+
 	const fiatCurrencyArr = [
 		{ value: 'KRW', label: 'KRW', image: '/imgs/flag1.svg' },
 		{ value: 'KRW2', label: 'KRW2', image: '/imgs/bank.svg' },
@@ -12,12 +13,10 @@
 		{ value: 'bank', label: 'Bank Transfer', image: '/imgs/bank.svg' },
 		{ value: 'wire', label: 'Wire Transfer', image: '/imgs/bank.svg' }
 	];
-	function closeProfileModal() {
-		dispathEvent('closeProfileModal')
-	}
+
 </script>
 
-<ModalLayout on:closeProfileModal={closeProfileModal} title="Deposit Funds">
+<ModalLayout title="Deposit Funds">
 	<div class="w-full flex flex-col gap-[15px] mt-[24px]">
 		<p class="text-base text-black dark:text-white font-medium">Fiat Currency</p>
 		<Select items={fiatCurrencyArr} />

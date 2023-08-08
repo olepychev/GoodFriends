@@ -1,23 +1,14 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import globalStore from '../../../store/globalStore';
 
 	export let title;
-	export let step;
-
-	const dispathEvent = createEventDispatcher();
-	function closeProfileModal() {
-		dispathEvent('closeProfileModal');
-	}
-
+	
 	document.addEventListener('click', (e) => {
 		if(e.target.closest('#modalLayout') && !e.target.closest("#modalInner") && !e.target.closest('#closeForm') && !e.target.closest('.radialImg')) {
-			dispathEvent('closeProfileModal');
+			globalStore.toggleItem('profileModalOpen', 0)
+			globalStore.toggleItem('depositModalOpen', 0)
 		}
 	});
-
-	function stepBack() {
-		dispathEvent('stepBack')
-	}
 </script>
 
 <div
@@ -34,15 +25,15 @@
 				<div class="flex flex-col w-full">
 					<div class="w-full flex justify-between px-[26px]">
 						<div class="flex items-center gap-[15px]">
-							{#if step}
-							<svg on:click={stepBack} class="w-[24px] h-[24px] cursor-pointer">
+							{#if $globalStore.profileModalOpen == 2}
+							<svg on:click={() => globalStore.toggleItem('profileModalOpen', 1)} class="w-[24px] h-[24px] cursor-pointer">
 								<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#chevron-left"/>
 							</svg>
 							{/if}
 							<p class="text-xl font-semibold gradient-text-white2 main">{title}</p>
 						</div>
 						<div
-							on:click={closeProfileModal}
+							on:click={() => globalStore.toggleItem('profileModalOpen', 0)}
 							id="closeForm"
 							class="relative z-[999] w-[31px] h-[31px] rounded-full flex items-center justify-center bg-grayLight4 dark:bg-white5 cursor-pointer"
 						>

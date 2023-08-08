@@ -3,107 +3,10 @@
 	import LoggedinHeader from './headerLoggedin.svelte';
 	import LoginHeader from './headerlogin.svelte';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import toast from '$lib/components/toast/toast';
-	import { getAccessToken, getRefreshToken, signupSocial, signIn } from '../../../apis/account';
-	import ProfileMenu from '$lib/components/menus/profile/profileMenu.svelte';
-	import DepositModal from '../modals/deposit/deposit.svelte';
-	import MyProfile from '../modals/profile/myProfile.svelte';
-	import EditMyProfile from '../modals/profile/editMyProfile.svelte';
-	import BetSlip from '../betSlip/betSlip.svelte';
-
+	
 	$: path = $page.url.pathname;
 	$: isLoggedIn = $globalStore.userDetail;
-
-	onMount(async () => {
-		handleTokens();
-		if ($globalStore.telegramUserData) {
-			const userInfo = $globalStore.telegramUserData;
-			signInWithTelegram(userInfo)
-		}
-	});
-
-	async function handleTokens() {
-		const res = await getAccessToken();
-		if (res.success) {
-			globalStore.toggleItem('userDetail', res.data);
-		} else if (res.data.code == 4001) {
-			const res1 = await getRefreshToken();
-			if (res1.success) {
-				const res2 = await getAccessToken();
-				if (res2.success) globalStore.toggleItem('userDetail', res2.data);
-			} else {
-				globalStore.toggleItem('userDetail', null);
-			}
-		} else {
-			globalStore.toggleItem('userDetail', null);
-			toast.error('Bad Network Connection');
-		}
-	}
-
-	async function signInWithTelegram(userInfo) {
-    const res = await signupSocial({
-      email: 't_' + userInfo.id,
-      password: userInfo.id,
-      loginType: 'telegram'
-    })
-    try {
-      const res1 = await signIn({
-        email: 't_' + userInfo.id,
-        password: userInfo.id,
-      });
-
-      if (res1.success) {
-        toast.success(res1.data.message);
-        globalStore.toggleItem("loginForm", false);
-        handleTokens();
-      } else {
-        toast.error(res1.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-	let activeProfileMenu = false;
-	function openProfileMenu() {
-		activeProfileMenu = true;
-	}
-	function closeProfileMenu() {
-		activeProfileMenu = false;
-	}
-
-	let activeDepositModal = false;
-	function openDepositModal() {
-		activeProfileMenu = false;
-		activeDepositModal = true;
-		document.body.style.overflow = 'hidden';
-	}
-	let activeMyProfileModal = false;
-	let editMyProfileModal = false;
-	function openMyProfileModal() {
-		activeProfileMenu = false;
-		activeMyProfileModal = true;
-		document.body.style.overflow = 'hidden';
-	}
-	function editMyProfile() {
-		editMyProfileModal = true;
-	}
-	function previousMyProfile() {
-		editMyProfileModal = false;
-	}
-	$: activeBetSlip = $globalStore.betSlip
-	function openBetSlip() {
-		globalStore.toggleItem('betSlip', true);
-	}
-	function closeBetSlip() {
-		globalStore.toggleItem('betSlip', false);
-	}
-	function closeProfileModal() {
-		activeDepositModal = false;
-		activeMyProfileModal = false;
-		document.body.style.overflow = 'auto';
-	}
+	
 </script>
 
 <header
@@ -152,7 +55,7 @@
 		</a>
 
 		{#if isLoggedIn}
-			<LoggedinHeader on:openBetSlip={openBetSlip} on:openProfileMenu={openProfileMenu} />
+			<LoggedinHeader />
 		{:else}
 			<LoginHeader />
 		{/if}
@@ -163,28 +66,3 @@
 		/>
 	</div>
 </header>
-
-{#if activeProfileMenu}
-	<ProfileMenu
-		on:closeProfileMenu={closeProfileMenu}
-		on:openDepositModal={openDepositModal}
-		on:openMyProfileModal={openMyProfileModal}
-	/>
-{/if}
-{#if activeDepositModal}
-	<DepositModal on:closeProfileModal={closeProfileModal} />
-{/if}
-
-{#if activeMyProfileModal && !editMyProfileModal}
-	<MyProfile on:closeProfileModal={closeProfileModal} on:editMyProfile={editMyProfile} />
-{:else if activeMyProfileModal && editMyProfileModal}
-	<EditMyProfile
-		step={true}
-		on:stepBack={previousMyProfile}
-		on:closeProfileModal={closeProfileModal}
-	/>
-{/if}
-
-{#if activeBetSlip}
-	<BetSlip on:closeBetSlip={closeBetSlip}/>
-{/if}

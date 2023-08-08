@@ -1,17 +1,24 @@
 import { writable } from 'svelte/store';
 
 const globalStore = writable({
-	sidebar: false,
+	sidebarOpen: false,
 	chatOpen: false,
-	betSlip: false,
-	registrationStep: 1,
-	registrationForm: false,
-	loginForm: false,
-	forgotPasswordStep: 1,
-	forgotPasswordForm: false,
+	betSlipOpen: false,
+
+	// profile menu modals
+	profileMenuOpen: false,
+	depositModalOpen: false,
+	withdrawModalOpen: false,
+	profileModalOpen: 0,
+
+	// auth modals
+	loginOpen: false,
+	registrationOpen: 0,
+	forgotPasswordOpen: 0,
+
+	telegramUserData: null,
 	darkMode: true,
 	userDetail: null,
-	telegramUserData: null,
 	// userDetail: {
 	// 	member_idx: 3,
 	// 	email: 'g_115965063647480354431',

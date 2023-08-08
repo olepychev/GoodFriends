@@ -15,7 +15,7 @@
 	// Declare selectedValue as a writable store
 	let selectedValue = writable(items[0].value);
 
-	$: sidebarOpen = $globalStore.sidebar;
+	$: sidebarOpen = $globalStore.sidebarOpen;
 
 	onMount(() => {
 		if (sidebarOpen) {
@@ -31,14 +31,14 @@
 		} else {
 			document.body.classList.remove('aside-active');
 		}
-		globalStore.toggleItem('sidebar', !$globalStore.sidebar);
+		globalStore.toggleItem('sidebarOpen', !$globalStore.sidebarOpen);
 	}
 
 	function closeSidebar() {
 		if(sidebarOpen) {
 			document.body.classList.remove('aside-active');
 
-			globalStore.toggleItem('sidebar', !$globalStore.sidebar);
+			globalStore.toggleItem('sidebarOpen', !$globalStore.sidebarOpen);
 		}
 	}
 </script>

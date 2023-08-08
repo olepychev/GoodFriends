@@ -1,28 +1,15 @@
 <script>
-	import { createEventDispatcher } from "svelte";
 	import { signOut } from '../../../../apis/account';
 	import toast from '../../toast/toast';
 	import globalStore from '../../../../store/globalStore';
 
 	$: darkMode = $globalStore.darkMode
 
-	const dispathEvent = createEventDispatcher()
-	function closeProfileMenu() {
-		dispathEvent('closeProfileMenu')
-	}
-
 	document.addEventListener('click', (e)=> {
 		if(!e.target.closest('#headerProfile') && !e.target.closest('#profileModal') && !e.target.closest('#closeProfileMenu')) {
-			dispathEvent('closeProfileMenu')
+			globalStore.toggleItem('profileMenuOpen', false)
 		}
 	})
-
-	function openDepositModal() {
-		dispathEvent('openDepositModal')
-	}
-	function openMyProfileModal() {
-		dispathEvent('openMyProfileModal')
-	}
 
 	function handleChange(val) {
 		if(val === 'dark') {
@@ -39,7 +26,7 @@
     if (res.success) {
       toast.success(res.data.message);
       globalStore.toggleItem("userDetail", null);
-			dispathEvent('closeProfileMenu')
+			globalStore.toggleItem('profileMenuOpen', false)
     } else {
       toast.error(res.data.message);
     }
@@ -60,7 +47,9 @@
 					</div>
 				</div>
 			</div>
-			<div id="closeProfileMenu" on:click={closeProfileMenu} class="w-[31px] h-[31px] rounded-full bg-grayLight4 dark:bg-white11 flex items-center justify-center opacity-70 hover:opacity-100 cursor-pointer">
+			<div id="closeProfileMenu" on:click={ () => {
+				globalStore.toggleItem('profileMenuOpen', false)
+			}} class="w-[31px] h-[31px] rounded-full bg-grayLight4 dark:bg-white11 flex items-center justify-center opacity-70 hover:opacity-100 cursor-pointer">
 				<svg class="w-[16px] h-[16px] translate-x-[1px] translate-y-[1px]">
 					<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#close" />
 				</svg>
@@ -98,13 +87,18 @@
 		<div class="flex flex-col gap-[12px] mt-[15px] pb-[15px] border-b border-b-white11">
 			<p class="text-black50 dark:text-white50 font-medium text-msm">My Account</p>
             <div class="flex flex-col gap-[5px]">
-                <a href="/account/settings" on:click={closeProfileMenu} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
+                <a href="/account/settings" on:click={ () => {
+									globalStore.toggleItem('profileMenuOpen', false)
+								}} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
                         <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#settings"/>
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Settings</p>
                 </a>
-                <a href="#" on:click={openDepositModal} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
+                <a href="#" on:click={() => {
+									globalStore.toggleItem('depositModalOpen', true);
+									globalStore.toggleItem('profileMenuOpen', false);
+								}} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
                         <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#card"/>
                     </svg>
@@ -122,7 +116,11 @@
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Transactions</p>
                 </a>
-                <a href="#" on:click={openMyProfileModal} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
+                <a href="#" on:click={ () => {
+										globalStore.toggleItem('profileModalOpen', true)
+										globalStore.toggleItem('profileMenuOpen', false)
+									}
+								} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
                         <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#user"/>
                     </svg>

@@ -1,6 +1,6 @@
 <script>
-	import { createEventDispatcher } from "svelte";
-
+	import globalStore from '../../../store/globalStore';
+	
 	const betSlipArr = [
 		{
 			type: 'basketball',
@@ -47,9 +47,8 @@
 			betX: '1.425'
 		}
 	];
-    const dispathEvent = createEventDispatcher()
     function closeBetSlip() {
-        dispathEvent('closeBetSlip')
+        globalStore.toggleItem('betSlipOpen', false)
     }
 </script>
 

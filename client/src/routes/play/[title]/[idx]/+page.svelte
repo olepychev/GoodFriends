@@ -95,7 +95,7 @@
 	});
 
 	const loginAndStart = () => {
-		globalStore.toggleItem('loginForm', true);
+		globalStore.toggleItem('loginOpen', true);
 	};
 
 	async function updateLink() {

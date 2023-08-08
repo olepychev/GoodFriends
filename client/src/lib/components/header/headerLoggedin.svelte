@@ -1,23 +1,12 @@
 <script>
 	import globalStore from '../../../store/globalStore';
-	import { createEventDispatcher } from 'svelte';
-	
-	const dispatch = createEventDispatcher();
-	
+
 	$: chatOpen = $globalStore.chatOpen;
 
 	function chatToggle(e) {
 		chatOpen ? document.body.classList.remove('chat-active')
 			: document.body.classList.add('chat-active')
 		globalStore.toggleItem('chatOpen', !$globalStore.chatOpen);
-	}
-
-	function openProfileMenu() {
-		dispatch('openProfileMenu')
-	}
-
-	function openBetSlip() {
-		dispatch('openBetSlip')
 	}
 
 </script>
@@ -36,7 +25,9 @@
 		</button>
 	</div>
 	<div class="flex items-center gap-[15px] lg:gap-[20px]">
-		<button on:click={openBetSlip}
+		<button on:click={() => {
+			globalStore.toggleItem('betSlipOpen', !$globalStore.betSlipOpen)
+		}}
 			class="hidden md:flex gradient-border bg-purpleLight2  dark:bg-blueDark px-[21px] h-[47px] items-center justify-center rounded-[7px] before:rounded-[7px]"
 		>
 			<p class="text-base font-medium gradient-text hidden lg:flex">Bet Slip</p>
@@ -51,7 +42,7 @@
 			<img class="w-[21px]" src="/imgs/add.svg" alt="">
 			</div>
 		</button>
-		<div on:click={openProfileMenu} id="headerProfile" class="flex items-center gap-[9px] cursor-pointer">
+		<div on:click={() => globalStore.toggleItem('profileMenuOpen', true)} id="headerProfile" class="flex items-center gap-[9px] cursor-pointer">
 			<div class="relative w-[48px] h-[48px] rounded-full border border-grayLight dark:border-white50">
 				<img class="absolute w-full h-full object-cover rounded-full" src={ $globalStore.userDetail.profile_image } alt="profile image" />
 				<img class="lg:hidden w-[14px] absolute top-[calc(100%-10px)] left-[50%] translate-x-[-50%]" src="/imgs/medal.svg" alt="" />

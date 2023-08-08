@@ -1,20 +1,10 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	import ModalLayout from '../modalLayout.svelte';
-	const dispathEvent = createEventDispatcher();
-    
-    export let step;
+    import globalStore from '../../../../store/globalStore'
 
-	function closeProfileModal() {
-		dispathEvent('closeProfileModal');
-	}
-
-    function stepBack() {
-        dispathEvent('stepBack')
-    }
 </script>
 
-<ModalLayout on:stepBack={stepBack} step={step} on:closeProfileModal={closeProfileModal} title="Edit Profile">
+<ModalLayout title="Edit Profile">
 	<div class="w-full flex flex-col items-center gap-[10px] my-[30px]">
 		<div class="relative flex justify-center w-full h-[200px] rounded-[14px] bg-linear4">
 			

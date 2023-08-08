@@ -2,11 +2,9 @@
 	import toast from '../../../lib/components/toast/toast';
 	import globalStore from '../../../store/globalStore';
 	import { onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
 	import { signIn, getAccessToken, getRefreshToken, signupSocial } from '../../../apis/account';
 	import firebase from '../../../lib/components/firebase/firebase';
 
-	const dispatch = createEventDispatcher();
 	const BOT_NAME = import.meta.env.VITE_TELEGRAM_BOT_NAME;
   const REDIRECT_URL = import.meta.env.VITE_TELEGRAM_REDIRECT_URL;
 
@@ -16,8 +14,55 @@
   };
 
 	onMount(async () => {
+		// handleTokens();
 		handleTelegram();
+		if ($globalStore.telegramUserData) {
+			const userInfo = $globalStore.telegramUserData;
+			signInWithTelegram(userInfo)
+		}
 	});
+
+	async function handleTokens() {
+		const res = await getAccessToken();
+		if (res.success) {
+			globalStore.toggleItem('userDetail', res.data);
+		} else if (res.data.code == 4001) {
+			const res1 = await getRefreshToken();
+			if (res1.success) {
+				const res2 = await getAccessToken();
+				if (res2.success) globalStore.toggleItem('userDetail', res2.data);
+			} else {
+				globalStore.toggleItem('userDetail', null);
+			}
+		} else {
+			globalStore.toggleItem('userDetail', null);
+			toast.error('Bad Network Connection');
+		}
+	}
+
+	async function signInWithTelegram(userInfo) {
+    const res = await signupSocial({
+      email: 't_' + userInfo.id,
+      password: userInfo.id,
+      loginType: 'telegram'
+    })
+    try {
+      const res1 = await signIn({
+        email: 't_' + userInfo.id,
+        password: userInfo.id,
+      });
+
+      if (res1.success) {
+        toast.success(res1.data.message);
+        globalStore.toggleItem("loginOpen", false);
+        handleTokens();
+      } else {
+        toast.error(res1.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 	function handleTelegram() {
     const script = document.createElement('script');
@@ -29,14 +74,6 @@
 		document.getElementById('telegram-login').style.opacity = '1%';
   }
 
-	function openSignUp() {
-		dispatch('openSignUp');
-	}
-
-	function openForgotPasswordForm() {
-		dispatch('openForgotPasswordForm')
-	}
-
 	async function handleSignIn(event) {
 		const res = await signIn({
 			email: signInUserData.email,
@@ -44,30 +81,12 @@
 		});
 		if (res.success) {
 			toast.success(res.data.message);
-			globalStore.toggleItem("loginForm", false);
+			globalStore.toggleItem("loginOpen", false);
 			handleTokens();
 		} else {
 			toast.error(res.data.message);
 		}
 	}
-
-	async function handleTokens() {
-    const res = await getAccessToken();
-    if (res.success) {
-      globalStore.toggleItem("userDetail", res.data);
-    } else if (res.data.code == 4001) {
-      const res1 = await getRefreshToken();
-      if (res1.success) {
-        const res2 = await getAccessToken();
-        if (res2.success) globalStore.toggleItem("userDetail", res2.data);
-      } else {
-        globalStore.toggleItem("userDetail", null);
-      }
-    } else {
-      globalStore.toggleItem("userDetail", null);
-      toast.error("Bad Network Connection");
-    }
-  }
 
 	async function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -87,7 +106,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginForm", false);
+        globalStore.toggleItem("loginOpen", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -115,7 +134,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginForm", false);
+        globalStore.toggleItem("loginOpen", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -166,7 +185,10 @@
 				/>
 			</div>
 		</div>
-		<a href="#" on:click={openForgotPasswordForm} class="text-end text-msm text-grayDark2">Forgot password?</a>
+		<a href="#" on:click={() => {
+			globalStore.toggleItem('forgotPasswordOpen', 1);
+			globalStore.toggleItem('loginOpen', false)
+		}} class="text-end text-msm text-grayDark2">Forgot password?</a>
 		<button
 			type="submit"
 			class="w-full bg-linear p-[13px] rounded-[7px] text-sm font-semibold text-white opacity-90 hover:opacity-100 transition-all"
@@ -176,7 +198,10 @@
 	</div>
 	<div class="flex items-center justify-center mt-[15px] gap-[4px]">
 		<p class="text-msm text-grayDark3 font-medium">
-			Don't have an account? <a href="#" on:click={openSignUp} class="gradient-text font-bold">Sign Up</a>
+			Don't have an account? <a href="#" on:click={() => {
+				globalStore.toggleItem('registrationOpen', 1);
+				globalStore.toggleItem('loginOpen', false);
+			}} class="gradient-text font-bold">Sign Up</a>
 		</p>
 	</div>
 </form>

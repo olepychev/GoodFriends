@@ -1,7 +1,5 @@
 <script>
 	import globalStore from '../../../store/globalStore';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
 
 	$: chatOpen = $globalStore.chatOpen;
 
