@@ -1,12 +1,12 @@
 <script>
-	import Hero from '$lib/components/main/hero/hero.svelte';
-	import AllCategory from '$lib/components/main/allCategory/allCategory.svelte';
-	import LiveSports from '$lib/components/main/liveSports/liveSports.svelte';
-	import MainSports from '$lib/components/main/mainSports/mainSports.svelte';
-	import BestCasino from '$lib/components/main/bestCasino/bestCasino.svelte';
-	import BestSlot from '$lib/components/main/bestSlot/bestSlot.svelte';
-	import ActivityTable from '$lib/components/main/activityTable/activityTable.svelte';
-	import Footer from '$lib/components/footer/footer.svelte';
+	import Hero from '../lib/components/main/hero/hero.svelte';
+	import AllCategory from '../lib/components/main/allCategory/allCategory.svelte';
+	import LiveSports from '../lib/components/main/liveSports/liveSports.svelte';
+	import MainSports from '../lib/components/main/mainSports/mainSports.svelte';
+	import BestCasino from '../lib/components/main/bestCasino/bestCasino.svelte';
+	import BestSlot from '../lib/components/main/bestSlot/bestSlot.svelte';
+	import ActivityTable from '../lib/components/main/activityTable/activityTable.svelte';
+	import Footer from '../lib/components/footer/footer.svelte';
 
 	const betActivity = [
 		{

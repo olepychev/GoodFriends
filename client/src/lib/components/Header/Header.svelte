@@ -83,6 +83,7 @@
 	class="overflow-hidden sticky top-0 w-full px-[15px] sm:px-[30px] py-[17px] bg-white dark:bg-blackDark z-[999]"
 >
 	<div class="w-full flex items-center justify-between">
+		<!-- <div class="telegram-login-widget"></div> -->
 		<div class="hidden md:flex items-center gap-[15px]">
 			<a
 				href="/casino"
