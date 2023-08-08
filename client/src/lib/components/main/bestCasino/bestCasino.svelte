@@ -17,37 +17,37 @@
 		},
 		{
 			title: 'Tiny Gods',
-			image: 'src/assets/imgs/slot2.svg',
+			image: '/imgs/slot2.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: 'src/assets/imgs/slot3.svg',
+			image: '/imgs/slot3.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: 'src/assets/imgs/slot4.svg',
+			image: '/imgs/slot4.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: 'src/assets/imgs/slot5.svg',
+			image: '/imgs/slot5.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: 'src/assets/imgs/slot1.svg',
+			image: '/imgs/slot1.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: 'src/assets/imgs/slot3.svg',
+			image: '/imgs/slot3.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: 'src/assets/imgs/slot4.svg',
+			image: '/imgs/slot4.svg',
 			link: '/'
 		}
 	];
@@ -125,7 +125,7 @@
 					/>
                     <div class="group-hover:opacity-100 opacity-0 transition-all absolute left-0 top-0 w-full h-full bg-black81 flex items-center justify-center">
                         <div class="flex flex-col gap-[12px] scale-[0.80] group-hover:scale-[1] transition-all">
-                            <img src="src/assets/imgs/play.svg" alt="play.svg">
+                            <img src="/imgs/play.svg" alt="play.svg">
                         </div>
                     </div>
                     </div>
