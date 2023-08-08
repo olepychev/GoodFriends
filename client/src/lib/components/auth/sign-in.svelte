@@ -26,6 +26,7 @@
     script.setAttribute('data-size', 'large');
     script.setAttribute('data-auth-url', REDIRECT_URL);
     document.getElementById('telegram-login').appendChild(script);
+		document.getElementById('telegram-login').style.opacity = '1%';
   }
 
 	function openSignUp() {
@@ -230,19 +231,22 @@
 		</svg>
 	</button>
 	<div class="relative cursor-pointer">
-		<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
-			<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<g clip-path="url(#clip0_2708_75443)">
-				<path fill-rule="evenodd" clip-rule="evenodd" d="M13.1851 2.95334C13.3498 2.884 13.5302 2.86009 13.7073 2.88409C13.8844 2.90808 14.0519 2.97912 14.1922 3.0898C14.3326 3.20048 14.4407 3.34675 14.5053 3.5134C14.57 3.68004 14.5888 3.86097 14.5598 4.03734L13.0478 13.2087C12.9011 14.0933 11.9304 14.6007 11.1191 14.16C10.4404 13.7913 9.43242 13.2233 8.52575 12.6307C8.07242 12.334 6.68375 11.384 6.85442 10.708C7.00109 10.13 9.33442 7.95801 10.6678 6.66667C11.1911 6.15934 10.9524 5.86667 10.3344 6.33334C8.79909 7.49201 6.33575 9.25401 5.52109 9.75001C4.80242 10.1873 4.42775 10.262 3.97975 10.1873C3.16242 10.0513 2.40442 9.84067 1.78575 9.58401C0.949753 9.23734 0.99042 8.08801 1.78509 7.75334L13.1851 2.95334Z" fill="white"/>
-				</g>
-				<defs>
-				<clipPath id="clip0_2708_75443">
-				<rect width="16" height="16" fill="white"/>
-				</clipPath>
-				</defs>
-			</svg>			
-		</button>
+		<div>
+			<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<g clip-path="url(#clip0_2708_75443)">
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M13.1851 2.95334C13.3498 2.884 13.5302 2.86009 13.7073 2.88409C13.8844 2.90808 14.0519 2.97912 14.1922 3.0898C14.3326 3.20048 14.4407 3.34675 14.5053 3.5134C14.57 3.68004 14.5888 3.86097 14.5598 4.03734L13.0478 13.2087C12.9011 14.0933 11.9304 14.6007 11.1191 14.16C10.4404 13.7913 9.43242 13.2233 8.52575 12.6307C8.07242 12.334 6.68375 11.384 6.85442 10.708C7.00109 10.13 9.33442 7.95801 10.6678 6.66667C11.1911 6.15934 10.9524 5.86667 10.3344 6.33334C8.79909 7.49201 6.33575 9.25401 5.52109 9.75001C4.80242 10.1873 4.42775 10.262 3.97975 10.1873C3.16242 10.0513 2.40442 9.84067 1.78575 9.58401C0.949753 9.23734 0.99042 8.08801 1.78509 7.75334L13.1851 2.95334Z" fill="white"/>
+					</g>
+					<defs>
+					<clipPath id="clip0_2708_75443">
+					<rect width="16" height="16" fill="white"/>
+					</clipPath>
+					</defs>
+				</svg>			
+			</button>
+		</div>
+		
 
-		<div id="telegram-login" class="w-[42px] h-[42px] absolute top-0 opacity-0"></div>
+		<div id="telegram-login" class="w-[42px] absolute top-0 z-[999]"></div>
 	</div>
 </div>
