@@ -8,7 +8,7 @@
 
 	const dispatch = createEventDispatcher();
 	const BOT_NAME = import.meta.env.VITE_TELEGRAM_BOT_NAME;
-  const REDIRECT_URL = import.meta.env.VITE_TELEGRAM_REDIRECT_URL;
+	const REDIRECT_URL = import.meta.env.VITE_TELEGRAM_REDIRECT_URL;
 
 	let signInUserData = {
     email: "",
@@ -16,8 +16,31 @@
   };
 
 	onMount(async () => {
+		handleTokens();
 		handleTelegram();
+		if ($globalStore.telegramUserData) {
+			const userInfo = $globalStore.telegramUserData;
+			signInWithTelegram(userInfo)
+		}
 	});
+
+	async function handleTokens() {
+		const res = await getAccessToken();
+		if (res.success) {
+			globalStore.toggleItem('userDetail', res.data);
+		} else if (res.data.code == 4001) {
+			const res1 = await getRefreshToken();
+			if (res1.success) {
+				const res2 = await getAccessToken();
+				if (res2.success) globalStore.toggleItem('userDetail', res2.data);
+			} else {
+				globalStore.toggleItem('userDetail', null);
+			}
+		} else {
+			globalStore.toggleItem('userDetail', null);
+			toast.error('Bad Network Connection');
+		}
+	}
 
 	function handleTelegram() {
     const script = document.createElement('script');
@@ -50,24 +73,6 @@
 			toast.error(res.data.message);
 		}
 	}
-
-	async function handleTokens() {
-    const res = await getAccessToken();
-    if (res.success) {
-      globalStore.toggleItem("userDetail", res.data);
-    } else if (res.data.code == 4001) {
-      const res1 = await getRefreshToken();
-      if (res1.success) {
-        const res2 = await getAccessToken();
-        if (res2.success) globalStore.toggleItem("userDetail", res2.data);
-      } else {
-        globalStore.toggleItem("userDetail", null);
-      }
-    } else {
-      globalStore.toggleItem("userDetail", null);
-      toast.error("Bad Network Connection");
-    }
-  }
 
 	async function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -131,6 +136,30 @@
       const data = await firebase.auth().signInWithPopup(provider);
       // console.log(data.additionalUserInfo.profile);
       // User signed in successfully
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+	async function signInWithTelegram(userInfo) {
+    const res = await signupSocial({
+      email: 't_' + userInfo.id,
+      password: userInfo.id,
+      loginType: 'telegram'
+    })
+    try {
+      const res1 = await signIn({
+        email: 't_' + userInfo.id,
+        password: userInfo.id,
+      });
+
+      if (res1.success) {
+        toast.success(res1.data.message);
+        globalStore.toggleItem("loginForm", false);
+        handleTokens();
+      } else {
+        toast.error(res1.data.message);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -230,6 +259,7 @@
 			/>
 		</svg>
 	</button>
+
 	<div class="relative cursor-pointer">
 		<div>
 			<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">

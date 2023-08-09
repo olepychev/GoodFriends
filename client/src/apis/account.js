@@ -340,3 +340,83 @@ export async function signOut() {
     }
   }
 }
+
+export async function changeProfileImage({memberIdx, profileImage}) {
+  try {
+    const res = await axios.post(SEVER_URL + '/api/account/profile/image', {
+      memberIdx,
+      profileImage
+    }, {
+      headers: {
+        'GF-API-KEY': GF_API_KEY,
+        'GF-AFFILIATE-CODE': GF_AFFILIATE_CODE,
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+
+    if(res.status == 200) {
+      return {
+        success: true,
+        data: res.data
+      }
+    }
+    /// add more case here.
+    return {
+      success: false,
+      data: "Sign in Failed"
+    }
+  } catch(err) {
+    if(err.response && err.response.request.status == 400)
+      return {
+        success: false,
+        data: err.response.data
+      }
+    return {
+      success: false,
+      data: {
+        'message': "Bad Internet Connection"
+      }
+    }
+  }
+}
+
+export async function changeNickname({memberIdx, nick}) {
+  try {
+    const res = await axios.post(SEVER_URL + '/api/account/profile/nick', {
+      memberIdx,
+      nick
+    }, {
+      headers: {
+        'GF-API-KEY': GF_API_KEY,
+        'GF-AFFILIATE-CODE': GF_AFFILIATE_CODE,
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+
+    if(res.status == 200) {
+      return {
+        success: true,
+        data: res.data
+      }
+    }
+    /// add more case here.
+    return {
+      success: false,
+      data: "Sign in Failed"
+    }
+  } catch(err) {
+    if(err.response && err.response.request.status == 400)
+      return {
+        success: false,
+        data: err.response.data
+      }
+    return {
+      success: false,
+      data: {
+        'message': "Bad Internet Connection"
+      }
+    }
+  }
+}

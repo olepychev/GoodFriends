@@ -3,9 +3,8 @@
 	import LoggedinHeader from './headerLoggedin.svelte';
 	import LoginHeader from './headerlogin.svelte';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import toast from '$lib/components/toast/toast';
-	import { getAccessToken, getRefreshToken, signupSocial, signIn } from '../../../apis/account';
+	import toast from '../../../lib/components/toast/toast';
+	import { getAccessToken, getRefreshToken } from '../../../apis/account';
 	import ProfileMenu from '$lib/components/menus/profile/profileMenu.svelte';
 	import DepositModal from '../modals/deposit/deposit.svelte';
 	import MyProfile from '../modals/profile/myProfile.svelte';
@@ -14,56 +13,6 @@
 
 	$: path = $page.url.pathname;
 	$: isLoggedIn = $globalStore.userDetail;
-
-	onMount(async () => {
-		handleTokens();
-		if ($globalStore.telegramUserData) {
-			const userInfo = $globalStore.telegramUserData;
-			signInWithTelegram(userInfo)
-		}
-	});
-
-	async function handleTokens() {
-		const res = await getAccessToken();
-		if (res.success) {
-			globalStore.toggleItem('userDetail', res.data);
-		} else if (res.data.code == 4001) {
-			const res1 = await getRefreshToken();
-			if (res1.success) {
-				const res2 = await getAccessToken();
-				if (res2.success) globalStore.toggleItem('userDetail', res2.data);
-			} else {
-				globalStore.toggleItem('userDetail', null);
-			}
-		} else {
-			globalStore.toggleItem('userDetail', null);
-			toast.error('Bad Network Connection');
-		}
-	}
-
-	async function signInWithTelegram(userInfo) {
-    const res = await signupSocial({
-      email: 't_' + userInfo.id,
-      password: userInfo.id,
-      loginType: 'telegram'
-    })
-    try {
-      const res1 = await signIn({
-        email: 't_' + userInfo.id,
-        password: userInfo.id,
-      });
-
-      if (res1.success) {
-        toast.success(res1.data.message);
-        globalStore.toggleItem("loginForm", false);
-        handleTokens();
-      } else {
-        toast.error(res1.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
 	let activeProfileMenu = false;
 	function openProfileMenu() {
@@ -94,11 +43,13 @@
 	}
 	$: activeBetSlip = $globalStore.betSlip
 	function openBetSlip() {
-		globalStore.toggleItem('betSlip', true);
+		globalStore.toggleItem('betSlip', !$globalStore.betSlip);
 	}
+
 	function closeBetSlip() {
 		globalStore.toggleItem('betSlip', false);
 	}
+
 	function closeProfileModal() {
 		activeDepositModal = false;
 		activeMyProfileModal = false;
@@ -111,7 +62,6 @@
 	class="overflow-hidden sticky top-0 w-full px-[15px] sm:px-[30px] py-[17px] bg-white dark:bg-blackDark z-[999]"
 >
 	<div class="w-full flex items-center justify-between">
-		<!-- <div class="telegram-login-widget"></div> -->
 		<div class="hidden md:flex items-center gap-[15px]">
 			<a
 				href="/casino"
@@ -120,11 +70,11 @@
 				} group header-filter px-[18px] py-[13px] border-[1.14px] hover:bg-grayLight4 dark:hover:bg-white5 border-transparent rounded-[7px] transition-all hover:border-grayLight2 dark:hover:border-white11 flex items-center gap-[9px] cursor-pointer`}
 			>
 				<div class="header_icon-light hidden group-hover:block">
-					<img class="w-[24px]" src="/imgs/casinoR.svg"/>
+					<img class="w-[24px]" src="/src/assets/imgs/casinoR.svg"/>
 				</div>
 				<div class="header_icon-dark block group-hover:hidden">
-					<img class="dark:hidden flex w-[24px]" src="/imgs/casinoLight.svg"/>
-					<img class="dark:flex hidden w-[24px]" src="/imgs/casinoDark.svg"/>
+					<img class="dark:hidden flex w-[24px]" src="/src/assets/imgs/casinoLight.svg"/>
+					<img class="dark:flex hidden w-[24px]" src="/src/assets/imgs/casinoDark.svg"/>
 				</div>
 
 				<p class="text-grayLight3 dark:text-gray font-semibold text-sm group-hover:text-black dark:group-hover:text-white">Casino</p>
@@ -133,22 +83,22 @@
 			<a
 				href="/sports"
 				class={`${
-					path === '/sports' ? 'active' : ''
+					path.includes('/sports') ? 'active' : ''
 				} group header-filter px-[18px] py-[13px] border-[1.14px] hover:bg-grayLight4 dark:hover:bg-white5 border-transparent rounded-[7px] transition-all hover:border-grayLight2 dark:hover:border-white11 flex items-center gap-[9px] cursor-pointer`}
 			>
 				<div class="header_icon-light hidden group-hover:block">
-					<img class="w-[24px]" src="/imgs/sportsR.svg"/>
+					<img class="w-[24px]" src="/src/assets/imgs/sportsR.svg"/>
 				</div>
 				<div class="header_icon-dark block group-hover:hidden">
-					<img class="dark:hidden flex w-[24px]" src="/imgs/sportsLight.svg"/>
-					<img class="dark:flex hidden w-[24px]" src="/imgs/sportsDark.svg"/>
+					<img class="dark:hidden flex w-[24px]" src="/src/assets/imgs/sportsLight.svg"/>
+					<img class="dark:flex hidden w-[24px]" src="/src/assets/imgs/sportsDark.svg"/>
 				</div>
 
 				<p class="text-grayLight3 dark:text-gray font-semibold text-sm group-hover:text-black dark:group-hover:text-white">Sports</p>
 			</a>
 		</div>
 		<a href="/" class="flex md:hidden w-full max-w-[42px]">
-			<img class="w-full" src="/imgs/Logo.svg" alt="">
+			<img class="w-full" src="/src/assets/imgs/logo.svg" alt="">
 		</a>
 
 		{#if isLoggedIn}
@@ -157,7 +107,7 @@
 			<LoginHeader />
 		{/if}
 		<img
-			src="/imgs/headerElipse.svg"
+			src="/src/assets/imgs/headerElipse.svg"
 			class="hidden dark:flex h-[125px] object-cover sm:object-inherit sm:h-auto absolute z-[-1] right-0 bottom-[2px]"
 			alt=""
 		/>

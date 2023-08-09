@@ -4,7 +4,7 @@
 	const betSlipArr = [
 		{
 			type: 'basketball',
-			image: '/imgs/live-sports/basket-ball.svg',
+			image: '/src/assets/imgs/live-sports/basket-ball.svg',
 			groups: {
 				group1: 'Memphis',
 				group2: 'Houston'
@@ -15,7 +15,7 @@
 		},
 		{
 			type: 'basketball',
-			image: '/imgs/live-sports/basket-ball.svg',
+			image: '/src/assets/imgs/live-sports/basket-ball.svg',
 			groups: {
 				group1: 'Memphis2',
 				group2: 'Houston2'
@@ -26,7 +26,7 @@
 		},
 		{
 			type: 'basketball',
-			image: '/imgs/live-sports/basket-ball.svg',
+			image: '/src/assets/imgs/live-sports/basket-ball.svg',
 			groups: {
 				group1: 'Memphis',
 				group2: 'Houston'
@@ -37,7 +37,7 @@
 		},
 		{
 			type: 'basketball',
-			image: '/imgs/live-sports/basket-ball.svg',
+			image: '/src/assets/imgs/live-sports/basket-ball.svg',
 			groups: {
 				group1: 'Memphis2',
 				group2: 'Houston2'
@@ -81,7 +81,7 @@
 					class="cursor-pointer opacity-80 hover:opacity-100 transition-all w-[31px] h-[31px] rounded-full bg-white11 flex items-center justify-center"
 				>
 					<svg class="w-[16px] h-[16px]">
-						<use class="fill-white" href="/imgs/icons/icons.svg#close" />
+						<use class="fill-white" href="/src/assets/imgs/icons/icons.svg#close" />
 					</svg>
 				</div>
 			</div>
@@ -93,7 +93,7 @@
 					<p class="font-medium text-sm md:text-base text-black50 dark:text-white32 peer-checked:text-black dark:peer-checked:text-white">Single</p>
 					<img
 						class="absolute bottom-0 w-full opacity-0 peer-checked:left-0 peer-checked:opacity-100 left-[100px] transition-all"
-						src="/imgs/borderGradient.svg"
+						src="/src/assets/imgs/borderGradient.svg"
 						alt=""
 					/>
 				</label>
@@ -104,7 +104,7 @@
 					<p class="font-medium text-sm md:text-base text-black50 dark:text-white32 peer-checked:text-black dark:peer-checked:text-white">Multiples</p>
 					<img
 						class="absolute bottom-0 w-full opacity-0 peer-checked:right-0 peer-checked:opacity-100 right-[100px] transition-all"
-						src="/imgs/borderGradient.svg"
+						src="/src/assets/imgs/borderGradient.svg"
 						alt=""
 					/>
 				</label>
@@ -138,7 +138,7 @@
 							<svg class="w-[15px] h-[12px]">
 								<use
 									class="fill-red group-hover:fill-white transition-all"
-									href="/imgs/icons/icons.svg#close"
+									href="/src/assets/imgs/icons/icons.svg#close"
 								/>
 							</svg>
 						</div>
@@ -198,7 +198,7 @@
 					<svg class="w-[18px] h-[18px]">
 						<use
 							class="stroke-red fill-transparent"
-							href="/imgs/icons/icons.svg#trash"
+							href="/src/assets/imgs/icons/icons.svg#trash"
 						/>
 					</svg>
 					<p class="text-red font-medium text-sm">Remove All</p>

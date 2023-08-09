@@ -32,6 +32,9 @@ body::-webkit-scrollbar {
 	background: #555;
 }
 
+#main {
+	min-height:100vh;
+}
 .navLink::after {
 	position: absolute;
 	content: '';
@@ -56,6 +59,10 @@ body::-webkit-scrollbar {
 .navLink.active::after {
 	opacity: 1;
 	transform: scale(1);
+}
+
+.accordion {
+	transition: all 0.6s ease !important;
 }
 
 .navLink.active .navRadial {
@@ -341,10 +348,10 @@ body::-webkit-scrollbar {
 }
 
 .gradient-text {
-	background-image: theme('backgroundImage.gradientPurple');
-	-webkit-background-clip: text; /* For Safari */
-	background-clip: text;
-	color: transparent;
+	background-image: theme('backgroundImage.gradientPurple') !important;
+	-webkit-background-clip: text !important; /* For Safari */
+	background-clip: text !important;
+	color: transparent !important;
 }
 .hover-gradient-text {
 	position: relative;
@@ -569,4 +576,14 @@ body::-webkit-scrollbar {
 
 .custom-select .selected-item {
 	transform: translateY(2px) !important;
+}
+
+.cropper-view-box {
+	border-radius: 50% !important;
+	outline: 0px !important;
+	box-shadow: 0 0 0 1px #39f !important;
+}
+
+.cropper-container {
+	border-radius: 14px;
 }

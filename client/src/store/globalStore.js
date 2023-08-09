@@ -11,7 +11,6 @@ const globalStore = writable({
 	forgotPasswordForm: false,
 	darkMode: true,
 	userDetail: null,
-	telegramUserData: null,
 	// userDetail: {
 	// 	member_idx: 3,
 	// 	email: 'g_115965063647480354431',

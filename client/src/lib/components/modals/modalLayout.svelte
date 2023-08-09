@@ -29,14 +29,14 @@
 		<div id="modalInner"
 			class="relative w-full h-full overflow-auto md:h-auto md:max-w-[460px] m-auto md:min-h-[600px] rounded-[14px] rounded-tl-[14px] bg-white dark:bg-black md:overflow-hidden"
 		>
-			<img src="/imgs/elipse.svg" class="dark:flex hidden radialImg absolute top-0 right-[0] z-[1]" alt="" />
+			<!-- <img src="/src/assets/imgs/elipse.svg" class="dark:flex hidden radialImg absolute top-0 right-[0] z-[1]" alt="" /> -->
 			<div class="w-full py-[24px]">
 				<div class="flex flex-col w-full">
 					<div class="w-full flex justify-between px-[26px]">
 						<div class="flex items-center gap-[15px]">
 							{#if step}
 							<svg on:click={stepBack} class="w-[24px] h-[24px] cursor-pointer">
-								<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#chevron-left"/>
+								<use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
 							</svg>
 							{/if}
 							<p class="text-xl font-semibold gradient-text-white2 main">{title}</p>
@@ -47,7 +47,7 @@
 							class="relative z-[999] w-[31px] h-[31px] rounded-full flex items-center justify-center bg-grayLight4 dark:bg-white5 cursor-pointer"
 						>
 							<svg class="w-[16px] h-[16px] translate-x-[1px] translate-y-[1px]">
-								<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#close" />
+								<use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#close" />
 							</svg>
 						</div>
 					</div>
@@ -57,10 +57,10 @@
 				</div>
 			</div>
 
-			<img class="dark:flex hidden radialImg absolute bottom-0 left-[0] z-[1] rotate-[180deg]"
-				src="/imgs/elipse.svg"
+			<!-- <img class="dark:flex hidden radialImg absolute bottom-0 left-[0] z-[1] rotate-[180deg]"
+				src="/src/assets/imgs/elipse.svg"
 				alt=""
-			/>
+			/> -->
 		</div>
 	</div>
 </div>
