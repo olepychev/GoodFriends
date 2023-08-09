@@ -11,7 +11,7 @@ export const authCodeInsert = async (dataAccess: any, authCode: string): Promise
     return dataAccess.insert(sql, values)
 }
 
-export const signUpInsert = async (dataAccess:any, email:string, password:string, nick:string, loginType:string, affiliateCode:string): Promise<any> => {
+export const signUpInsert = async (dataAccess:any, affiliateCode:string, email:string, password:string, nick:string, loginType:string): Promise<any> => {
     let sql:string = `
         INSERT INTO gf_member
             SET email = ?,
@@ -22,7 +22,7 @@ export const signUpInsert = async (dataAccess:any, email:string, password:string
                 reg_date = NOW(),
                 login_type = ?,
                 affiliate_code = ?`
-    let values:string[] = [email, password, nick, setting.INITIAL_PROFILE_IMAGE, loginType, affiliateCode]    
+    let values:string[] = [affiliateCode, email, password, nick, setting.INITIAL_PROFILE_IMAGE, loginType, ]    
     return dataAccess.insert(sql, values)
 }
 
