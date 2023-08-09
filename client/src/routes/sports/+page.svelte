@@ -1,5 +1,5 @@
 <script>
-	import BreadCrumb from '$lib/components/breadcrumb/breadCrumb.svelte';
+	import BreadCrumb from '$lib/components/breadCrumb/breadCrumb.svelte';
 	import SportsBet from '$lib/components/sports/sportsBet.svelte';
 	const sportsTabs = [
 		{
