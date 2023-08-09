@@ -2,19 +2,19 @@
 	const tabs = [
 		{
 			title: 'Soccer',
-			image: '/src/assets/imgs/live-sports/ball.svg'
+			image: '/imgs/live-sports/ball.svg'
 		},
 		{
 			title: 'Esports',
-			image: '/src/assets/imgs/live-sports/headphone.svg'
+			image: '/imgs/live-sports/headphone.svg'
 		},
 		{
 			title: 'Tennis',
-			image: '/src/assets/imgs/live-sports/tennis-ball.svg'
+			image: '/imgs/live-sports/tennis-ball.svg'
 		},
 		{
 			title: 'Basketball',
-			image: '/src/assets/imgs/live-sports/basket-ball.svg'
+			image: '/imgs/live-sports/basket-ball.svg'
 		},
 	];
     let currentTab = 'soccer'
@@ -47,7 +47,7 @@
 							{tab.title}
 						</p>
                         <svg class="w-[16px] h-[16px] rotate-[180deg]">
-                            <use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
+                            <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#chevron-left"/>
                         </svg>
 					</div>
 				{/each}
@@ -67,7 +67,7 @@
                         <p class="text-sm md:text-base text-black dark:text-white font-medium">BountryHunter31</p>
                         <div class="flex items-center gap-[4px]">
                             <p class="text-sm md:text-base text-black dark:text-white font-medium">104.54</p>
-                            <img class="w-[24px]" src="/src/assets/imgs/bitcoin.svg"/>
+                            <img class="w-[24px]" src="/imgs/bitcoin.svg"/>
                         </div>
                         <p class="text-sm md:text-base text-grayDark font-medium">2023/13/07 22:33</p>
                         <div class="flex items-center px-[10px] py-[7px] gap-[6px]  max-w-max rounded-full bg-white dark:bg-white5">
@@ -80,7 +80,7 @@
                         <p class="text-sm md:text-base text-black dark:text-white font-medium">BountryHunter31</p>
                         <div class="flex items-center gap-[4px]">
                             <p class="text-sm md:text-base text-black dark:text-white font-medium">104.54</p>
-                            <img class="w-[24px]" src="/src/assets/imgs/bitcoin.svg"/>
+                            <img class="w-[24px]" src="/imgs/bitcoin.svg"/>
                         </div>
                         <p class="text-sm md:text-base text-grayDark font-medium">2023/13/07 22:33</p>
                         <div class="flex items-center px-[10px] py-[7px] gap-[6px]  max-w-max rounded-full bg-white dark:bg-white5">

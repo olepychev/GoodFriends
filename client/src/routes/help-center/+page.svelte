@@ -24,7 +24,7 @@
 				<svg class="w-[20px] h-[20px]">
 					<use
 						class="fill-black dark:fill-white"
-						href="/src/assets/imgs/icons/icons.svg#chevron-left"
+						href="/imgs/icons/icons.svg#chevron-left"
 					/>
 				</svg>
 				<p class="text-sm font-medium capitalize text-black dark:text-white"> {tab} Back</p>

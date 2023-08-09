@@ -28,7 +28,7 @@
 	>
 		<div class="p-[8px] rounded-[5px] rotate-[45deg] bg-linear">
 			<svg class="w-[23px] h-[23px] rotate-[-45deg]">
-				<use class="fill-transparent" href="/src/assets/imgs/icons/icons.svg#arrow-up" />
+				<use class="fill-transparent" href="/imgs/icons/icons.svg#arrow-up" />
 			</svg>
 		</div>
 	</div>
