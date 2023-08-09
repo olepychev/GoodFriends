@@ -1,5 +1,5 @@
 <script>
-	import BreadCrumb from '$lib/components/breadcrumb/breadCrumb.svelte';
+	import BreadCrumb from '$lib/components/breadCrumb/breadCrumb.svelte';
 	import { onMount } from 'svelte';
 	import BettingAccordion from '../../../lib/components/accordion/betting/bettingAccordion.svelte';
 
