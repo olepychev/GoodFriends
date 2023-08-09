@@ -4,13 +4,13 @@
 	import ModalLayout from '../modalLayout.svelte';
 	const dispathEvent = createEventDispatcher()
 	const fiatCurrencyArr = [
-		{ value: 'KRW', label: 'KRW', image: '/src/assets/imgs/flag1.svg' },
-		{ value: 'KRW2', label: 'KRW2', image: '/src/assets/imgs/bank.svg' },
-		{ value: 'KRW3', label: 'KRW3', image: '/src/assets/imgs/flag1.svg' }
+		{ value: 'KRW', label: 'KRW', image: '/imgs/flag1.svg' },
+		{ value: 'KRW2', label: 'KRW2', image: '/imgs/bank.svg' },
+		{ value: 'KRW3', label: 'KRW3', image: '/imgs/flag1.svg' }
 	];
 	const paymentMethodArr = [
-		{ value: 'bank', label: 'Bank Transfer', image: '/src/assets/imgs/bank.svg' },
-		{ value: 'wire', label: 'Wire Transfer', image: '/src/assets/imgs/bank.svg' }
+		{ value: 'bank', label: 'Bank Transfer', image: '/imgs/bank.svg' },
+		{ value: 'wire', label: 'Wire Transfer', image: '/imgs/bank.svg' }
 	];
 	function closeProfileModal() {
 		dispathEvent('closeProfileModal')

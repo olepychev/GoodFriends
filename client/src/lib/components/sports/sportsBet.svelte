@@ -115,7 +115,7 @@
 						</div>
 						<div class="flex flex-col gap-[12px] sm:gap-[20px]">
 							<div class="flex items-center gap-[5px]">
-								<img class="w-[14px] sm:w-[16px]" src="/src/assets/imgs/global.svg" alt="global" />
+								<img class="w-[14px] sm:w-[16px]" src="/imgs/global.svg" alt="global" />
 								<p class="text-xs sm:text-sm uppercase font-medium text-grayDark2">
 									{item.content}
 								</p>

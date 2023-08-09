@@ -111,18 +111,18 @@
 					class="min-w-[700px] gap-[15px] relative w-full grid grid-cols-5 py-[23px] before:content-[''] before:absolute before:top-full before:left-[50%] before:translate-x-[-50%] before:w-[97%] before:h-[1px] before:bg-grayLight dark:before:bg-blackDark2"
 				>
 					<div class="flex items-center gap-[5px] md:gap-[10px]">
-						<img class="w-[15px] md:w-[19px]" src='/src/assets/imgs/game1.svg' alt={item.title} />
+						<img class="w-[15px] md:w-[19px]" src='/imgs/game1.svg' alt={item.title} />
 						<p class="text-sm lg:text-base font-semibold text-grayDark dark:text-grayDark2">{item.title}</p>
 					</div>
 					<p class="font-semibold text-start text-sm lg:text-base text-black dark:text-white">{item.nick}</p>
 					<div class="flex items-center gap-[6px]">
 						<p class="font-semibold text-sm lg:text-base text-black dark:text-white">{item.betAmount}</p>
-						<img class="w-[24px]" src='/src/assets/imgs/bitcoin.svg' alt="Bet Amount" />
+						<img class="w-[24px]" src='/imgs/bitcoin.svg' alt="Bet Amount" />
 					</div>
 					<p class="text-base font-semibold text-grayDark2">0.001x</p>
 					<div class="flex items-center justify-end gap-[6px]">
 						<p class={`font-semibold text-base ${item.profitAmount >= 0 ? 'text-green': 'text-red'}`}>{item.profitAmount}</p>
-						<img class="w-[24px]" src='/src/assets/imgs/bitcoin.svg' alt="Profit Amount" />
+						<img class="w-[24px]" src='/imgs/bitcoin.svg' alt="Profit Amount" />
 					</div>
 				</div>
 			{/each}
