@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import globalStore from '../../../../store/globalStore';
-	import BreadCrumb from '$lib/components/breadcrumb/breadCrumb.svelte';
+	import BreadCrumb from '$lib/components/breadCrumb/breadCrumb.svelte';
 	import RelatedGames from '$lib/components/relatedGames/relatedGames.svelte';
 	import ActivityTable from '$lib/components/main/activityTable/activityTable.svelte';
 	import Footer from '$lib/components/footer/footer.svelte';
