@@ -10,17 +10,17 @@ const globalStore = writable({
 	forgotPasswordStep: 1,
 	forgotPasswordForm: false,
 	darkMode: true,
-	// userDetail: null,
-	userDetail: {
-		member_idx: 3,
-		email: 'g_115965063647480354431',
-		nick: 'user6474563937',
-		level: 1,
-		game_money: 0,
-		profile_image: 'https://storage.goodfriendszone.com/uploads/permanent/newbie.webp',
-		login_type: 'google',
-		affiliate_code: 'abcde'
-	}
+	userDetail: null,
+	// userDetail: {
+	// 	member_idx: 3,
+	// 	email: 'g_115965063647480354431',
+	// 	nick: 'user6474563937',
+	// 	level: 1,
+	// 	game_money: 0,
+	// 	profile_image: 'https://storage.goodfriendszone.com/uploads/permanent/newbie.webp',
+	// 	login_type: 'google',
+	// 	affiliate_code: 'abcde'
+	// }
 });
 
 const store = {
