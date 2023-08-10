@@ -1,18 +1,38 @@
 <script>
 	import { writable } from 'svelte/store';
+	import { onMount } from "svelte";
 	import globalStore from '../../../../../store/globalStore';
 	import Select from '../../../select/select.svelte';
 	import Switch from '../../../switch/switch.svelte';
 	import SelectPlugin from 'svelte-select';
+	import Cookies from 'js-cookie';
 
-	$: darkMode = $globalStore.darkMode
+	let darkMode;
+
+	onMount(() => {
+		darkMode = false;
+		if(Cookies.get('Mode') == undefined) {
+			window.document.body.classList.add('dark')
+		}
+		else if(Cookies.get('Mode') == 'Light') {
+			window.document.body.classList.remove('dark')
+		}
+		else if(Cookies.get('Mode') == 'Dark') {
+			window.document.body.classList.add('dark')
+			darkMode = true;
+		}
+	});
 
 	function handleChange(val) {
 		if(val === 'dark') {
-			globalStore.toggleItem('darkMode', true)
+			// globalStore.toggleItem('darkMode', true)
+			Cookies.set('Mode', 'Dark');
+			darkMode = true;
 			document.documentElement.classList.add('dark')
 		}else {
-			globalStore.toggleItem('darkMode', false)
+			// globalStore.toggleItem('darkMode', false)
+			Cookies.set('Mode', 'Light');
+			darkMode = false;
 			document.documentElement.classList.remove('dark')
 		}
 	}
@@ -55,7 +75,7 @@
 			class="max-w-[255px] w-full flex items-center justify-around bg-grayLight4 dark:bg-white5 rounded-[7px] p-[5px]"
 		>
 		<label class="w-[48%] cursor-pointer">
-			<input on:change={()=> handleChange('light')} type="radio"  name="colorMode" checked={!darkMode ? true : false} value="light" class="custom-peer sr-only" />
+			<input on:change={()=> handleChange('light')} type="radio"  name="colorModes" checked={!darkMode ? true : false} value="light" class="custom-peer sr-only" />
 			<div
 				class="flex items-center justify-center gap-[6px] parent border border-transparent transition-all w-full rounded-[7px] p-[6px]"
 			>
@@ -66,7 +86,7 @@
 			</div>
 		</label>
 		<label class="w-[48%] cursor-pointer">
-			<input on:change={()=> handleChange('dark')} type="radio" checked={darkMode} name="colorMode" value="dark" class="custom-peer sr-only" />
+			<input on:change={()=> handleChange('dark')} type="radio" checked={darkMode} name="colorModes" value="dark" class="custom-peer sr-only" />
 			<div
 				class="flex items-center justify-center gap-[6px] parent border border-transparent transitiona-all w-full rounded-[7px] p-[6px]"
 			>

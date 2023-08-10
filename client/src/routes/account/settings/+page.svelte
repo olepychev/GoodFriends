@@ -3,6 +3,7 @@
     import SettingsLayout from '$lib/components/account/settings/layout/settingsLayout.svelte'
     import GeneralTab from '$lib/components/account/settings/tabs/generalTab.svelte'
     import PrivacyTab from '$lib/components/account/settings/tabs/privacyTab.svelte'
+	import SecurityTab from '../../../lib/components/account/settings/tabs/securityTab.svelte';
     let tab = 'general'
     function handleTab(activeTab) {
         tab = activeTab.detail
@@ -27,6 +28,9 @@
                {/if}
                {#if tab === 'privacy'}
                 <PrivacyTab />
+               {/if}
+               {#if tab === 'security'}
+               <SecurityTab />
                {/if}
             </SettingsLayout>
         </div>

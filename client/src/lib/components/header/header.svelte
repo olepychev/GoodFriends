@@ -3,9 +3,8 @@
 	import LoggedinHeader from './headerLoggedin.svelte';
 	import LoginHeader from './headerlogin.svelte';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import toast from '$lib/components/toast/toast';
-	import { getAccessToken, getRefreshToken, signupSocial, signIn } from '../../../apis/account';
+	import toast from '../../../lib/components/toast/toast';
+	import { getAccessToken, getRefreshToken } from '../../../apis/account';
 	import ProfileMenu from '$lib/components/menus/profile/profileMenu.svelte';
 	import DepositModal from '../modals/deposit/deposit.svelte';
 	import MyProfile from '../modals/profile/myProfile.svelte';
@@ -14,56 +13,6 @@
 
 	$: path = $page.url.pathname;
 	$: isLoggedIn = $globalStore.userDetail;
-
-	onMount(async () => {
-		handleTokens();
-		if ($globalStore.telegramUserData) {
-			const userInfo = $globalStore.telegramUserData;
-			signInWithTelegram(userInfo)
-		}
-	});
-
-	async function handleTokens() {
-		const res = await getAccessToken();
-		if (res.success) {
-			globalStore.toggleItem('userDetail', res.data);
-		} else if (res.data.code == 4001) {
-			const res1 = await getRefreshToken();
-			if (res1.success) {
-				const res2 = await getAccessToken();
-				if (res2.success) globalStore.toggleItem('userDetail', res2.data);
-			} else {
-				globalStore.toggleItem('userDetail', null);
-			}
-		} else {
-			globalStore.toggleItem('userDetail', null);
-			toast.error('Bad Network Connection');
-		}
-	}
-
-	async function signInWithTelegram(userInfo) {
-    const res = await signupSocial({
-      email: 't_' + userInfo.id,
-      password: userInfo.id,
-      loginType: 'telegram'
-    })
-    try {
-      const res1 = await signIn({
-        email: 't_' + userInfo.id,
-        password: userInfo.id,
-      });
-
-      if (res1.success) {
-        toast.success(res1.data.message);
-        globalStore.toggleItem("loginForm", false);
-        handleTokens();
-      } else {
-        toast.error(res1.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
 	let activeProfileMenu = false;
 	function openProfileMenu() {
@@ -94,11 +43,13 @@
 	}
 	$: activeBetSlip = $globalStore.betSlip
 	function openBetSlip() {
-		globalStore.toggleItem('betSlip', true);
+		globalStore.toggleItem('betSlip', !$globalStore.betSlip);
 	}
+
 	function closeBetSlip() {
 		globalStore.toggleItem('betSlip', false);
 	}
+
 	function closeProfileModal() {
 		activeDepositModal = false;
 		activeMyProfileModal = false;
@@ -111,7 +62,6 @@
 	class="overflow-hidden sticky top-0 w-full px-[15px] sm:px-[30px] py-[17px] bg-white dark:bg-blackDark z-[999]"
 >
 	<div class="w-full flex items-center justify-between">
-		<!-- <div class="telegram-login-widget"></div> -->
 		<div class="hidden md:flex items-center gap-[15px]">
 			<a
 				href="/casino"
@@ -133,7 +83,7 @@
 			<a
 				href="/sports"
 				class={`${
-					path === '/sports' ? 'active' : ''
+					path.includes('/sports') ? 'active' : ''
 				} group header-filter px-[18px] py-[13px] border-[1.14px] hover:bg-grayLight4 dark:hover:bg-white5 border-transparent rounded-[7px] transition-all hover:border-grayLight2 dark:hover:border-white11 flex items-center gap-[9px] cursor-pointer`}
 			>
 				<div class="header_icon-light hidden group-hover:block">

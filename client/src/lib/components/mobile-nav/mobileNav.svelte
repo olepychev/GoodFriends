@@ -12,7 +12,6 @@
 		globalStore.toggleItem('chatOpen', false);
 		globalStore.toggleItem('sidebar', false);
 		document.body.classList.remove('aside-active');
-
 	}
 	function toggleBetSlip() {
 		globalStore.toggleItem('betSlip', !$globalStore.betSlip);
@@ -68,14 +67,14 @@
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
-					class={`${sidebarOpen ? 'fill-blue' : ''} fill-grayDark group-hover:fill-blue`}
+					class={`${sidebarOpen ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
 					href="/imgs/icons/icons.svg#menu"
 				/>
 			</svg>
 			<p
 				class={`${
-					sidebarOpen ? 'text-blue' : ''
-				} text-xs font-medium text-grayDark group-hover:text-blue`}
+					sidebarOpen ? 'text-blue' : 'text-grayDark'
+				} text-xs font-medium group-hover:text-blue`}
 			>
 				Menu
 			</p>
@@ -95,14 +94,14 @@
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
-					class={`${path === '/casino' ? 'fill-blue' : ''} fill-grayDark group-hover:fill-blue`}
+					class={`${path === '/casino' ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
 					href="/imgs/icons/icons.svg#casino"
 				/>
 			</svg>
 			<p
 				class={`${
-					path === '/casino' ? 'text-blue' : ''
-				} text-xs font-medium text-grayDark group-hover:text-blue`}
+					path === '/casino' ? 'text-blue' : 'text-grayDark'
+				} text-xs font-medium group-hover:text-blue`}
 			>
 				Casino
 			</p>
@@ -110,17 +109,26 @@
 
 		<a href="/sports" class="group pt-[15px] relative flex flex-col items-center gap-[7px]">
 			<img
-				class="absolute top-[-9px] min-w-[60px] left-[50%] opacity-0 translate-x-[-50%] group-hover:opacity-[1] transition-all"
+				class={`${
+					path.includes('/sports') ? '' : 'opacity-0'
+				} absolute top-[-9px] min-w-[60px] left-[50%]  translate-x-[-50%] group-hover:opacity-[1] transition-all`}
 				src="/imgs/mobileRadial.svg"
 				alt="navRadial"
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
-					class="fill-grayDark group-hover:fill-blue"
+					class={`${path.includes('/sports') ? 'fill-blue' : 'fill-grayDark'
+					} group-hover:fill-blue`}
 					href="/imgs/icons/icons.svg#sports"
 				/>
 			</svg>
-			<p class="text-xs font-medium text-grayDark group-hover:text-blue">Sports</p>
+			<p
+				class={`${
+					path.includes('/sports') ? 'text-blue' : 'text-grayDark'
+				} text-xs font-medium group-hover:text-blue`}
+			>
+				Sports
+			</p>
 		</a>
 
 		<a
@@ -137,14 +145,14 @@
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
-					class={`${chatOpen ? 'fill-blue' : ''} fill-grayDark group-hover:fill-blue`}
+					class={`${chatOpen ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
 					href="/imgs/icons/icons.svg#chat"
 				/>
 			</svg>
 			<p
 				class={`${
-					chatOpen ? 'text-blue' : ''
-				} text-xs font-medium text-grayDark group-hover:text-blue`}
+					chatOpen ? 'text-blue' : 'text-grayDark'
+				} text-xs font-medium group-hover:text-blue`}
 			>
 				Chat
 			</p>
@@ -164,14 +172,14 @@
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
-					class={`${betSlip ? 'fill-blue' : ''} fill-grayDark group-hover:fill-blue`}
+					class={`${betSlip ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
 					href="/imgs/icons/icons.svg#betSlip"
 				/>
 			</svg>
 			<p
 				class={`${
-					betSlip ? 'text-blue' : ''
-				} text-xs font-medium text-grayDark group-hover:text-blue`}
+					betSlip ? 'text-blue' : 'text-grayDark'
+				} text-xs font-medium group-hover:text-blue`}
 			>
 				Bet Slip
 			</p>

@@ -1,27 +1,27 @@
 <script>
 	import { onMount } from 'svelte';
+	import Cookies from 'js-cookie';
 	import globalStore from '../store/globalStore';
 
 	import Sidebar from '$lib/components/sidebar/sidebar.svelte';
 	import Header from '$lib/components/header/header.svelte';
-	import Chat from '$lib/components/chat/chat.svelte';
+	import Chat from '../lib/components/chat/chat.svelte';
 
 	import ScrollUp from '$lib/components/scrollUp/scroll-up.svelte';
 
-	import Layout from '$lib/components/auth/layout.svelte';
-	import SignUp from '$lib/components/auth/sign-up.svelte';
-	import SignIn from '$lib/components/auth/sign-in.svelte';
-	import ForgotPassword from '$lib/components/auth/forgot-password.svelte';
+	import Layout from '../lib/components/auth/layout.svelte';
+	import SignUp from '../lib/components/auth/sign-up.svelte';
+	import SignIn from '../lib/components/auth/sign-in.svelte';
+	import ForgotPassword from '../lib/components/auth/forgot-password.svelte';
 	import '../base.css';
-	import MainLoader from '$lib/components/loader/mainLoader.svelte';
-	import MobileNav from '$lib/components/mobile-nav/mobileNav.svelte';
+	import MainLoader from '../lib/components/loader/mainLoader.svelte';
+	import MobileNav from '../lib/components/mobile-nav/mobileNav.svelte';
 
 	$: isChatOpen = $globalStore.chatOpen;
 	$: userDetail = $globalStore.userDetail;
 	$: registrationForm = $globalStore.registrationForm;
 	$: loginForm = $globalStore.loginForm;
 	$: forgotPasswordForm = $globalStore.forgotPasswordForm;
-	$: darkMode = $globalStore.darkMode
 
 	let loaderMain = false;
 	function chatToggle(res) {
@@ -66,10 +66,15 @@
 	}
 
 	onMount(() => {
-		if(darkMode) {
-			document.documentElement.classList.add('dark')
-		}else {
-			document.documentElement.classList.remove('dark')
+		if(Cookies.get('Mode') == undefined) {
+			Cookies.set('Mode', 'Dark');
+			window.document.documentElement.classList.add('dark')
+		}
+		else if(Cookies.get('Mode') == 'Light') {
+			window.document.documentElement.classList.remove('dark')
+		}
+		else if(Cookies.get('Mode') == 'Dark') {
+			window.document.documentElement.classList.add('dark')
 		}
 		loaderMain = true
 		isChatOpen
@@ -101,7 +106,6 @@
 {/if}
 
 <div class={loginForm ? 'block': 'hidden'}>
-	<!-- {#if loginForm} -->
 	<Layout on:closeForm={closeForm}>
 		<SignIn
 			on:openForgotPasswordForm={openForgotPasswordForm}
@@ -109,7 +113,6 @@
 			on:closeForm={closeForm}
 		/>
 	</Layout>
-	<!-- {/if} -->
 </div>
 
 {#if forgotPasswordForm}

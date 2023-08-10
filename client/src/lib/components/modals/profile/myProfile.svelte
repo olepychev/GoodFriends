@@ -1,6 +1,8 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import ModalLayout from '../modalLayout.svelte';
+	import globalStore from '../../../../store/globalStore';
+
 	const dispathEvent = createEventDispatcher();
 
 	function closeProfileModal() {
@@ -15,15 +17,15 @@
 	<div class="w-full flex flex-col items-center gap-[10px] my-[30px]">
 		<div class="relative flex items-center justify-center w-[97px] h-[97px] rounded-full border border-blue bg-linear3">
 			<div class="w-[87px] h-[87px] rounded-full">
-				<img src="/imgs/profile.svg" class="w-full h-full object-cover" alt="profile">
+				<img src={ $globalStore.userDetail.profile_image } class="rounded-full w-full h-full object-cover" alt="profile">
 			</div>
 			<div class="absolute top-[calc(100%-25px)]">
 				<img src="/imgs/medal.svg" class="w-[27px]" alt="medal">
 			</div>
 		</div>
 		<div class="relative w-full flex flex-col items-center gap-[4px]">
-			<p class="text-mxl gradient-text-white2 main font-medium">Stacey Miller</p>
-			<p class="text-md text-black50 dark:text-white50 font-normal">User ID: @toles9388944</p>
+			<p class="text-mxl gradient-text-white2 main font-medium">{$globalStore.userDetail.nick}</p>
+			<p class="text-md text-black50 dark:text-white50 font-normal">User ID: {$globalStore.userDetail.email}</p>
 			<div on:click={editMyProfile} class="absolute z-[9] right-[0px] top-[50%] translate-y-[-50%] group w-[39px] h-[39px] rounded-[10px] bg-grayLight4 dark:bg-white11 flex items-center justify-center cursor-pointer">
 				<svg class="w-[16x] h-[16px] opacity-70 group-hover:opacity-100 transition-all">
 					<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#edit"/>

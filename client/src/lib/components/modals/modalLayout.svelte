@@ -29,7 +29,7 @@
 		<div id="modalInner"
 			class="relative w-full h-full overflow-auto md:h-auto md:max-w-[460px] m-auto md:min-h-[600px] rounded-[14px] rounded-tl-[14px] bg-white dark:bg-black md:overflow-hidden"
 		>
-			<img src="/imgs/elipse.svg" class="dark:flex hidden radialImg absolute top-0 right-[0] z-[1]" alt="" />
+			<!-- <img src="/imgs/elipse.svg" class="dark:flex hidden radialImg absolute top-0 right-[0] z-[1]" alt="" /> -->
 			<div class="w-full py-[24px]">
 				<div class="flex flex-col w-full">
 					<div class="w-full flex justify-between px-[26px]">
@@ -57,10 +57,10 @@
 				</div>
 			</div>
 
-			<img class="dark:flex hidden radialImg absolute bottom-0 left-[0] z-[1] rotate-[180deg]"
+			<!-- <img class="dark:flex hidden radialImg absolute bottom-0 left-[0] z-[1] rotate-[180deg]"
 				src="/imgs/elipse.svg"
 				alt=""
-			/>
+			/> -->
 		</div>
 	</div>
 </div>

@@ -1,9 +1,10 @@
 <script>
 	export let pages;
 	export let current;
+	export let hide;
 </script>
 
-<div class="w-full text-white">
+<div class={`${hide === 'tablet' ? 'md:flex hidden' : 'flex'} w-full text-white`}>
 	<div class="w-full flex items-center">
 		{#each pages as page}
 			<a href={page.route} class="group bg-white dark:bg-white5 px-[25px] py-[12px] mr-[10px] rounded-[7px]">

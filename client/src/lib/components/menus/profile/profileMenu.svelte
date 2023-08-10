@@ -3,8 +3,17 @@
 	import { signOut } from '../../../../apis/account';
 	import toast from '../../toast/toast';
 	import globalStore from '../../../../store/globalStore';
+	import { onMount } from "svelte";
+	import Cookies from 'js-cookie';
 
-	$: darkMode = $globalStore.darkMode
+	let darkMode;
+
+	onMount(() => {
+		darkMode = false;
+		if(Cookies.get('Mode') == 'Dark') {
+			darkMode = true;
+		}
+	});
 
 	const dispathEvent = createEventDispatcher()
 	function closeProfileMenu() {
@@ -26,10 +35,14 @@
 
 	function handleChange(val) {
 		if(val === 'dark') {
-			globalStore.toggleItem('darkMode', true)
+			// globalStore.toggleItem('darkMode', true)
+			Cookies.set('Mode', 'Dark');
+			darkMode = true;
 			document.documentElement.classList.add('dark')
 		}else {
-			globalStore.toggleItem('darkMode', false)
+			// globalStore.toggleItem('darkMode', false)
+			Cookies.set('Mode', 'Light');
+			darkMode = false;
 			document.documentElement.classList.remove('dark')
 		}
 	}

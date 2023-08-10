@@ -40,7 +40,6 @@
 			image: '/imgs/live-sports/rugby-ball.svg'
 		}
 	];
-
 	export let data;
 	let currentTab = 'All';
 	let totalNumber = 0,
@@ -153,13 +152,28 @@
 			: vendorSelectedList.filter((it) => it !== item.name);
 		search();
 	};
-
+	function removeFromvendorSelectedList(vendor) {
+	 	vendorSelectedList = vendorSelectedList.filter(item => {
+			if(item !== vendor) {
+				return true
+			} 
+		})
+		search();
+	}
 	const selectType = (e, item) => {
 		typeSelectedList = e.target.checked
 			? [...typeSelectedList, item.name]
 			: typeSelectedList.filter((it) => it !== item.name);
 		search();
 	};
+	function removeFromTypeSelectedList(type) {
+		typeSelectedList = typeSelectedList.filter(item => {
+			if(item !== type) {
+				return true
+			} 
+		})
+		search();
+	}
 </script>
 
 <main class="w-full py-[27px] pl-[15px] pr-[15px] md:pl-[30px] md:pr-[30px]" id="main">
@@ -186,10 +200,10 @@
 			<div
 				on:click={handleFilter}
 				id="filterToggle"
-				class="opacity-80 hover:opacity-100  w-[50px] h-[50px] bg-white dark:bg-white5 rounded-[7px] flex items-center justify-center cursor-pointer"
+				class="opacity-80 hover:opacity-100 w-[50px] h-[50px] bg-white dark:bg-white5 rounded-[7px] flex items-center justify-center cursor-pointer"
 			>
 				<svg class="w-[20px] h-[20px]">
-					<use class="fill-grayDark" href="/imgs/icons/icons.svg#filter"/>
+					<use class="fill-grayDark" href="/imgs/icons/icons.svg#filter" />
 				</svg>
 			</div>
 			{#if filter}
@@ -197,7 +211,9 @@
 					class="w-full px-[25px] py-[13px] bg-white dark:bg-white5 rounded-[7px] h-[500px] overflow-auto custom-scrollbar md:h-auto"
 					id="filter"
 				>
-					<h6 class="text-xl text-black dark:text-white50 font-medium border-b border-b-grayLight4 dark:border-b-white11 pb-[6px] mb-[22px]">
+					<h6
+						class="text-xl text-black dark:text-white50 font-medium border-b border-b-grayLight4 dark:border-b-white11 pb-[6px] mb-[22px]"
+					>
 						Filter
 					</h6>
 					{#each filterData as filter}
@@ -232,6 +248,40 @@
 				</div>
 			{/if}
 		</div>
+		{#if vendorSelectedList.length > 0}
+		<div class="flex flex-col gap-[6px] mt-[15px]">
+			<p class="dark:text-white text-black text-base font-medium">Seleted Vendors</p>
+			<div class="flex items-cnter flex-wrap gap-[6px]">
+				{#each vendorSelectedList as vendor}
+					<div
+						class="select-none flex items-center gap-[6px] pl-[12px] py-[6px] dark:bg-white11 bg-grayLight2 rounded-[59px]"
+					>
+						<p class="text-sm dark:text-white50 text-black50 translate-y-[1px]">{vendor}</p>
+							<div on:click={removeFromvendorSelectedList(vendor)} class="h-full flex items-center w-[20px] pl-[6px] pr-[20px]  border-l dark:border-white11 border-grayLight cursor-pointer group">
+								<p class="font-medium dark:text-white50 text-black50 group-hover:text-red">✖</p>
+							</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/if}
+		{#if typeSelectedList.length > 0}
+			<div class="flex flex-col gap-[6px] mt-[15px]">
+				<p class="dark:text-white text-black text-base font-medium">Seleted Types</p>
+				<div class="flex items-cnter flex-wrap gap-[6px]">
+					{#each typeSelectedList as type}
+						<div
+							class="select-none flex items-center gap-[6px] pl-[12px] py-[6px] dark:bg-white11 bg-grayLight2 rounded-[59px]"
+						>
+							<p class="text-sm dark:text-white50 text-black50 translate-y-[1px]">{type}</p>
+								<div on:click={removeFromTypeSelectedList(type)} class="h-full flex items-center w-[20px] pl-[6px] pr-[20px]  border-l dark:border-white11 border-grayLight cursor-pointer group">
+									<p class="font-medium dark:text-white50 text-black50 group-hover:text-red">✖</p>
+								</div>
+						</div>
+					{/each}
+				</div>
+			</div>
+		{/if}
 
 		<div
 			class="select-none flex sm:flex-wrap items-center gap-[15px] mt-[30px] dragable overflow-auto scrollbar-hidden"
@@ -303,7 +353,9 @@
 
 		{#if slotsLoaded}
 			<div class="w-full justify-center flex flex-col items-center gap-[12px] mt-[32px]">
-				<p class="text-base font-medium text-black dark:text-white">{currentLimit} / {totalNumber}</p>
+				<p class="text-base font-medium text-black dark:text-white">
+					{currentLimit} / {totalNumber}
+				</p>
 				<button
 					class="p-[12px] bg-linear text-white rounded-[6px] border border-white11"
 					on:click={moreLoad}>Load more</button

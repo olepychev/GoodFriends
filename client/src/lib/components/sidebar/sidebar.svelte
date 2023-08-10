@@ -238,7 +238,7 @@
 					</a>
 				</li>
 				<li class="w-full">
-					<a href="/" on:click={closeSidebar} class="group navLink relative flex items-center justify-center">
+					<a href="/sports" on:click={closeSidebar} class={`${path.includes('/sports') ? 'active' : ''} group navLink relative flex items-center justify-center`}>
 						<svg
 							class="icon"
 							width="20"

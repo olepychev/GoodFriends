@@ -26,7 +26,7 @@ export const signUp = async (req: Request, res: Response) => {
     const affiliateCode: any|undefined = req.headers["gf-affiliate-code"];
     
     const nick:string = `user${utils.generateRandomNumber(10)}`
-    await models.signUpInsert(dataAccess, email, utils.hashWithSHA256(password), nick, "GF", affiliateCode)
+    await models.signUpInsert(dataAccess, affiliateCode, email, utils.hashWithSHA256(password), nick, "GF", )
     await models.authCodeUpdate(dataAccess, authCode)
     
     res.status(200).json(response.signUpSuccess)

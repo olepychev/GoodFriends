@@ -1,6 +1,7 @@
 <script>
 	import globalStore from '../../../store/globalStore';
 	import { createEventDispatcher } from 'svelte';
+	const SOCKET_SERVER = import.meta.env.VITE_SOCKET_SERVER;
 	const dispatch = createEventDispatcher();
 
 	$: chatOpen = $globalStore.chatOpen;
@@ -23,7 +24,7 @@
 		role: 'user'
 	};
 
-	const socket = io('http://127.0.0.1:4000', {
+	const socket = io(SOCKET_SERVER, {
 		auth: {
 			api_key: 'GF-AAAAAAAAAAA',
 			user_id: '123',
