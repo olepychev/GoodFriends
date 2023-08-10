@@ -2,16 +2,16 @@
 	import globalStore from '../../../store/globalStore';
 
 	function openSignUpForm() {
-		globalStore.toggleItem('loginOpen', false);
+		globalStore.toggleItem('loginForm', false);
 		globalStore.toggleItem('forgotPasswordForm', false);
-		globalStore.toggleItem('registrationOpen', 1);
+		globalStore.toggleItem('registrationForm', true);
 
 		document.body.style.overflow = 'hidden';
 	}
 	function openSignInForm() {
-		globalStore.toggleItem('registrationOpen', 0);
+		globalStore.toggleItem('registrationForm', false);
 		globalStore.toggleItem('forgotPasswordForm', false);
-		globalStore.toggleItem('loginOpen', true);
+		globalStore.toggleItem('loginForm', true);
 
 		document.body.style.overflow = 'hidden';
 	}

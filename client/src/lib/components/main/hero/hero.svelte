@@ -1,12 +1,12 @@
 <div class="relative w-full">
 	<img
 		class="hidden md:flex w-full min-h-[260px] max-h-[320px] object-cover md:rounded-[14px]"
-		src="/imgs/hero.svg"
+		src="/src/assets/imgs/hero.svg"
 		alt=""
 	/>
 	<img
 		class="md:hidden max-h-[450px] flex w-full object-cover md:rounded-[14px]"
-		src="/imgs/hero2.svg"
+		src="/src/assets/imgs/hero2.svg"
 		alt=""
 	/>
 	<div class="md:flex hidden absolute left-[47px] top-[50%] translate-y-[-50%]">
@@ -44,8 +44,8 @@
 			>
 		</div>
 
-		<img class="dark:flex hidden absolute h-full min-h-[250px] bottom-0 object-cover w-full" src="/imgs/ln.svg" alt="linear Background">
-		<img class="dark:hidden flex absolute h-full min-h-[250px] bottom-0 object-cover w-full" src="/imgs/heroLinearLight.svg" alt="linear Background">
+		<img class="dark:flex hidden absolute h-full min-h-[250px] bottom-0 object-cover w-full" src="/src/assets/imgs/ln.svg" alt="linear Background">
+		<img class="dark:hidden flex absolute h-full min-h-[250px] bottom-0 object-cover w-full" src="/src/assets/imgs/heroLinearLight.svg" alt="linear Background">
 
 	</div>
 </div>

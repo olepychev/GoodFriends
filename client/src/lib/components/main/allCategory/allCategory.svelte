@@ -12,32 +12,32 @@
     const categorySliderArr = [
         {
             title: "Casino",
-            image: "/imgs/casino.svg",
+            image: "/src/assets/imgs/casino.svg",
             link: "/"
         },
         {
             title: "Slot",
-            image: "/imgs/slot.svg",
+            image: "/src/assets/imgs/slot.svg",
             link: "/"
         },
         {
             title: "sports",
-            image: "/imgs/sports.svg",
+            image: "/src/assets/imgs/sports.svg",
             link: "/"
         },
         {
             title: "V-Game",
-            image: "/imgs/v-games.svg",
+            image: "/src/assets/imgs/v-games.svg",
             link: "/"
         },
         {
             title: "Mini Games",
-            image: "/imgs/mini-games.svg",
+            image: "/src/assets/imgs/mini-games.svg",
             link: "/"
         },
         {
             title: "Live Sports",
-            image: "/imgs/live-sports.svg",
+            image: "/src/assets/imgs/live-sports.svg",
             link: "/"
         },
     ];
@@ -63,7 +63,7 @@
 				on:click={categorySliderPrev}
 			>
 				<svg class="w-[24px] h-[24px]">
-					<use class="dark:fill-white fill-black" href="/imgs/icons/icons.svg#chevron-left"/>
+					<use class="dark:fill-white fill-black" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
 				</svg>
 			</button>
 			<button
@@ -72,7 +72,7 @@
 				on:click={categorySliderNext}
 			>
 				<svg class="w-[24px] h-[24px] rotate-[180deg]">
-					<use class="dark:fill-white fill-black" href="/imgs/icons/icons.svg#chevron-left"/>
+					<use class="dark:fill-white fill-black" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
 				</svg>
 			</button>
 		</div>

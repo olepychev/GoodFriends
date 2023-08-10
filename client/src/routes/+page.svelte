@@ -12,147 +12,147 @@
 		{
 			type: 'latest bets',
 			game: {
-				image: '/imgs/game1.svg',
+				image: '/src/assets/imgs/game1.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'bountyHunter31',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/bitcoin.svg'
+				image: '/src/assets/imgs/bitcoin.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: false,
 				profit: '21.567',
-				image: '/imgs/bitcoin.svg'
+				image: '/src/assets/imgs/bitcoin.svg'
 			}
 		},
 		{
 			type: 'latest bets',
 			game: {
-				image: '/imgs/game2.svg',
+				image: '/src/assets/imgs/game2.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'unknown',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: true,
 				profit: '21.567',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			}
 		},
 		{
 			type: 'latest bets',
 			game: {
-				image: '/imgs/game3.svg',
+				image: '/src/assets/imgs/game3.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'wdwdw21',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: true,
 				profit: '21.567',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			}
 		},
 
 		{
 			type: 'recent deposits',
 			game: {
-				image: '/imgs/game4.svg',
+				image: '/src/assets/imgs/game4.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'gmaksd askd',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/bitcoin.svg'
+				image: '/src/assets/imgs/bitcoin.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: false,
 				profit: '21.567',
-				image: '/imgs/bitcoin.svg'
+				image: '/src/assets/imgs/bitcoin.svg'
 			}
 		},
 		{
 			type: 'recent deposits',
 			game: {
-				image: '/imgs/game4.svg',
+				image: '/src/assets/imgs/game4.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'gmaksd askd',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/bitcoin.svg'
+				image: '/src/assets/imgs/bitcoin.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: false,
 				profit: '21.567',
-				image: '/imgs/bitcoin.svg'
+				image: '/src/assets/imgs/bitcoin.svg'
 			}
 		},
 		{
 			type: 'recent deposits',
 			game: {
-				image: '/imgs/game1.svg',
+				image: '/src/assets/imgs/game1.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'uadasd123',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: true,
 				profit: '21.567',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			}
 		},
 		{
 			type: 'recent deposits',
 			game: {
-				image: '/imgs/game2.svg',
+				image: '/src/assets/imgs/game2.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'blabla bla',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: true,
 				profit: '21.567',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			}
 		},
 
 		{
 			type: 'recent withdrawals',
 			game: {
-				image: '/imgs/game2.svg',
+				image: '/src/assets/imgs/game2.svg',
 				title: 'Ring of fortune'
 			},
 			player: 'blabla bla',
 			betAmount: {
 				amount: '104.54',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			},
 			multiplier: '0.001x',
 			profitAmount: {
 				isProfit: true,
 				profit: '21.567',
-				image: '/imgs/eth.svg'
+				image: '/src/assets/imgs/eth.svg'
 			}
 		}
 	];

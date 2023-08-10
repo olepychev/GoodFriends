@@ -1,14 +1,10 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { onMount } from 'svelte';
 	import toast from '../../../lib/components/toast/toast';
 	import globalStore from '../../../store/globalStore';
-	import { signUp, signUpEmail, getAccessToken, getRefreshToken, signupSocial } from '../../../apis/account';
+	import { signUp, signUpEmail, signIn, getAccessToken, getRefreshToken, signupSocial } from '../../../apis/account';
 
 	const dispatch = createEventDispatcher();
-	const BOT_NAME = import.meta.env.VITE_TELEGRAM_BOT_NAME;
-  const REDIRECT_URL = import.meta.env.VITE_TELEGRAM_REDIRECT_URL;
-
 	let signUpUserData = {
     email: "",
     authCode: "",
@@ -16,11 +12,29 @@
     password: "",
   };
 
-	$: registrationOpen = $globalStore.registrationOpen;
+	$: registrationStep = $globalStore.registrationStep;
 
-	onMount(async () => {
-		handleTelegram();
-	});
+	function openSignIn() {
+		dispatch('openSignIn')
+	}
+
+	async function handleTokens() {
+		const res = await getAccessToken();
+		if (res.success) {
+			globalStore.toggleItem('userDetail', res.data);
+		} else if (res.data.code == 4001) {
+			const res1 = await getRefreshToken();
+			if (res1.success) {
+				const res2 = await getAccessToken();
+				if (res2.success) globalStore.toggleItem('userDetail', res2.data);
+			} else {
+				globalStore.toggleItem('userDetail', null);
+			}
+		} else {
+			globalStore.toggleItem('userDetail', null);
+			toast.error('Bad Network Connection');
+		}
+	}
 
 	function handleTelegram() {
     const script = document.createElement('script');
@@ -29,15 +43,12 @@
     script.setAttribute('data-size', 'large');
     script.setAttribute('data-auth-url', REDIRECT_URL);
     document.getElementById('telegram-login').appendChild(script);
+		document.getElementById('telegram-login').style.opacity = '1%';
   }
-
-	function openSignIn() {
-		dispatch('openSignIn')
-	}
 
 	async function handleSignUp(event) {
     event.preventDefault();
-    if ($globalStore.registrationOpen == 1) {
+    if ($globalStore.registrationStep == 1) {
       document.getElementById('submit_send').disabled = true
       const res = await signUpEmail({
         email: signUpUserData.email,
@@ -45,9 +56,9 @@
       document.getElementById('submit_send').disabled = false
       if (res.success) {
         toast.success("Sent a verification code to your email.");
-        globalStore.toggleItem("registrationOpen", 2);
+        globalStore.toggleItem("registrationStep", 2);
       } else toast.error(res.data.message);
-    } else if ($globalStore.registrationOpen == 2) {
+    } else if ($globalStore.registrationStep == 2) {
       const res = await signUp({
         email: signUpUserData.email,
         authCode: signUpUserData.authCode,
@@ -56,32 +67,14 @@
       });
       if (res.success) {
         toast.success(res.data.message);
-        globalStore.toggleItem("registrationOpen", 3);
+        globalStore.toggleItem("registrationStep", 3);
       } else toast.error(res.data.message);
     } else {
-      globalStore.toggleItem("registrationOpen", 0);
+      dispatch('closeForm');
     }
   }
 
-	async function handleTokens() {
-    const res = await getAccessToken();
-    if (res.success) {
-      globalStore.toggleItem("userDetail", res.data);
-    } else if (res.data.code == 4001) {
-      const res1 = await getRefreshToken();
-      if (res1.success) {
-        const res2 = await getAccessToken();
-        if (res2.success) globalStore.toggleItem("userDetail", res2.data);
-      } else {
-        globalStore.toggleItem("userDetail", null);
-      }
-    } else {
-      globalStore.toggleItem("userDetail", null);
-      toast.error("Bad Network Connection");
-    }
-  }
-
-	async function signInWithGoogle() {
+  async function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     await provider.addScope("email");
     const data = await firebase.auth().signInWithPopup(provider);
@@ -99,7 +92,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginOpen", false);
+        globalStore.toggleItem("loginForm", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -127,7 +120,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginOpen", false);
+        globalStore.toggleItem("loginForm", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -147,13 +140,37 @@
       console.error(error);
     }
   }
+
+	async function signInWithTelegram(userInfo) {
+    const res = await signupSocial({
+      email: 't_' + userInfo.id,
+      password: userInfo.id,
+      loginType: 'telegram'
+    })
+    try {
+      const res1 = await signIn({
+        email: 't_' + userInfo.id,
+        password: userInfo.id,
+      });
+
+      if (res1.success) {
+        toast.success(res1.data.message);
+        globalStore.toggleItem("loginForm", false);
+        handleTokens();
+      } else {
+        toast.error(res1.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 </script>
 
 <h5 class="text-2xl font-medium text-white mb-[25px]">Hey, hello 👋</h5>
 <form on:submit={handleSignUp} class="w-full">
 	<!-- First Step -->
 	<div class="flex flex-col w-full gap-[15px]">
-		{#if registrationOpen === 1}
+		{#if registrationStep === 1}
 			<div class="flex flex-col gap-[9px]">
 				<label class="text-msm text-white font-medium" for="email">Email address</label>
 				<div class="w-full flex">
@@ -166,7 +183,7 @@
 					/>
 				</div>
 			</div>
-		{:else if registrationOpen == 2}
+		{:else if registrationStep == 2}
 		<div class="flex flex-col gap-[9px]">
 			<label class="text-msm text-white font-medium" for="authCode">5 Verification Code</label>
 			<div class="w-full flex">
@@ -204,13 +221,10 @@
 				/>
 			</div>
 		</div>
-		{:else if registrationOpen == 3 }
+		{:else if registrationStep == 3 }
 		<div class="flex items-center justify-between mt-[15px] gap-[4px]">
 			<p class="text-msm text-grayDark3 font-medium">
-				Successfully SignUp! <a href="/" on:click={ () => {
-					globalStore.toggleItem("loginOpen", true);
-					globalStore.toggleItem("registrationOpen", false);
-				}} class="gradient-text font-bold"
+				Successfully SignUp! <a href="/" on:click={openSignIn} class="gradient-text font-bold"
 					>Sign In</a>
 			</p>
 		</div>
@@ -220,14 +234,14 @@
 				type="submit"
 				class="w-full bg-linear p-[13px] rounded-[7px] text-sm font-semibold text-white opacity-90 hover:opacity-100 transition-all"
 			>
-				{$globalStore.registrationOpen == 1
+				{$globalStore.registrationStep == 1
 				? "Send"
-				: $globalStore.registrationOpen == 2
+				: $globalStore.registrationStep == 2
 				? "Verify"
 				: "Submit"}
 			</button>
 		</div>
-		{#if $globalStore.registrationOpen == 1}
+		{#if $globalStore.registrationStep == 1}
 		<div class="flex items-center justify-center mt-[15px] gap-[4px]">
 			<p class="text-msm text-grayDark3 font-medium">
 				Already have an account? <a href="#" on:click={openSignIn} class="gradient-text font-bold">Sign In</a>
@@ -285,20 +299,24 @@
 			/>
 		</svg>
 	</button>
-	<div class="relative cursor-pointer">
-		<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
-			<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<g clip-path="url(#clip0_2708_75443)">
-				<path fill-rule="evenodd" clip-rule="evenodd" d="M13.1851 2.95334C13.3498 2.884 13.5302 2.86009 13.7073 2.88409C13.8844 2.90808 14.0519 2.97912 14.1922 3.0898C14.3326 3.20048 14.4407 3.34675 14.5053 3.5134C14.57 3.68004 14.5888 3.86097 14.5598 4.03734L13.0478 13.2087C12.9011 14.0933 11.9304 14.6007 11.1191 14.16C10.4404 13.7913 9.43242 13.2233 8.52575 12.6307C8.07242 12.334 6.68375 11.384 6.85442 10.708C7.00109 10.13 9.33442 7.95801 10.6678 6.66667C11.1911 6.15934 10.9524 5.86667 10.3344 6.33334C8.79909 7.49201 6.33575 9.25401 5.52109 9.75001C4.80242 10.1873 4.42775 10.262 3.97975 10.1873C3.16242 10.0513 2.40442 9.84067 1.78575 9.58401C0.949753 9.23734 0.99042 8.08801 1.78509 7.75334L13.1851 2.95334Z" fill="white"/>
-				</g>
-				<defs>
-				<clipPath id="clip0_2708_75443">
-				<rect width="16" height="16" fill="white"/>
-				</clipPath>
-				</defs>
-			</svg>			
-		</button>
 
-		<div id="telegram-login" class="w-[42px] h-[42px] absolute top-0 opacity-0"></div>
+	<div class="relative cursor-pointer">
+		<div>
+			<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<g clip-path="url(#clip0_2708_75443)">
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M13.1851 2.95334C13.3498 2.884 13.5302 2.86009 13.7073 2.88409C13.8844 2.90808 14.0519 2.97912 14.1922 3.0898C14.3326 3.20048 14.4407 3.34675 14.5053 3.5134C14.57 3.68004 14.5888 3.86097 14.5598 4.03734L13.0478 13.2087C12.9011 14.0933 11.9304 14.6007 11.1191 14.16C10.4404 13.7913 9.43242 13.2233 8.52575 12.6307C8.07242 12.334 6.68375 11.384 6.85442 10.708C7.00109 10.13 9.33442 7.95801 10.6678 6.66667C11.1911 6.15934 10.9524 5.86667 10.3344 6.33334C8.79909 7.49201 6.33575 9.25401 5.52109 9.75001C4.80242 10.1873 4.42775 10.262 3.97975 10.1873C3.16242 10.0513 2.40442 9.84067 1.78575 9.58401C0.949753 9.23734 0.99042 8.08801 1.78509 7.75334L13.1851 2.95334Z" fill="white"/>
+					</g>
+					<defs>
+					<clipPath id="clip0_2708_75443">
+					<rect width="16" height="16" fill="white"/>
+					</clipPath>
+					</defs>
+				</svg>			
+			</button>
+		</div>
+		
+
+		<div id="telegram-login" class="w-[42px] absolute top-0 z-[999]"></div>
 	</div>
 </div>

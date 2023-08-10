@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import globalStore from '../../../../store/globalStore';
-	import BreadCrumb from '$lib/components/breadCrumb/breadCrumb.svelte';
+	import BreadCrumb from '$lib/components/breadcrumb/breadCrumb.svelte';
 	import RelatedGames from '$lib/components/relatedGames/relatedGames.svelte';
 	import ActivityTable from '$lib/components/main/activityTable/activityTable.svelte';
 	import Footer from '$lib/components/footer/footer.svelte';
@@ -24,63 +24,6 @@
 		}
 	];
 
-	const latestBetActivity = [
-		{
-			type: 'latest bets',
-			game: {
-				image: '/imgs/game1.svg',
-				title: 'Ring of fortune'
-			},
-			player: 'bountyHunter31',
-			betAmount: {
-				amount: '104.54',
-				image: '/imgs/bitcoin.svg'
-			},
-			multiplier: '0.001x',
-			profitAmount: {
-				isProfit: false,
-				profit: '21.567',
-				image: '/imgs/bitcoin.svg'
-			}
-		},
-		{
-			type: 'latest bets',
-			game: {
-				image: '/imgs/game2.svg',
-				title: 'Ring of fortune'
-			},
-			player: 'unknown',
-			betAmount: {
-				amount: '104.54',
-				image: '/imgs/eth.svg'
-			},
-			multiplier: '0.001x',
-			profitAmount: {
-				isProfit: true,
-				profit: '21.567',
-				image: '/imgs/eth.svg'
-			}
-		},
-		{
-			type: 'latest bets',
-			game: {
-				image: '/imgs/game3.svg',
-				title: 'Ring of fortune'
-			},
-			player: 'wdwdw21',
-			betAmount: {
-				amount: '104.54',
-				image: '/imgs/eth.svg'
-			},
-			multiplier: '0.001x',
-			profitAmount: {
-				isProfit: true,
-				profit: '21.567',
-				image: '/imgs/eth.svg'
-			}
-		}
-	];
-
 	$: {
 		if (!$globalStore.userDetail) {
 			isPlay = false;
@@ -95,7 +38,7 @@
 	});
 
 	const loginAndStart = () => {
-		globalStore.toggleItem('loginOpen', true);
+		globalStore.toggleItem('loginForm', true);
 	};
 
 	async function updateLink() {
@@ -113,7 +56,7 @@
 			class="w-full flex flex-col bg-white dark:bg-white5 rounded-b-[14px] md:rounded-[14px] border-b-[4px] border-b-blue mt-[25px] overflow-hidden"
 		>
 			<div class="relative w-full min-h-[350px] md:min-h-[450px]">
-				<iframe src={link} width="100%" height="100%" frameborder="0" />
+				<iframe class="min-h-[350px] md:min-h-[450px]" src={link} width="100%" frameborder="0" />
 				{#if !isLoggedIn}
 					<div
 						class="absolute left-0 top-0 bg-black60 backdrop-blur-[6px] w-full h-full flex items-center justify-center"

@@ -12,42 +12,42 @@
 	const bestCasinoSliderArr = [
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot1.svg',
+			image: '/src/assets/imgs/slot1.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot2.svg',
+			image: 'src/assets/imgs/slot2.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot3.svg',
+			image: 'src/assets/imgs/slot3.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot4.svg',
+			image: 'src/assets/imgs/slot4.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot5.svg',
+			image: 'src/assets/imgs/slot5.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot1.svg',
+			image: 'src/assets/imgs/slot1.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot3.svg',
+			image: 'src/assets/imgs/slot3.svg',
 			link: '/'
 		},
 		{
 			title: 'Tiny Gods',
-			image: '/imgs/slot4.svg',
+			image: 'src/assets/imgs/slot4.svg',
 			link: '/'
 		}
 	];
@@ -73,7 +73,7 @@
 				on:click={bestCasinoSliderPrev}
 			>
 				<svg class="w-[24px] h-[24px]">
-					<use class="dark:fill-white fill-black" href="/imgs/icons/icons.svg#chevron-left"/>
+					<use class="dark:fill-white fill-black" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
 				</svg>
 			</button>
 			<button
@@ -82,7 +82,7 @@
 				on:click={bestCasinoSliderNext}
 			>
 				<svg class="w-[24px] h-[24px] rotate-[180deg]">
-					<use class="dark:fill-white fill-black" href="/imgs/icons/icons.svg#chevron-left"/>
+					<use class="dark:fill-white fill-black" href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
 				</svg>
 			</button>
 		</div>
@@ -125,7 +125,7 @@
 					/>
                     <div class="group-hover:opacity-100 opacity-0 transition-all absolute left-0 top-0 w-full h-full bg-black81 flex items-center justify-center">
                         <div class="flex flex-col gap-[12px] scale-[0.80] group-hover:scale-[1] transition-all">
-                            <img src="/imgs/play.svg" alt="play.svg">
+                            <img src="src/assets/imgs/play.svg" alt="play.svg">
                         </div>
                     </div>
                     </div>
@@ -136,7 +136,7 @@
 							{categoryItem.title}
 						</p>
 						<svg class="min-w-[20px] min-h-[20px] w-[20px] h-[20px]">
-							<use class="fill-transparent" href="/imgs/icons/icons.svg#info" />
+							<use class="fill-transparent" href="/src/assets/imgs/icons/icons.svg#info" />
 						</svg>
 					</div>
 				</a>

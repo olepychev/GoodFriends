@@ -2,11 +2,13 @@
 	import toast from '../../../lib/components/toast/toast';
 	import globalStore from '../../../store/globalStore';
 	import { onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { signIn, getAccessToken, getRefreshToken, signupSocial } from '../../../apis/account';
 	import firebase from '../../../lib/components/firebase/firebase';
 
+	const dispatch = createEventDispatcher();
 	const BOT_NAME = import.meta.env.VITE_TELEGRAM_BOT_NAME;
-  const REDIRECT_URL = import.meta.env.VITE_TELEGRAM_REDIRECT_URL;
+	const REDIRECT_URL = import.meta.env.VITE_TELEGRAM_REDIRECT_URL;
 
 	let signInUserData = {
     email: "",
@@ -40,30 +42,6 @@
 		}
 	}
 
-	async function signInWithTelegram(userInfo) {
-    const res = await signupSocial({
-      email: 't_' + userInfo.id,
-      password: userInfo.id,
-      loginType: 'telegram'
-    })
-    try {
-      const res1 = await signIn({
-        email: 't_' + userInfo.id,
-        password: userInfo.id,
-      });
-
-      if (res1.success) {
-        toast.success(res1.data.message);
-        globalStore.toggleItem("loginOpen", false);
-        handleTokens();
-      } else {
-        toast.error(res1.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
 	function handleTelegram() {
     const script = document.createElement('script');
     script.src = 'https://telegram.org/js/telegram-widget.js?14';
@@ -74,6 +52,14 @@
 		document.getElementById('telegram-login').style.opacity = '1%';
   }
 
+	function openSignUp() {
+		dispatch('openSignUp');
+	}
+
+	function openForgotPasswordForm() {
+		dispatch('openForgotPasswordForm')
+	}
+
 	async function handleSignIn(event) {
 		const res = await signIn({
 			email: signInUserData.email,
@@ -81,7 +67,7 @@
 		});
 		if (res.success) {
 			toast.success(res.data.message);
-			globalStore.toggleItem("loginOpen", false);
+			globalStore.toggleItem("loginForm", false);
 			handleTokens();
 		} else {
 			toast.error(res.data.message);
@@ -106,7 +92,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginOpen", false);
+        globalStore.toggleItem("loginForm", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -134,7 +120,7 @@
 
       if (res1.success) {
         toast.success(res1.data.message);
-        globalStore.toggleItem("loginOpen", false);
+        globalStore.toggleItem("loginForm", false);
         handleTokens();
       } else {
         toast.error(res1.data.message);
@@ -150,6 +136,30 @@
       const data = await firebase.auth().signInWithPopup(provider);
       // console.log(data.additionalUserInfo.profile);
       // User signed in successfully
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+	async function signInWithTelegram(userInfo) {
+    const res = await signupSocial({
+      email: 't_' + userInfo.id,
+      password: userInfo.id,
+      loginType: 'telegram'
+    })
+    try {
+      const res1 = await signIn({
+        email: 't_' + userInfo.id,
+        password: userInfo.id,
+      });
+
+      if (res1.success) {
+        toast.success(res1.data.message);
+        globalStore.toggleItem("loginForm", false);
+        handleTokens();
+      } else {
+        toast.error(res1.data.message);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -185,10 +195,7 @@
 				/>
 			</div>
 		</div>
-		<a href="#" on:click={() => {
-			globalStore.toggleItem('forgotPasswordOpen', 1);
-			globalStore.toggleItem('loginOpen', false)
-		}} class="text-end text-msm text-grayDark2">Forgot password?</a>
+		<a href="#" on:click={openForgotPasswordForm} class="text-end text-msm text-grayDark2">Forgot password?</a>
 		<button
 			type="submit"
 			class="w-full bg-linear p-[13px] rounded-[7px] text-sm font-semibold text-white opacity-90 hover:opacity-100 transition-all"
@@ -198,10 +205,7 @@
 	</div>
 	<div class="flex items-center justify-center mt-[15px] gap-[4px]">
 		<p class="text-msm text-grayDark3 font-medium">
-			Don't have an account? <a href="#" on:click={() => {
-				globalStore.toggleItem('registrationOpen', 1);
-				globalStore.toggleItem('loginOpen', false);
-			}} class="gradient-text font-bold">Sign Up</a>
+			Don't have an account? <a href="#" on:click={openSignUp} class="gradient-text font-bold">Sign Up</a>
 		</p>
 	</div>
 </form>
@@ -255,6 +259,7 @@
 			/>
 		</svg>
 	</button>
+
 	<div class="relative cursor-pointer">
 		<div>
 			<button class="flex items-center justify-center w-[42px] h-[42px] bg-white5 rounded-full">

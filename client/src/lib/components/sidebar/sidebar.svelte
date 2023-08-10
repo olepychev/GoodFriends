@@ -15,7 +15,7 @@
 	// Declare selectedValue as a writable store
 	let selectedValue = writable(items[0].value);
 
-	$: sidebarOpen = $globalStore.sidebarOpen;
+	$: sidebarOpen = $globalStore.sidebar;
 
 	onMount(() => {
 		if (sidebarOpen) {
@@ -31,14 +31,14 @@
 		} else {
 			document.body.classList.remove('aside-active');
 		}
-		globalStore.toggleItem('sidebarOpen', !$globalStore.sidebarOpen);
+		globalStore.toggleItem('sidebar', !$globalStore.sidebar);
 	}
 
 	function closeSidebar() {
 		if(sidebarOpen) {
 			document.body.classList.remove('aside-active');
 
-			globalStore.toggleItem('sidebarOpen', !$globalStore.sidebarOpen);
+			globalStore.toggleItem('sidebar', !$globalStore.sidebar);
 		}
 	}
 </script>
@@ -51,12 +51,12 @@
 		class={`${sidebarOpen ? 'scale-[-1]' : ''} hidden md:flex transition-all cursor-pointer absolute right-[-20px] top-[77px] z-[99] w-[38px] h-[38px] rounded-[11px] bg-grayLight4 dark:bg-white5 backdrop-blur-[25px] border border-grayLight dark:border-white11 flex items-center justify-center`}
 	>
 		<svg class="w-[24px] h-[24px] rotate-[180deg]">
-			<use class='fill-black dark:fill-white' href="/imgs/icons/icons.svg#chevron-left"/>
+			<use class='fill-black dark:fill-white' href="/src/assets/imgs/icons/icons.svg#chevron-left"/>
 		</svg>
 	</div>
 	<div class="overflow-hidden relative w-full h-full flex flex-col items-center">
 		<img
-			src="/imgs/asideEclipse.svg"
+			src="/src/assets/imgs/asideEclipse.svg"
 			class="absolute z-[-1] right-[-37px] top-[-45px]"
 			alt=""
 		/>
@@ -68,19 +68,19 @@
 				<a href="/" on:click={closeSidebar} class="flex items-center overflow-hidden min-w-max">
 					<img
 						class=" flex max-w-[206px] logoTitle dark"
-						src="/imgs/LogoWithTitle.svg"
+						src="/src/assets/imgs/LogoWithTitle.svg"
 						alt="Logo with title"
 					/>
 					<img
 						class=" max-w-[206px] logoTitle light"
-						src="/imgs/LogoWithTitleDark.svg"
+						src="/src/assets/imgs/LogoWithTitleDark.svg"
 						alt="Logo with title"
 					/>
-					<img class="logo" src="/imgs/Logo.svg" alt="Logo" />
+					<img class="logo" src="/src/assets/imgs/Logo.svg" alt="Logo" />
 				</a>
 				<div on:click={closeSidebar} class="ml-auto w-[35px] h-[35px] bg-grayLight dark:bg-white11 rounded-full items-center justify-center flex md:hidden opacity-80 hover:opacity-100 transition-all cursor-pointer">
 					<svg class="w-[16px] h-[16px] translate-y-[1.5px]">
-						<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#close" />
+						<use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#close" />
 					</svg>
 				</div>
 			</div>
@@ -95,7 +95,7 @@
 					href="/"
 					class="spinner relative overflow-hidden gap-[28px] flex bg-blue88 dark:bg-transparent items-center p-[12px] border dark:border-white9 border-grayLight2 rounded-[16px] cursor-pointer"
 				>
-					<img class="z-[1] min-w-max" src="/imgs/spinner.svg" alt="spinner" />
+					<img class="z-[1] min-w-max" src="/src/assets/imgs/spinner.svg" alt="spinner" />
 					<div class="spinner-text flex flex-col gap-[3px]">
 						<p class="font-semibold text-base text-white min-w-max">SPIN NOW</p>
 						<p class="font-normal text-sm text-grayLight2 dark:text-gray min-w-max">Unlocked</p>
@@ -140,7 +140,7 @@
 						<p class="nav-text text-gray font-medium text-base">Favorites</p>
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -232,13 +232,13 @@
 
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1]"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
 				</li>
 				<li class="w-full">
-					<a href="/" on:click={closeSidebar} class="group navLink relative flex items-center justify-center">
+					<a href="/sports" on:click={closeSidebar} class={`${path.includes('/sports') ? 'active' : ''} group navLink relative flex items-center justify-center`}>
 						<svg
 							class="icon"
 							width="20"
@@ -301,7 +301,7 @@
 
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -356,7 +356,7 @@
 
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadia"
 						/>
 					</a>
@@ -396,7 +396,7 @@
 						<p class="nav-text text-gray font-medium text-base">E-Sports</p>
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -436,7 +436,7 @@
 						<p class="nav-text text-gray font-medium text-base">Virtue Game</p>
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRardial"
 						/>
 					</a>
@@ -477,7 +477,7 @@
 
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -517,7 +517,7 @@
 						<p class="nav-text text-gray font-medium text-base">Poker</p>
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -544,7 +544,7 @@
 
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -577,7 +577,7 @@
 						<p class="nav-text text-gray font-medium text-base">Promotions</p>
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -639,7 +639,7 @@
 
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -671,7 +671,7 @@
 
 						<img
 							class="navRadial absolute left-[-10px] opacity-0 group-hover:opacity-[1] transition-all"
-							src="/imgs/navRadial.svg"
+							src="/src/assets/imgs/navRadial.svg"
 							alt="navRadial"
 						/>
 					</a>
@@ -705,8 +705,8 @@
 						bind:value={$selectedValue}
 					>
 						<div slot="prepend">
-							<img class="w-[22px] dark:hidden flex" src="/imgs/global.svg" alt="global" />
-							<img class="w-[22px] hidden dark:flex" src="/imgs/globalLight.svg" alt="global" />
+							<img class="w-[22px] dark:hidden flex" src="/src/assets/imgs/global.svg" alt="global" />
+							<img class="w-[22px] hidden dark:flex" src="/src/assets/imgs/globalLight.svg" alt="global" />
 						</div>
 						<div slot="item" let:item>{item.label}</div>
 					</Select>
