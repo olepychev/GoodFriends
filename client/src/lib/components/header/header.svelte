@@ -98,7 +98,7 @@
 			</a>
 		</div>
 		<a href="/" class="flex md:hidden w-full max-w-[42px]">
-			<img class="w-full" src="/imgs/logo.svg" alt="">
+			<img class="w-full" src="/imgs/Logo.svg" alt="">
 		</a>
 
 		{#if isLoggedIn}

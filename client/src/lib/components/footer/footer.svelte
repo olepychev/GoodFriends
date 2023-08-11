@@ -43,7 +43,7 @@
 			Made with love and Ruby on Rails. GoodFriends © 2023
 		</p>
 		<a href="/" class="flex">
-			<img class="w-full max-w-[50px]" src="/imgs/logo.svg" alt="" />
+			<img class="w-full max-w-[50px]" src="/imgs/Logo.svg" alt="" />
 		</a>
 	</div>
 </div>
