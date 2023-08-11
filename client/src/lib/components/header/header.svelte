@@ -33,6 +33,7 @@
 	function openMyProfileModal() {
 		activeProfileMenu = false;
 		activeMyProfileModal = true;
+		editMyProfileModal = false;
 		document.body.style.overflow = 'hidden';
 	}
 	function editMyProfile() {

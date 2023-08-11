@@ -63,7 +63,7 @@
 		<div class="w-full flex items-center justify-between">
 			<div class="flex items-center gap-[9px]">
 				<div class="w-[48px] h-[48px]">
-					<img src="/imgs/profile.svg" alt="user" />
+					<img src={$globalStore.userDetail.profile_image} class="rounded-full" alt="user" />
 				</div>
 				<div class="flex flex-col">
 					<p class="text-md gradient-text">Stacey Miller</p>

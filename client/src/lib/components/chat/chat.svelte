@@ -1,33 +1,118 @@
 <script>
 	import globalStore from '../../../store/globalStore';
 	import { createEventDispatcher } from 'svelte';
+	const SOCKET_SERVER = import.meta.env.VITE_SOCKET_SERVER;
 	const dispatch = createEventDispatcher();
 
 	$: chatOpen = $globalStore.chatOpen;
 
 	function chatClose(e) {
-		chatOpen ? document.body.classList.remove('chat-active')
-			: document.body.classList.add('chat-active');
+		chatOpen ? document.body.classList.remove('chat-active') : document.body.classList.add('chat-active');
 		globalStore.toggleItem('chatOpen', false);
 	}
+
+	import { io, Socket } from 'socket.io-client';
+	import Messages from './messages.svelte';
+	import SendForm from './sendForm.svelte';
+
+	const clientData = {
+		api_key: 'GF-AAAAAAAAAAA',
+		user_id: '123',
+		username: 'ismail',
+		translate: true,
+		locale: 'ja',
+		role: 'user'
+	};
+
+	const socket = io(SOCKET_SERVER, {
+		auth: {
+			api_key: 'GF-AAAAAAAAAAA',
+			user_id: '123',
+			username: 'ismail',
+			translate: true,
+			locale: 'ja',
+			role: 'user'
+		},
+		withCredentials: true
+	});
+
+	const api_key = clientData.api_key;
+
+	const room_name = 'test2';
+	let room_data = api_key + ':' + room_name;
+
+	socket.emit('joinRoom', room_data, (response) => {
+		//console.log(response);
+	});
+
+	socket.on('connect', () => {
+		console.log(socket.id + ' connected');
+	});
+
+	import { afterUpdate, onMount, tick } from 'svelte';
+
+	let messages = [];
+	let messages_element;
+	let my_message_text = '';
+
+	onMount(() => {
+		scrollToBottom(messages_element);
+	});
+
+	afterUpdate(() => {
+		console.log('afterUpdate');
+		if (messages) scrollToBottom(messages_element);
+	});
+
+	const scrollToBottom = async (node) => {
+		if (node) {
+			await tick();
+			node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
+		}
+	};
+	let emojiModalOpen;
+	socket.on('messages', async (message) => {
+		messages = messages.concat(message);
+		messages = messages.slice().reverse();
+		await tick();
+	});
+
+	function send_message() {
+		const message = {
+			to: room_data,
+			from: null,
+			username: $globalStore.userDetail.nick,
+			avatar: $globalStore.userDetail.profile_image,
+			content: my_message_text,
+			time: new Date().toString()
+		};
+		socket.emit('sendMessage', message);
+		my_message_text = '';
+		emojiModalOpen = false;
+	}
+
+	socket.on('sendMessage', async (message) => {
+		const messageParts = message.split('/*-');
+		const formattedMessage = {
+			to: messageParts[0],
+			from: messageParts[1],
+			username: messageParts[2],
+			avatar: messageParts[3],
+			content: messageParts[4],
+			time: new Date(messageParts[5]).getTime()
+		};
+		messages = [...messages, formattedMessage];
+		await tick();
+	});
 </script>
 
 <div class="fixed right-0 md:w-auto w-full top-[80px] md:top-[85px] bg-white dark:bg-black border !border-t-[0px] border-grayLight4 dark:border-white5 z-[99999999] md:z-[999]">
 	<div class="w-full md:w-[297px] h-[calc(100vh-86px)]">
-		<div
-			class="sticky flex top-0 w-full px-[12px] py-[18px] bg-white dark:bg-black21 border border-grayLight4 dark:border-white5 backdrop-blur-[34px] justify-between"
-		>
+		<div class="sticky flex top-0 w-full px-[12px] py-[18px] bg-white dark:bg-black21 border border-grayLight4 dark:border-white5 backdrop-blur-[34px] justify-between">
 			<p class="text-black dark:text-white text-base font-semibold">Live Chat</p>
 			<div class="flex items-center gap-[21px]">
 				<div id="info" class="cursor-pointer opacity-60 hover:opacity-100">
-					<svg
-						class=""
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
+					<svg class="" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
 							d="M9.99996 18.3334C14.5833 18.3334 18.3333 14.5834 18.3333 10C18.3333 5.41669 14.5833 1.66669 9.99996 1.66669C5.41663 1.66669 1.66663 5.41669 1.66663 10C1.66663 14.5834 5.41663 18.3334 9.99996 18.3334Z"
 							stroke="#595A69"
@@ -35,30 +120,12 @@
 							stroke-linecap="round"
 							stroke-linejoin="round"
 						/>
-						<path
-							d="M10 6.66669V10.8334"
-							stroke="#595A69"
-							stroke-width="1.25"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-						<path
-							d="M9.99512 13.3333H10.0026"
-							stroke="#595A69"
-							stroke-width="1.66667"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
+						<path d="M10 6.66669V10.8334" stroke="#595A69" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+						<path d="M9.99512 13.3333H10.0026" stroke="#595A69" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
 				</div>
 				<div id="prize" class="cursor-pointer opacity-60 hover:opacity-100">
-					<svg
-						width="19"
-						height="19"
-						viewBox="0 0 19 19"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
+					<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g clip-path="url(#clip0_341_13379)">
 							<path
 								opacity="0.994"
@@ -120,97 +187,20 @@
 				</div>
 
 				<div on:click={chatClose} id="close" class="cursor-pointer opacity-60 hover:opacity-100">
-					<svg
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M3.3335 3.33331L16.6668 16.6666"
-							stroke="#595A69"
-							stroke-width="1.5"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-						<path
-							d="M16.6667 3.33331L3.77783 16.2222"
-							stroke="#595A69"
-							stroke-width="1.5"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
+					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M3.3335 3.33331L16.6668 16.6666" stroke="#595A69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						<path d="M16.6667 3.33331L3.77783 16.2222" stroke="#595A69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
 				</div>
 			</div>
 		</div>
-		<div class="relative flex flex-col md:grid md:grid-rows-[1fr,100px] w-full justify-between h-[calc(100%-121px)] md:h-[calc(100%-61px)]">
-			<div class="w-full flex items-start justify-start max-h-full overflow-auto scrollbar-hidden">
-				<div class="w-full flex flex-col gap-[25px] px-[14px] py-[20px]">
+		<div class="relative" style="height: 100%;max-height: 100%;">
+			<div class="w-full flex items-start justify-start max-h-full overflow-auto scrollbar-hidden" style="height: calc(100% - 63px);">
+				<div class="w-full flex flex-col gap-[25px] px-[14px] py-[20px]" style="position: relative;height: 100%;">
+					<Messages {messages} bind:messages_element />
+					<SendForm bind:my_message_text {send_message} {socket} {room_data} {emojiModalOpen} />
 					<!-- Chat Item -->
-					<div class="flex items-start gap-[10px]">
-						<div class="min-w-[30px] min-h-[30px] rounded-[10px] overflow-hidden">
-							<img class="w-full" src="/imgs/friend.svg" alt="friend's Profile Image" />
-						</div>
-						<div class="flex w-full md:w-auto flex-col gap-[13px]">
-							<div class="w-full flex items-center justify-between">
-								<div class="flex items-center gap-[5px]">
-									<p class="text-msm text-black dark:text-white font-normal">Ellis Schneider</p>
-									<img src="/imgs/award1.svg" alt="" />
-								</div>
-								<p class="text-gray text-msm font-normal">12:03</p>
-							</div>
-							<p class="text-gray text-msm font-normal">
-								Lorem ipsum dolor sit amet consecte Feugiat accum.
-							</p>
-						</div>
-					</div>
-					
 				</div>
-			</div>
-			<div class="px-[13px] pt-[29px] pb-[18px]  bg-gradientWhiteLight dark:bg-gradientBlack w-full">
-				<form>
-					<div class="relative">
-						<input
-							placeholder="Write a message"
-							type="text"
-							class="w-full bg-white dark:bg-blueDark rounded-[14px] h-[53px] outline-none border border-grayLight dark:border-white11 px-[18px] placeholder:text-gray text-black dark:text-white text-sm"
-						/>
-						<button
-							class="absolute right-[0px] opacity-60 hover:opacity-100 flex items-center top-[50%] translate-y-[-50%] w-[40px] h-[40px]"
-							type="submit"
-						>
-							<svg
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									fill-rule="evenodd"
-									clip-rule="evenodd"
-									d="M16.1269 4.20144C17.9162 3.60499 19.0284 3.88221 19.5702 4.42486C20.1129 4.96839 20.3895 6.08413 19.7979 7.87367L19.7976 7.87444L16.9682 16.3628L16.9681 16.3631C16.5091 17.7424 15.9945 18.7182 15.4857 19.3343C14.975 19.9528 14.5395 20.1324 14.2197 20.1324C13.8999 20.1324 13.4644 19.9528 12.9536 19.3343C12.4449 18.7182 11.9303 17.7424 11.4713 16.3631L11.4712 16.3628L10.7177 14.1022L14.2205 10.5897C14.513 10.2964 14.5123 9.82148 14.219 9.529C13.9257 9.23651 13.4509 9.23718 13.1584 9.53048L9.57837 13.1205C9.56475 13.1341 9.55176 13.1482 9.53941 13.1626L7.63686 12.5284L7.63648 12.5283C6.25694 12.0692 5.2811 11.5552 4.66498 11.0471C4.04637 10.5369 3.86719 10.1024 3.86719 9.78368C3.86719 9.46471 4.04661 9.02942 4.66558 8.5179C5.28188 8.00859 6.25779 7.49278 7.63714 7.03135L7.63761 7.03119L16.1269 4.20144ZM21.2218 8.34541C21.8898 6.3254 21.7614 4.49638 20.6317 3.36499C19.501 2.23264 17.6732 2.10486 15.6525 2.77841L7.16252 5.60841L7.16177 5.60866C5.68637 6.10219 4.52117 6.69132 3.71004 7.36164C2.90152 8.02981 2.36719 8.84889 2.36719 9.78368C2.36719 10.7187 2.90175 11.5373 3.71065 12.2043C4.52195 12.8734 5.68723 13.4605 7.16252 13.9514L7.16289 13.9516L9.32676 14.6729L10.0481 16.8367L10.0481 16.837L10.0482 16.8371C10.5392 18.3126 11.127 19.478 11.797 20.2893C12.465 21.0983 13.2845 21.6324 14.2197 21.6324C15.1549 21.6324 15.9744 21.0983 16.6424 20.2893C17.3124 19.478 17.9002 18.3126 18.3912 16.8371L18.3913 16.8367L21.2212 8.3471L21.2218 8.34541Z"
-									fill="url(#paint0_linear_2501_35365)"
-								/>
-								<defs>
-									<linearGradient
-										id="paint0_linear_2501_35365"
-										x1="6.00534"
-										y1="-1.27108"
-										x2="21.7625"
-										y2="2.26825"
-										gradientUnits="userSpaceOnUse"
-									>
-										<stop stop-color="#C6A3FF" />
-										<stop offset="1" stop-color="#7E8BED" />
-									</linearGradient>
-								</defs>
-							</svg>
-						</button>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
