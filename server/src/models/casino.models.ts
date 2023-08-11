@@ -94,9 +94,10 @@ export const getInfo = (dataAccess: any, idx: number) => {
 }
 
 // bet-result
-export const getBetHistory = async(dataAccess: any, affiliateCode: any|undefined): Promise<any> => {
-    let sql: string = `SELECT round FROM gf_casino_betting WHERE affiliate_code = ? AND type = ? ORDER BY reg_date DESC LIMIT 0, 20`
-    let values: string[] = [affiliateCode, "win"]
+export const getBetHistory = async(dataAccess: any): Promise<any> => {
+    // let sql: string = `SELECT round FROM gf_casino_betting WHERE affiliate_code = ? AND type = ? ORDER BY reg_date DESC LIMIT 0, 20`
+    let sql: string = `SELECT round FROM gf_casino_betting WHERE type = ? ORDER BY reg_date DESC LIMIT 0, 20` 
+    let values: string[] = ["win"]
 
     return await dataAccess.selectAll(sql, values)
 }

@@ -93,8 +93,8 @@ export const info = async(req:Request, res: Response) => {
 
 // bet-result
 export const betHistoryResult = async (req: Request, res: Response) => {
-    const affiliateCode: any|undefined = req.headers["gf-affiliate-code"]
-    const betHistory: string[] = await models.getBetHistory(dataAccess, affiliateCode)
+    // const affiliateCode: any|undefined = req.headers["gf-affiliate-code"]
+    const betHistory: string[] = await models.getBetHistory(dataAccess)
     const betHistoryResult: BetHistoryResult[] = await models.betHistoryResult(dataAccess, betHistory)
 
     res.status(200).json({
