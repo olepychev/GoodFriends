@@ -7,6 +7,7 @@
 	import { getAccessToken, getRefreshToken } from '../../../apis/account';
 	import ProfileMenu from '$lib/components/menus/profile/profileMenu.svelte';
 	import DepositModal from '../modals/deposit/deposit.svelte';
+	import WithdrawModal from '../modals/withdraw/withdraw.svelte';
 	import MyProfile from '../modals/profile/myProfile.svelte';
 	import EditMyProfile from '../modals/profile/editMyProfile.svelte';
 	import BetSlip from '../betSlip/betSlip.svelte';
@@ -23,11 +24,21 @@
 	}
 
 	let activeDepositModal = false;
+	let activeWithdrawModal = false;
 	function openDepositModal() {
 		activeProfileMenu = false;
 		activeDepositModal = true;
+		activeWithdrawModal = false;
 		document.body.style.overflow = 'hidden';
 	}
+
+	function openWithdrawModal() {
+		activeProfileMenu = false;
+		activeDepositModal = false;
+		activeWithdrawModal = true;
+		document.body.style.overflow = 'hidden';
+	}
+
 	let activeMyProfileModal = false;
 	let editMyProfileModal = false;
 	function openMyProfileModal() {
@@ -54,6 +65,7 @@
 	function closeProfileModal() {
 		activeDepositModal = false;
 		activeMyProfileModal = false;
+		activeWithdrawModal = false;
 		document.body.style.overflow = 'auto';
 	}
 </script>
@@ -119,11 +131,17 @@
 	<ProfileMenu
 		on:closeProfileMenu={closeProfileMenu}
 		on:openDepositModal={openDepositModal}
+		on:openWithdrawModal={openWithdrawModal}
 		on:openMyProfileModal={openMyProfileModal}
 	/>
 {/if}
+
 {#if activeDepositModal}
 	<DepositModal on:closeProfileModal={closeProfileModal} />
+{/if}
+
+{#if activeWithdrawModal}
+	<WithdrawModal on:closeProfileModal={closeProfileModal} />
 {/if}
 
 {#if activeMyProfileModal && !editMyProfileModal}
