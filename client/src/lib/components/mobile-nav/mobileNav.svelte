@@ -48,7 +48,7 @@
 		class="relative w-full pb-[10px] flex items-center justify-between sm:justify-around gap-[15px] px-[35px] overflow-hidden"
 	>
 		<img
-			src="/src/assets/imgs/headerElipse.svg"
+			src="/imgs/headerElipse.svg"
 			class="z-[-1] h-full absolute rotate-[180deg] bottom-0 left-[-35%]"
 			alt=""
 		/>
@@ -62,13 +62,13 @@
 				class={`${
 					sidebarOpen ? '' : 'opacity-0'
 				} absolute top-[-9px] min-w-[60px] left-[50%]  translate-x-[-50%] group-hover:opacity-[1] transition-all`}
-				src="/src/assets/imgs/mobileRadial.svg"
+				src="/imgs/mobileRadial.svg"
 				alt="navRadial"
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
 					class={`${sidebarOpen ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
-					href="/src/assets/imgs/icons/icons.svg#menu"
+					href="/imgs/icons/icons.svg#menu"
 				/>
 			</svg>
 			<p
@@ -89,13 +89,13 @@
 				class={`${
 					path === '/casino' ? '' : 'opacity-0'
 				} absolute top-[-9px] min-w-[60px] left-[50%]  translate-x-[-50%] group-hover:opacity-[1] transition-all`}
-				src="/src/assets/imgs/mobileRadial.svg"
+				src="/imgs/mobileRadial.svg"
 				alt="navRadial"
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
 					class={`${path === '/casino' ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
-					href="/src/assets/imgs/icons/icons.svg#casino"
+					href="/imgs/icons/icons.svg#casino"
 				/>
 			</svg>
 			<p
@@ -112,14 +112,14 @@
 				class={`${
 					path.includes('/sports') ? '' : 'opacity-0'
 				} absolute top-[-9px] min-w-[60px] left-[50%]  translate-x-[-50%] group-hover:opacity-[1] transition-all`}
-				src="/src/assets/imgs/mobileRadial.svg"
+				src="/imgs/mobileRadial.svg"
 				alt="navRadial"
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
 					class={`${path.includes('/sports') ? 'fill-blue' : 'fill-grayDark'
 					} group-hover:fill-blue`}
-					href="/src/assets/imgs/icons/icons.svg#sports"
+					href="/imgs/icons/icons.svg#sports"
 				/>
 			</svg>
 			<p
@@ -140,13 +140,13 @@
 				class={`${
 					chatOpen ? '' : 'opacity-0'
 				} absolute top-[-9px] min-w-[60px] left-[50%]  translate-x-[-50%] group-hover:opacity-[1] transition-all`}
-				src="/src/assets/imgs/mobileRadial.svg"
+				src="/imgs/mobileRadial.svg"
 				alt="navRadial"
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
 					class={`${chatOpen ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
-					href="/src/assets/imgs/icons/icons.svg#chat"
+					href="/imgs/icons/icons.svg#chat"
 				/>
 			</svg>
 			<p
@@ -167,13 +167,13 @@
 				class={`${
 					betSlip ? '' : 'opacity-0'
 				} absolute top-[-9px] min-w-[60px] left-[50%]  translate-x-[-50%] group-hover:opacity-[1] transition-all`}
-				src="/src/assets/imgs/mobileRadial.svg"
+				src="/imgs/mobileRadial.svg"
 				alt="navRadial"
 			/>
 			<svg class="w-[21px] h-[21px]">
 				<use
 					class={`${betSlip ? 'fill-blue' : 'fill-grayDark'} group-hover:fill-blue`}
-					href="/src/assets/imgs/icons/icons.svg#betSlip"
+					href="/imgs/icons/icons.svg#betSlip"
 				/>
 			</svg>
 			<p

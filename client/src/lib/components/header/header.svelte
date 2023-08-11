@@ -70,11 +70,11 @@
 				} group header-filter px-[18px] py-[13px] border-[1.14px] hover:bg-grayLight4 dark:hover:bg-white5 border-transparent rounded-[7px] transition-all hover:border-grayLight2 dark:hover:border-white11 flex items-center gap-[9px] cursor-pointer`}
 			>
 				<div class="header_icon-light hidden group-hover:block">
-					<img class="w-[24px]" src="/src/assets/imgs/casinoR.svg"/>
+					<img class="w-[24px]" src="/imgs/casinoR.svg"/>
 				</div>
 				<div class="header_icon-dark block group-hover:hidden">
-					<img class="dark:hidden flex w-[24px]" src="/src/assets/imgs/casinoLight.svg"/>
-					<img class="dark:flex hidden w-[24px]" src="/src/assets/imgs/casinoDark.svg"/>
+					<img class="dark:hidden flex w-[24px]" src="/imgs/casinoLight.svg"/>
+					<img class="dark:flex hidden w-[24px]" src="/imgs/casinoDark.svg"/>
 				</div>
 
 				<p class="text-grayLight3 dark:text-gray font-semibold text-sm group-hover:text-black dark:group-hover:text-white">Casino</p>
@@ -87,18 +87,18 @@
 				} group header-filter px-[18px] py-[13px] border-[1.14px] hover:bg-grayLight4 dark:hover:bg-white5 border-transparent rounded-[7px] transition-all hover:border-grayLight2 dark:hover:border-white11 flex items-center gap-[9px] cursor-pointer`}
 			>
 				<div class="header_icon-light hidden group-hover:block">
-					<img class="w-[24px]" src="/src/assets/imgs/sportsR.svg"/>
+					<img class="w-[24px]" src="/imgs/sportsR.svg"/>
 				</div>
 				<div class="header_icon-dark block group-hover:hidden">
-					<img class="dark:hidden flex w-[24px]" src="/src/assets/imgs/sportsLight.svg"/>
-					<img class="dark:flex hidden w-[24px]" src="/src/assets/imgs/sportsDark.svg"/>
+					<img class="dark:hidden flex w-[24px]" src="/imgs/sportsLight.svg"/>
+					<img class="dark:flex hidden w-[24px]" src="/imgs/sportsDark.svg"/>
 				</div>
 
 				<p class="text-grayLight3 dark:text-gray font-semibold text-sm group-hover:text-black dark:group-hover:text-white">Sports</p>
 			</a>
 		</div>
 		<a href="/" class="flex md:hidden w-full max-w-[42px]">
-			<img class="w-full" src="/src/assets/imgs/logo.svg" alt="">
+			<img class="w-full" src="/imgs/logo.svg" alt="">
 		</a>
 
 		{#if isLoggedIn}
@@ -107,7 +107,7 @@
 			<LoginHeader />
 		{/if}
 		<img
-			src="/src/assets/imgs/headerElipse.svg"
+			src="/imgs/headerElipse.svg"
 			class="hidden dark:flex h-[125px] object-cover sm:object-inherit sm:h-auto absolute z-[-1] right-0 bottom-[2px]"
 			alt=""
 		/>

@@ -63,19 +63,19 @@
 		<div class="w-full flex items-center justify-between">
 			<div class="flex items-center gap-[9px]">
 				<div class="w-[48px] h-[48px]">
-					<img src="/src/assets/imgs/profile.svg" alt="user" />
+					<img src="/imgs/profile.svg" alt="user" />
 				</div>
 				<div class="flex flex-col">
 					<p class="text-md gradient-text">Stacey Miller</p>
 					<div class="flex items-center gap-[7px]">
-						<img class="w-[14px]" src="/src/assets/imgs/medal.svg" alt="" />
+						<img class="w-[14px]" src="/imgs/medal.svg" alt="" />
 						<p class="text-gray font-normal text-base">level 1</p>
 					</div>
 				</div>
 			</div>
 			<div id="closeProfileMenu" on:click={closeProfileMenu} class="w-[31px] h-[31px] rounded-full bg-grayLight4 dark:bg-white11 flex items-center justify-center opacity-70 hover:opacity-100 cursor-pointer">
 				<svg class="w-[16px] h-[16px] translate-x-[1px] translate-y-[1px]">
-					<use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#close" />
+					<use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#close" />
 				</svg>
 			</div>
 		</div>
@@ -89,7 +89,7 @@
 						class="flex items-center justify-center gap-[6px] parent border border-transparent transition-all w-full rounded-[7px] p-[6px]"
 					>
 						<svg class="w-[16px] h-[16px]">
-							<use class="icon stroke" href="/src/assets/imgs/icons/icons.svg#sun" />
+							<use class="icon stroke" href="/imgs/icons/icons.svg#sun" />
 						</svg>
 						<p class="text-black50 dark:text-white50 font-medium text-msm text">Light</p>
 					</div>
@@ -100,7 +100,7 @@
 						class="flex items-center justify-center gap-[6px] parent border border-transparent transitiona-all w-full rounded-[7px] p-[6px]"
 					>
 						<svg class="w-[16px] h-[16px]">
-							<use class="icon fill-grayDark2" href="/src/assets/imgs/icons/icons.svg#moon" />
+							<use class="icon fill-grayDark2" href="/imgs/icons/icons.svg#moon" />
 						</svg>
 						<p class="text-black50 dark:text-white50 font-medium text-msm text">Dark</p>
 					</div>
@@ -113,31 +113,31 @@
             <div class="flex flex-col gap-[5px]">
                 <a href="/account/settings" on:click={closeProfileMenu} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
-                        <use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#settings"/>
+                        <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#settings"/>
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Settings</p>
                 </a>
                 <a href="#" on:click={openDepositModal} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
-                        <use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#card"/>
+                        <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#card"/>
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Deposit</p>
                 </a>
                 <a href="/" class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
-                        <use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#card-send"/>
+                        <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#card-send"/>
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Withdraw</p>
                 </a>
                 <a href="/" class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
-                        <use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#card"/>
+                        <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#card"/>
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Transactions</p>
                 </a>
                 <a href="#" on:click={openMyProfileModal} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
-                        <use class="fill-black dark:fill-white" href="/src/assets/imgs/icons/icons.svg#user"/>
+                        <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#user"/>
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">My Profile</p>
                 </a>
@@ -148,7 +148,7 @@
             <div class="flex flex-col gap-[5px]">
                 <button on:click={handleSignOut} class="group bg-red5 hover:bg-red50 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] group-hover:opacity-100">
-                        <use class="fill-red" href="/src/assets/imgs/icons/icons.svg#settings"/>
+                        <use class="fill-red" href="/imgs/icons/icons.svg#settings"/>
                     </svg>
                     <p class="text-sm font-medium text-red group-hover:opacity-100">Logout</p>
                 </button>
@@ -156,7 +156,7 @@
 		</div>
 	</div>
     <img
-    src="/src/assets/imgs/elipse.svg"
+    src="/imgs/elipse.svg"
     class="absolute top-0 right-[0] z-[1] dark:flex hidden"
     alt=""
 />

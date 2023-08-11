@@ -111,7 +111,7 @@
 		</div>
 
 		<div class="w-full max-w-[142px]">
-			<img class="w-full" src="/src/assets/imgs/qr.svg" alt="" />
+			<img class="w-full" src="/imgs/qr.svg" alt="" />
 		</div>
 
 		<div class="relative z-[99] w-full flex flex-col gap-[15px] max-w-[500px] mx-auto">
@@ -129,7 +129,7 @@
 					<svg on:click={copySecretKey} class="w-[22px] h-[22px] group cursor-pointer">
 						<use
 							class="group-hover:fill-black dark:group-hover:fill-white fill-black21 dark:fill-white11 transition-all"
-							href="/src/assets/imgs/icons/icons.svg#copy"
+							href="/imgs/icons/icons.svg#copy"
 						/>
 					</svg>
 				{:else}

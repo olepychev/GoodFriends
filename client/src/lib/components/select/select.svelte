@@ -47,7 +47,7 @@
 		<svg class="w-[20px] h-[20px]">
 			<use
 				class="fill-black dark:fill-white"
-				href="/src/assets/imgs/icons/icons.svg#chevron-down"
+				href="/imgs/icons/icons.svg#chevron-down"
 			/>
 		</svg>
 	</div>

@@ -7,7 +7,7 @@
 		<div class="relative w-full mb-[35px] md:flex hidden">
             <img
                 class=" w-full min-h-[360px] max-h-[360px] object-cover md:rounded-[14px]"
-                src="/src/assets/imgs/affiliate.svg"
+                src="/imgs/affiliate.svg"
                 alt=""
             />
             <div class="absolute left-[47px] top-[50%] translate-y-[-50%]">

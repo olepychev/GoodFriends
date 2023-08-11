@@ -63,26 +63,26 @@
 		<div class="relative w-full mb-[35px]">
 			<img
 				class=" w-full h-[306px] sm:h-[320px] object-cover md:rounded-[14px]"
-				src="/src/assets/imgs/liveBanner.svg"
+				src="/imgs/liveBanner.svg"
 				alt=""
 			/>
 			<div class="absolute left-0 top-0 w-full h-full flex items-center justify-center">
 				<div class="w-full flex items-center justify-between max-w-[90%] sm:max-w-[70%]">
 					<div class="flex flex-col items-center gap-[16px]">
-						<img class="w-[70px] sm:w-[90px]" src="/src/assets/imgs/item1.svg" alt="" />
+						<img class="w-[70px] sm:w-[90px]" src="/imgs/item1.svg" alt="" />
 						<div class="flex flex-col items-center gap-[6px]">
 							<p class="font-semibold text-sm sm:text-md text-white">MANCHESTER</p>
 							<div class="flex items-center gap-[4px] sm:gap-[7px]">
 								<div class="flex items-center gap-[5px]">
-									<img class="w-[10px] sm:w-[14px]" src="/src/assets/imgs/red-rec.svg" alt="" />
+									<img class="w-[10px] sm:w-[14px]" src="/imgs/red-rec.svg" alt="" />
 									<p class="text-xs sm:text-sm text-white font-semibold">1</p>
 								</div>
 								<div class="flex items-center gap-[5px]">
-									<img class="w-[10px] sm:w-[14px]" src="/src/assets/imgs/yellow-rec.svg" alt="" />
+									<img class="w-[10px] sm:w-[14px]" src="/imgs/yellow-rec.svg" alt="" />
 									<p class="text-xs sm:text-sm text-white font-semibold">1</p>
 								</div>
 								<div class="flex items-center gap-[5px]">
-									<img class="w-[10px] sm:w-[14px]" src="/src/assets/imgs/white-rec.svg" alt="" />
+									<img class="w-[10px] sm:w-[14px]" src="/imgs/white-rec.svg" alt="" />
 									<p class="text-xs sm:text-sm text-white font-semibold">1</p>
 								</div>
 							</div>
@@ -90,7 +90,7 @@
 					</div>
 					<div class="flex flex-col items-center gap-[22px]">
 						<div class="flex items-center gap-[4px] sm:gap-[9px]">
-							<img src="/src/assets/imgs/live.svg" alt="live" />
+							<img src="/imgs/live.svg" alt="live" />
 							<p class="text-sm font-medium text-grayDark">83'Second Half</p>
 						</div>
 						<div class="flex items-center gap-[14px]">
@@ -109,20 +109,20 @@
 						<p class="gradient-text font-semibold text-sm">1st half 0:0</p>
 					</div>
 					<div class="flex flex-col items-center gap-[16px]">
-						<img class="w-[70px] sm:w-[90px]" src="/src/assets/imgs/item1.svg" alt="" />
+						<img class="w-[70px] sm:w-[90px]" src="/imgs/item1.svg" alt="" />
 						<div class="flex flex-col items-center gap-[6px]">
 							<p class="font-semibold text-sm sm:text-md text-white">MANCHESTER</p>
 							<div class="flex items-center gap-[4px] sm:gap-[7px]">
 								<div class="flex items-center gap-[5px]">
-									<img class="w-[10px] sm:w-[14px]" src="/src/assets/imgs/red-rec.svg" alt="" />
+									<img class="w-[10px] sm:w-[14px]" src="/imgs/red-rec.svg" alt="" />
 									<p class="text-xs sm:text-sm text-white font-semibold">1</p>
 								</div>
 								<div class="flex items-center gap-[5px]">
-									<img class="w-[10px] sm:w-[14px]" src="/src/assets/imgs/yellow-rec.svg" alt="" />
+									<img class="w-[10px] sm:w-[14px]" src="/imgs/yellow-rec.svg" alt="" />
 									<p class="text-xs sm:text-sm text-white font-semibold">1</p>
 								</div>
 								<div class="flex items-center gap-[5px]">
-									<img class="w-[10px] sm:w-[14px]" src="/src/assets/imgs/white-rec.svg" alt="" />
+									<img class="w-[10px] sm:w-[14px]" src="/imgs/white-rec.svg" alt="" />
 									<p class="text-xs sm:text-sm text-white font-semibold">1</p>
 								</div>
 							</div>

@@ -38,9 +38,9 @@
 	}
 
 	const valuteSettings = [
-		{ value: 'KRW', label: 'KRW', image: '/src/assets/imgs/flag1.svg' },
-		{ value: 'KRW2', label: 'KRW2', image: '/src/assets/imgs/bank.svg' },
-		{ value: 'KRW3', label: 'KRW3', image: '/src/assets/imgs/flag1.svg' }
+		{ value: 'KRW', label: 'KRW', image: '/imgs/flag1.svg' },
+		{ value: 'KRW2', label: 'KRW2', image: '/imgs/bank.svg' },
+		{ value: 'KRW3', label: 'KRW3', image: '/imgs/flag1.svg' }
 	];
 
 	const items = [
@@ -80,7 +80,7 @@
 				class="flex items-center justify-center gap-[6px] parent border border-transparent transition-all w-full rounded-[7px] p-[6px]"
 			>
 				<svg class="w-[16px] h-[16px]">
-					<use class="icon stroke" href="/src/assets/imgs/icons/icons.svg#sun" />
+					<use class="icon stroke" href="/imgs/icons/icons.svg#sun" />
 				</svg>
 				<p class="text-black50 dark:text-white50 font-medium text-msm text">Light</p>
 			</div>
@@ -91,7 +91,7 @@
 				class="flex items-center justify-center gap-[6px] parent border border-transparent transitiona-all w-full rounded-[7px] p-[6px]"
 			>
 				<svg class="w-[16px] h-[16px]">
-					<use class="icon fill-grayDark2" href="/src/assets/imgs/icons/icons.svg#moon" />
+					<use class="icon fill-grayDark2" href="/imgs/icons/icons.svg#moon" />
 				</svg>
 				<p class="text-black50 dark:text-white50 font-medium text-msm text">Dark</p>
 			</div>
@@ -114,7 +114,7 @@
 					bind:value={$selectedValue}
 				>
 					<div slot="prepend">
-						<img class="min-w-[34px]" src="/src/assets/imgs/global.svg" alt="" />
+						<img class="min-w-[34px]" src="/imgs/global.svg" alt="" />
 					</div>
 					<div slot="item" let:item>{item.label}</div>
 				</SelectPlugin>
