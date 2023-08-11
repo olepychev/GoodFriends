@@ -17,7 +17,7 @@
 	<div class="w-full flex flex-col items-center gap-[10px] my-[30px]">
 		<div class="relative flex items-center justify-center w-[97px] h-[97px] rounded-full border border-blue bg-linear3">
 			<div class="w-[87px] h-[87px] rounded-full">
-				<img src="/src/assets/imgs/profile.svg" class="w-full h-full object-cover" alt="profile">
+				<img src={ $globalStore.userDetail.profile_image } class="rounded-full w-full h-full object-cover" alt="profile">
 			</div>
 			<div class="absolute top-[calc(100%-25px)]">
 				<img src="/src/assets/imgs/medal.svg" class="w-[27px]" alt="medal">
