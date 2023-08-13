@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { getBestResult } from '../../../../apis/casino';
+	import { getBetResult } from '../../../../apis/casino';
 
 	export let title;
 	export let showCols;
@@ -12,43 +12,44 @@
 	let loadCnt = 5;
 
     onMount(async ()=> {
-			const res1 = await getBestResult();
+			const res1 = await getBetResult();
 			latestBet = res1.betHistoryResult.slice(0, loadCnt);
 			dynamicTableArr = latestBet
 
+
 			const container = document.querySelectorAll('.dragable');
-		container.forEach((cont) => {
-			let startY;
-			let startX;
-			let scrollLeft;
-			let scrollTop;
-			let isDown;
+			container.forEach((cont) => {
+				let startY;
+				let startX;
+				let scrollLeft;
+				let scrollTop;
+				let isDown;
 
-			cont.addEventListener('mousedown', (e) => {
-				isDown = true;
-				startY = e.pageY - cont.offsetTop;
-				startX = e.pageX - cont.offsetLeft;
-				scrollLeft = cont.scrollLeft;
-				scrollTop = cont.scrollTop;
-			});
-			cont.addEventListener('mouseup', (e) => {
-				isDown = false;
-			});
-			cont.addEventListener('mouseleave', (e) => {
-				isDown = false;
-			});
-			cont.addEventListener('mousemove', (e) => {
-				if (isDown) {
-					e.preventDefault();
+				cont.addEventListener('mousedown', (e) => {
+					isDown = true;
+					startY = e.pageY - cont.offsetTop;
+					startX = e.pageX - cont.offsetLeft;
+					scrollLeft = cont.scrollLeft;
+					scrollTop = cont.scrollTop;
+				});
+				cont.addEventListener('mouseup', (e) => {
+					isDown = false;
+				});
+				cont.addEventListener('mouseleave', (e) => {
+					isDown = false;
+				});
+				cont.addEventListener('mousemove', (e) => {
+					if (isDown) {
+						e.preventDefault();
 
-					//Move Horizontally
-					const x = e.pageX - cont.offsetLeft;
-					const walkX = x - startX;
-					cont.scrollLeft = scrollLeft - walkX;
-                    
-				}
+						//Move Horizontally
+						const x = e.pageX - cont.offsetLeft;
+						const walkX = x - startX;
+						cont.scrollLeft = scrollLeft - walkX;
+											
+					}
+				});
 			});
-		});
     })
     function handleFilter(filter) {
 			activeFilter = filter;

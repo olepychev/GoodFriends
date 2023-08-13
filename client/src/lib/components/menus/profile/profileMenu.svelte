@@ -29,6 +29,11 @@
 	function openDepositModal() {
 		dispathEvent('openDepositModal')
 	}
+
+	function openWithdrawModal() {
+		dispathEvent('openWithdrawModal')
+	}
+
 	function openMyProfileModal() {
 		dispathEvent('openMyProfileModal')
 	}
@@ -123,13 +128,13 @@
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Deposit</p>
                 </a>
-                <a href="/" class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
+                <a href="#" on:click={openWithdrawModal} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
                         <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#card-send"/>
                     </svg>
                     <p class="text-sm font-medium text-black dark:text-white opacity-50 group-hover:opacity-100">Withdraw</p>
                 </a>
-                <a href="/" class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
+                <a href="/transactions" on:click={closeProfileMenu} class="group hover:bg-grayLight4 dark:hover:bg-white5 flex items-center gap-[6px] p-[9px] rounded-[7px] transition-all">
                     <svg class="w-[20px] h-[20px] opacity-50 group-hover:opacity-100">
                         <use class="fill-black dark:fill-white" href="/imgs/icons/icons.svg#card"/>
                     </svg>

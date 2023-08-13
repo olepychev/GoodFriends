@@ -160,7 +160,7 @@ export async function LaunchCasino(idx, nick) {
   }
 }
 
-export async function getBestResult(page, search) {
+export async function getBetResult(page, search) {
   const endPoint = SEVER_URL + '/api/casino/bet-result'
   const data = {
   }
