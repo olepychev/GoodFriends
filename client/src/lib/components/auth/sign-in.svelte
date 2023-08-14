@@ -16,7 +16,7 @@
   };
 
 	onMount(async () => {
-		// handleTokens();
+		handleTokens();
 		handleTelegram();
 		if ($globalStore.telegramUserData) {
 			const userInfo = $globalStore.telegramUserData;
