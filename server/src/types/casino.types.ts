@@ -66,6 +66,7 @@ export interface TotalNumber {
 }
 
 export interface CasinoSearch {
+    order: string,
     title: string,
     vendor: string[],
     type: string[],

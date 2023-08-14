@@ -34,7 +34,7 @@ export const memberGameMoneyChange = async (dataAccess: any, memberIdx: number, 
 
 // list
 export const getList = async (dataAccess: any, search: CasinoSearch) => {
-    let sql: string = `SELECT * FROM gf_casino_list WHERE is_open = 1`
+    let sql: string = `SELECT *, (likes_count + favourites_count) as popular_count FROM gf_casino_list WHERE is_open = 1`
 
     if(search.title) {
         sql += ` AND REPLACE(LOWER(title), ' ', '') LIKE REPLACE(LOWER("%${search.title}%"), ' ', '')`
@@ -48,9 +48,28 @@ export const getList = async (dataAccess: any, search: CasinoSearch) => {
         search.type.forEach((v) => {
             sql += ` AND REPLACE(LOWER(type), ' ', '') LIKE REPLACE(LOWER("%${v}%"), ' ', '')`
         })      
-    }    
+    }
+
+    switch (search.order) {
+        case "all":
+            sql += ` `
+            break;
+        case "recommended":
+            sql += ` ORDER BY rank ASC`
+            break;
+        case "popular":
+            sql += ` ORDER BY popular_count ASC`
+            break;
+        case "random":
+            sql += ` ORDER BY RANDOM()`
+            break;
+        default:
+            break;
+    }
  
     sql += ` LIMIT ${search.page*setting.GAME_LIST_LIMIT}, ${setting.GAME_LIST_LIMIT}`
+
+    console.log(sql)
     return dataAccess.selectAll(sql, [])
 }
 
@@ -102,15 +121,17 @@ export const getBetHistory = async(dataAccess: any): Promise<any> => {
     return await dataAccess.selectAll(sql, values)
 }
 
+
+// need fixed.
 export const betHistoryResult = async(dataAccess: any, list: string[])=> {
     const array: BetHistoryResult[] = await Promise.all(
         list.map( async (v: any) => {
             const round: string = v.round;
-            const bets: BetHistory[] = await dataAccess.findAll(
+            let bets: BetHistory[] = await dataAccess.findAll(
                 "gf_casino_betting", 
                 "title, nick, type, amount",
                 {column: "round", condition: "=", data: round });
-        
+            
             let title: string = bets[0].title;
             let nick: string = bets[0].nick;
             let betAmount: number|undefined = bets.find(bet => bet.type === 'bet')?.amount;
