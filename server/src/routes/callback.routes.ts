@@ -1,20 +1,25 @@
 import express, { Router, Request, Response } from 'express';
-import * as middlewares from '../middlewares/casino.middlewares';
-import * as controllers from "../controllers/casino.controllers";
+import * as casinoMiddlewares from '../middlewares/casino.middlewares';
+import * as casinoControllers from "../controllers/casino.controllers";
+
+import * as gfpayMiddlewares from "../middlewares/gfpay.middlewares"
+
 
 const router: Router = express.Router();
 
+
+//// casino - honor-link ////
 // balance (Callback URL)
-router.get("/honor-link/balance", middlewares.queryUserCheck, controllers.responseBalance);
+router.get("/honor-link/balance", casinoMiddlewares.queryUserCheck, casinoControllers.responseBalance);
 // changeBalance (Callback URL)
-router.post("/honor-link/changeBalance", middlewares.postUserCheck, controllers.changeBalance)
+router.post("/honor-link/changeBalance", casinoMiddlewares.postUserCheck, casinoControllers.changeBalance)
 
 
+//// payment - gfpay ////
 // deposit notice (Callback URL)
-router.post("/gf/")
-
+router.post("/pay/gfpay/deposit", gfpayMiddlewares.gfpayNotificationCheck, )
 // withdrawal notice (Callback URL)
-router.post("/")
+router.post("/pay/gfpay/withdraw", gfpayMiddlewares.gfpayNotificationCheck, )
 
 
 

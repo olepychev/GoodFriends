@@ -91,6 +91,29 @@ app.use("/api/casino", casinoRouter)
 import callbackRouter from "./routes/callback.routes"
 app.use("/callback", callbackRouter)
 
+// import {getGameList} from "./services/casino.services"
+// import db from "./config/database.config"
+
+// const test = async () => {
+//     const data = await getGameList()
+//     const now = new Date()
+
+//     data.map((v: any) => {
+//         const sql = `
+//         INSERT INTO gf_casino_list
+//             SET game_id  = ?,
+//                 title    = ?,
+//                 provider = ?,
+//                 thumbnail = ?,
+//                 vendor   = ?,
+//                 type     = ?,
+//                 rank     = ?,
+//                 reg_date = ?`
+//         const values = [v.id, v.title, v.provider, v.thumbnails['300x300'], v.vendor, v.type, v.rank !== null ? v.rank : 9999, now]
+
+//         db.query(sql, values,(err, res) => {if(err) throw err})
+//     })
+// }
 const port:number = 9001
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`);

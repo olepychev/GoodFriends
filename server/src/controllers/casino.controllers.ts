@@ -58,7 +58,7 @@ export const getList = async (req: Request, res: Response) => {
 
 // /filter menu
 export const getFilterMenu = async(req: Request, res: Response) => {
-    const   vendor = await models.getVendor(dataAccess);
+    const vendor = await models.getVendor(dataAccess);
     const type = await models.getType(dataAccess);
 
     res.status(200).json({
@@ -93,9 +93,10 @@ export const info = async(req:Request, res: Response) => {
 
 // bet-result
 export const betHistoryResult = async (req: Request, res: Response) => {
+    
     // const affiliateCode: any|undefined = req.headers["gf-affiliate-code"]
     const betHistory: string[] = await models.getBetHistory(dataAccess)
-    const betHistoryResult: BetHistoryResult[] = await models.betHistoryResult(dataAccess, betHistory)
+    const betHistoryResult: BetHistoryResult[] | undefined = await models.betHistoryResult(dataAccess, betHistory)
 
     res.status(200).json({
         "betHistoryResult": betHistoryResult
