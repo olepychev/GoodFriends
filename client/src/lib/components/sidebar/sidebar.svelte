@@ -113,7 +113,7 @@
 				class="flex flex-col items-center  dark:border-t-white9 border-b dark:border-b-white9 border-b-grayLight2 w-full h-fit py-[25px]"
 			>
 				<li class="w-full">
-					<a href="/" on:click={closeSidebar} class="group navLink relative flex gap-[21px] items-center justify-center">
+					<a href="/favorites" on:click={closeSidebar} class={`${path === '/favorites' ? 'active' : '' } group navLink relative flex gap-[21px] items-center justify-center`}>
 						<svg
 							class="icon"
 							width="20"
