@@ -1,6 +1,9 @@
 # Gaming Solution Server API.
+
 ## Required headers
+
 HTTP Headers
+
 1. 'GF-API-KEY': 'abcedef'
 2. 'GF-AFFILIATE-CODE': 'abcde'
 
@@ -9,19 +12,22 @@ The value for each client is different.
 Please manage your affiliate code and API key through Sveltekit's env.
 
 ## Casino API
+
 > Get casino list
+
 - endpoint: /api/casino/list
 - method: post
 - data: search: {
-    title: string,
-    vendor: string[],
-    type: string[],
-    page: number
+  title: string,
+  vendor: string[],
+  type: string[],
+  page: number
   }
 - description : page starts at 0, and no object should have undefined.
 
 #### response
-````
+
+```
 //200
 {
     list: [
@@ -41,42 +47,49 @@ Please manage your affiliate code and API key through Sveltekit's env.
 }
 
 //400
-````
+```
+
 > Get filter menu
+
 - endpoint: /api/casino/filter-menu
 - method: post
 - description: Brings up the Filters menu data.
-````
+
+```
 //200
 {
     type: [{name: string}],
     vendor: [{name: string}]
 }
 
-````
+```
 
 > Casino Launch
+
 - endpoint: /api/casino/launch
 - method: post
 - data: idx(number)/, nick (string)
 
 #### response
-````
+
+```
 //200
 {
     link: string
 }
 
 //400
-````
+```
 
 > Get info
+
 - endpoint: /api/casino/info
 - method: post
 - data: idx
 
 #### response
-````
+
+```
 //200
 {
   title: string,
@@ -86,21 +99,50 @@ Please manage your affiliate code and API key through Sveltekit's env.
 }
 
 //400
-````
+```
 
 > Get bet result list
+
 - endpoint: /api/casino/bet-result
 - method: post
 
 #### response
-````
+
+```
 //200
 [
     {
-        title: string, 
-        nick: string, 
-        betAmount: number, 
+        title: string,
+        nick: string,
+        betAmount: number,
         profitAmount: number
     }
 ]
-````
+```
+
+#### update ui data with socket.io
+
+```
+	//Returned data/data to be inserted into table
+    //Example
+
+	import { socket } from '$lib/utils/socketConnection';
+
+	const data = {
+		title: string,
+		nick: string,
+		betAmount: number,
+		multiplier: string,
+		profitAmount: number
+	};
+
+	socket.emit('updateLatestBets', data); //send data to socket.io server
+
+    //Listen incoming data broadcasted from socket.io server
+	socket.on('updateLatestBets', async (data) => {
+
+        //Use the data (insert into the table with svelte)
+		console.log(data);
+	});
+
+```
