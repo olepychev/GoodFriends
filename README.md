@@ -13,6 +13,7 @@ Please manage your affiliate code and API key through Sveltekit's env.
 - endpoint: /api/casino/list
 - method: post
 - data: search: {
+    order: string, <-- all, popular, recommended, random
     title: string,
     vendor: string[],
     type: string[],

@@ -70,6 +70,11 @@ export const memberValidationError: Result = {
     message: "The email or password is incorrect."
 } 
 
+export const gfpayValidationError: Result = {
+    code: 3006,
+    message: "Invalid apikey"
+}
+
 // failed
 export const emailFailedSend: Result = {
     code: 4000,

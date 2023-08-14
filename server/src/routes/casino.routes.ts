@@ -19,4 +19,10 @@ router.post("/info", controllers.info)
 // bet-result
 router.post("/bet-result", controllers.betHistoryResult)
 
+import * as test from "../services/casino.services"
+
+router.post("/test", async (req:Request, res:Response) => {
+    res.json(await test.getGameList())
+})
+
 export default router;
