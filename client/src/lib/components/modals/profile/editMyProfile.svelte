@@ -98,7 +98,7 @@
 		const canvas = cropper.getCroppedCanvas();
 		const roundedCanvas = getRoundedCanvas(canvas);
 		const imageData = roundedCanvas.toDataURL('image/png');
-  
+		
 		const formData = new FormData();
 		const blob = dataURItoBlob(imageData);
 		formData.append('image', blob, 'image.png');
